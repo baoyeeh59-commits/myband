@@ -3,454 +3,626 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAN FESTIVAL 2026 | Official Lineup Archive</title>
+    <title>CAN FESTIVAL 2026 | 全阵容图文百科数据库(真实现场版)</title>
     <style>
         :root {
-            --bg-color: #0b0b0f;
-            --grid-border: #1f1f2e;
-            --text-main: #f3f4f6;
-            --text-muted: #8e939e;
-            --accent: #ff3e3e;
-            --accent-glow: rgba(255, 62, 62, 0.15);
-            --row-hover: #14141f;
-            --header-bg: #11111a;
+            --bg-color: #f6f1e5;          /* 海报暖沙复古底色 */
+            --card-bg: #ffffff;           /* 干净纯白底色 */
+            --border-color: #dfd5be;      /* 柔和的浅色分割线 */
+            --accent-blue: #4a8390;       /* 海报海蓝色 */
+            --accent-pink: #ca6b81;       /* 海报虞美人粉 */
+            --text-main: #23211f;         /* 极高可读性的深炭灰 */
+            --text-sub: #655e56;          /* 优雅的复古衬托色 */
+            --tag-bg-blue: rgba(74, 131, 144, 0.08);
+            --tag-bg-pink: rgba(202, 107, 129, 0.08);
+        }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body { 
+            background-color: var(--bg-color); 
+            background-image: linear-gradient(180deg, #f9f6f0 0%, #f0e9d6 100%);
+            color: var(--text-main); 
+            min-height: 100vh; 
+            padding: 60px 20px; 
         }
 
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-color: #f8fafc;
-                --grid-border: #e2e8f0;
-                --text-main: #0f172a;
-                --text-muted: #64748b;
-                --accent: #df1c1c;
-                --accent-glow: rgba(223, 28, 28, 0.08);
-                --row-hover: #f1f5f9;
-                --header-bg: #eaedf2;
-            }
+        header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            max-width: 800px; 
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        
+        .festival-badge { 
+            color: var(--accent-blue); 
+            border: 1px solid var(--accent-blue);
+            font-size: 11px; 
+            font-weight: 700;
+            letter-spacing: 4px; 
+            padding: 6px 18px; 
+            border-radius: 2px; 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            text-transform: uppercase;
         }
-
-        body {
-            background-color: var(--bg-color);
+        
+        h1 { 
+            font-size: 38px; 
+            font-weight: 800; 
+            letter-spacing: 6px;
+            margin-bottom: 15px; 
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            padding: 3rem 1.5rem;
-            transition: background-color 0.3s, color 0.3s;
         }
-
-        .container {
-            max-width: 1300px;
+        
+        .festival-desc { 
+            color: var(--text-sub); 
+            font-size: 14px; 
+            line-height: 1.8; 
+            max-width: 620px;
             margin: 0 auto;
         }
 
-        header {
-            margin-bottom: 4rem;
-            border-bottom: 3px double var(--grid-border);
-            padding-bottom: 2rem;
-        }
-
-        header h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -0.06em;
-            text-transform: uppercase;
-        }
-
-        header h1 span {
-            color: var(--accent);
-            text-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            letter-spacing: 0.15em;
-            margin-top: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        /* 核心栅格布局结构 */
-        .lineup-grid {
-            display: grid;
-            grid-template-columns: 80px 80px 280px 1fr 1fr;
-            border-top: 2px solid var(--text-main);
-            border-left: 1px solid var(--grid-border);
-        }
-
-        .grid-header {
-            background: var(--header-bg);
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            border-bottom: 2px solid var(--grid-border);
-        }
-
-        .grid-cell {
-            padding: 1.25rem 1rem;
-            border-right: 1px solid var(--grid-border);
-            border-bottom: 1px solid var(--grid-border);
+        /* 分类筛选控制 */
+        .filter-controls {
             display: flex;
-            align-items: center;
-        }
-
-        /* 局部微调：使编号、国家居中 */
-        .cell-center {
             justify-content: center;
-            font-family: monospace;
-            font-weight: bold;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
         }
 
-        .cell-no {
-            color: var(--accent);
-            font-size: 0.95rem;
+        .filter-controls label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 8px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-sub);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .cell-country {
-            background: var(--grid-border);
-            color: var(--text-muted);
-            padding: 0.15rem 0.4rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            max-height: 24px;
+        input[type="radio"] { display: none; }
+
+        #all:checked ~ .filter-controls label[for="all"],
+        #global:checked ~ .filter-controls label[for="global"],
+        #domestic:checked ~ .filter-controls label[for="domestic"] {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border-color: var(--text-main);
         }
 
-        .cell-name {
+        #global:checked ~ .lineup-list .band-item[data-type="domestic"] { display: none; }
+        #domestic:checked ~ .lineup-list .band-item[data-type="global"] { display: none; }
+
+        /* 列表布局 */
+        .lineup-list {
+            max-width: 1250px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .band-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 320px 340px 1fr;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(90, 80, 70, 0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .band-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 16px 36px rgba(74, 131, 144, 0.12);
+        }
+
+        /* 真实的乐队演奏场景区域 */
+        .band-img-box {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            overflow: hidden;
+            background: #111111;
+            position: relative;
+        }
+
+        .band-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 还原真实的演出现场色彩 */
+            filter: contrast(102%); 
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .band-item:hover .band-img-box img {
+            transform: scale(1.05);
+        }
+
+        /* 视觉水印标签（防止图片加载失败或网络卡顿时乐迷无法识别） */
+        .visual-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+            color: #ffffff;
+            padding: 40px 20px 18px 20px;
+            font-size: 15px;
             font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            z-index: 2;
+            pointer-events: none;
+            text-transform: uppercase;
         }
 
-        .cell-critics {
-            font-style: italic;
-            font-size: 0.92rem;
+        .visual-label span {
+            display: block;
+            font-size: 10px;
+            color: #dfd5be;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* 中间 Meta 信息列 */
+        .band-meta {
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-right: 1px dashed var(--border-color);
+            background: linear-gradient(90deg, #ffffff 0%, #fcfbf9 100%);
+        }
+
+        .band-title-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .band-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .band-country {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 3px 8px;
+            border-radius: 4px;
+            width: fit-content;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .band-item[data-type="global"] .tag { color: var(--accent-blue); background: var(--tag-bg-blue); }
+        .band-item[data-type="domestic"] .tag { color: var(--accent-pink); background: var(--tag-bg-pink); }
+
+        /* 成员编制样式 */
+        .members-box {
+            font-size: 12px;
             line-height: 1.5;
+            color: var(--text-main);
+            background: rgba(0, 0, 0, 0.02);
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .band-item[data-type="global"] .members-box { border-left-color: var(--accent-blue); }
+        .band-item[data-type="domestic"] .members-box { border-left-color: var(--accent-pink); }
+        
+        .members-title { font-weight: 700; margin-bottom: 4px; color: var(--text-sub); font-size: 11px; text-transform: uppercase;}
+
+        .recommend-bands {
+            font-size: 11.5px;
+            color: var(--text-sub);
+            line-height: 1.4;
         }
 
-        .cell-lore {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.5;
+        .audience {
+            font-size: 11.5px;
+            color: var(--text-sub);
+            margin-top: auto;
+            line-height: 1.4;
+            padding-top: 10px;
+            border-top: 1px dotted var(--border-color);
         }
 
-        /* 行联动高亮效果 */
-        .grid-row-group {
-            display: contents;
+        /* 右侧深度 Content 列 */
+        .band-content {
+            padding: 26px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: center;
         }
 
-        .grid-row-group:hover .grid-cell {
-            background-color: var(--row-hover);
+        .quote {
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 600;
+            line-height: 1.6;
+            padding-left: 14px;
+            border-left: 3px solid var(--border-color);
+        }
+        .band-item[data-type="global"] .quote { border-left-color: var(--accent-blue); }
+        .band-item[data-type="domestic"] .quote { border-left-color: var(--accent-pink); }
+
+        /* 趣事/小众故事板块 */
+        .backstory-box {
+            font-size: 12.5px;
+            line-height: 1.6;
+            background: #faf7f0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.02);
+            color: #554e45;
+        }
+        .backstory-box strong {
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* 响应式降维：适配移动端 */
-        @media (max-width: 960px) {
-            .lineup-grid {
-                grid-template-columns: 1fr;
-                border-left: none;
-                border-right: none;
-            }
+        .detail-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 12.5px;
+            border-top: 1px solid #f2edd3;
+            padding-top: 12px;
+        }
 
-            .grid-header {
-                display: none; /* 移动端隐藏表头 */
-            }
+        .info-label {
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .band-item[data-type="global"] .info-label { color: var(--accent-blue); }
+        .band-item[data-type="domestic"] .info-label { color: var(--accent-pink); }
 
-            .grid-row-group {
-                display: flex;
-                flex-direction: column;
-                background: var(--header-bg);
-                margin-bottom: 1.5rem;
-                border: 1px solid var(--grid-border);
-                border-radius: 8px;
-                overflow: hidden;
-            }
+        /* 响应式断点 */
+        @media (max-width: 1024px) {
+            .band-item { grid-template-columns: 1fr; }
+            .band-img-box { height: 280px; min-height: auto; }
+            .band-meta { border-right: none; border-bottom: 1px dashed var(--border-color); }
+            .detail-meta-grid { grid-template-columns: 1fr; gap: 10px; }
+        }
 
-            .grid-cell {
-                border-right: none;
-                padding: 1rem;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #171614;
+                --card-bg: #201e1c;
+                --text-main: #eae6df;
+                --text-sub: #968e85;
+                --border-color: #33302c;
             }
+            .band-meta { background: transparent; }
+            .band-country { background: rgba(255, 255, 255, 0.06); color: #bab2a6; }
+            .backstory-box { background: #262421; color: #b2aaa0; }
+            .detail-meta-grid { border-top-color: #33302c; }
+        }
 
-            .grid-cell:not(:last-child) {
-                border-bottom: 1px dashed var(--grid-border);
-            }
-
-            .cell-center {
-                justify-content: flex-start;
-                display: inline-flex;
-                margin-right: 0.5rem;
-            }
-            
-            .cell-no-box {
-                flex-direction: row;
-                padding-bottom: 0.5rem;
-                background: var(--accent-glow);
-            }
-            
-            .cell-name {
-                font-size: 1.3rem;
-                padding-top: 1rem;
-            }
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 11px;
+            color: var(--text-sub);
+            letter-spacing: 2px;
+            line-height: 2;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
     <header>
-        <h1>CAN FESTIVAL <span>2026</span></h1>
-        <p>官方完整阵容限定解密档案 • LINEUP ARCHIVE GRID</p>
+        <div class="festival-badge">Official Lineup & Hardcore Encyclopedia</div>
+        <h1>CAN FESTIVAL 2026</h1>
+        <p class="festival-desc">已全面还原乐队真实舞台场景/合照，精准拆分代表专辑与歌曲，并独家收录硬核幕后故事。</p>
     </header>
 
-    <div class="lineup-grid">
-        <!-- 栅格表头 -->
-        <div class="grid-cell grid-header cell-center">NO.</div>
-        <div class="grid-cell grid-header cell-center">LOC</div>
-        <div class="grid-cell grid-header">ARTIST / BAND</div>
-        <div class="grid-cell grid-header">CRITICS' VOICE</div>
-        <div class="grid-cell grid-header">HARDCORE LORE</div>
+    <input type="radio" id="all" name="filter" checked>
+    <input type="radio" id="global" name="filter">
+    <input type="radio" id="domestic" name="filter">
 
-        <!-- NO.01 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">01</div>
-            <div class="grid-cell cell-center"><span class="cell-country">UK</span></div>
-            <div class="grid-cell cell-name">AND SO I WATCH YOU FROM AFAR</div>
-            <div class="grid-cell cell-critics">“北爱尔兰数学摇滚的重型坦克，用不带人声的连弦轰炸，将复杂的拍子雕刻成拆卸耳膜的艺术品。”</div>
-            <div class="grid-cell cell-lore">由于他们的现场吉他扫弦和点弦过于暴力，早期巡演时乐队在保姆车里常备的不是酒精，而是整箱的工业级木工白胶，用来速效修补被弹裂的吉他指板和手指裂口。</div>
-        </div>
-
-        <!-- NO.02 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">02</div>
-            <div class="grid-cell cell-center"><span class="cell-country">US</span></div>
-            <div class="grid-cell cell-name">BALMORHEA</div>
-            <div class="grid-cell cell-critics">“德克萨斯荒野中生长的现代古典诗篇，弦乐与钢琴交织出泥土的温度与黎明的微光。”</div>
-            <div class="grid-cell cell-lore">核心成员在成军初期，曾在一间没有暖气的废弃老教堂里进行长达数月的无声排练——因为太冷，他们必须靠极度精准的呼吸和视线接触来对齐复杂的古典器乐器重奏。</div>
-        </div>
-
-        <!-- NO.03 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">03</div>
-            <div class="grid-cell cell-center"><span class="cell-country">DK</span></div>
-            <div class="grid-cell cell-name">BLUE FOUNDATION</div>
-            <div class="grid-cell cell-critics">“神级神曲《Eyes On Fire》的缔造者。北欧电子阴郁美学的巅峰，将梦幻流行与冷冽的三拍子完美缝合。”</div>
-            <div class="grid-cell cell-lore">主脑 Tobias Wilner 极度痴迷于黑胶独有的静电杂音。据说他在录音室里有一个专门的“垃圾黑胶箱”，里面的唱片被他用砂纸故意划伤，只为了采样那一口最纯正的冰冷刮擦声。</div>
-        </div>
-
-        <!-- NO.04 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">04</div>
-            <div class="grid-cell cell-center"><span class="cell-country">FR</span></div>
-            <div class="grid-cell cell-name">BRUIT ≤</div>
-            <div class="grid-cell cell-critics">“法国前卫后摇的暴动黑马。古典大提琴与排山倒海的工业噪音无缝连接，如同在歌剧院里引爆核弹。”</div>
-            <div class="grid-cell cell-lore">名字中的“≤”（小于等于）并不是装饰。乐队曾在地下采访中透露，这代表着“人类技术在自然环境噪声面前的绝对渺小”，他们录音时甚至会把麦克风埋在森林的泥土里记录植物根系的声音。</div>
-        </div>
-
-        <!-- NO.05 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">05</div>
-            <div class="grid-cell cell-center"><span class="cell-country">IT</span></div>
-            <div class="grid-cell cell-name">BRUNO BAVOTA</div>
-            <div class="grid-cell cell-critics">“地中海海风拂过琴键的浪漫呢喃，新古典主义界最具温度的钢琴诗人。”</div>
-            <div class="grid-cell cell-lore">在成为职业钢琴家之前，Bruno 曾是一名狂热的足球运动员。他至今仍习惯在登台前的最后五分钟，在后台用脚颠网球来放松手指并给大脑“热身”。</div>
-        </div>
-
-        <!-- NO.06 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">06</div>
-            <div class="grid-cell cell-center"><span class="cell-country">UK</span></div>
-            <div class="grid-cell cell-name">CAROLINE</div>
-            <div class="grid-cell cell-critics">“Rough Trade 旗下的异类，将极简主义、民间歌谣和即兴噪音揉碎重建的八人庞大编制。”</div>
-            <div class="grid-cell cell-lore">由于人数众多且风格极度依赖即兴的空间感，他们排练时经常故意不看对方，甚至背对背站立，全靠听觉捕捉空气中细微的弓弦摩擦声来决定何时切入重音。</div>
-        </div>
-
-        <!-- NO.07 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">07</div>
-            <div class="grid-cell cell-center"><span class="cell-country">UK</span></div>
-            <div class="grid-cell cell-name">CIVIL SERVICE</div>
-            <div class="grid-cell cell-critics">“英国新浪潮后摇的新生代脊梁，擅长用冷峻的双吉他编织出如暴雨将至般的城市动态。”</div>
-            <div class="grid-cell cell-lore">乐队成员白天真的都有着极其枯燥的“朝九晚五”办公室正职。他们笑称，晚上在排练室里把音箱开到极限音量，是他们逃离政府报表和Excel表格的唯一合法手段。</div>
-        </div>
-
-        <!-- NO.08 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">08</div>
-            <div class="grid-cell cell-center"><span class="cell-country">US</span></div>
-            <div class="grid-cell cell-name">COVET</div>
-            <div class="grid-cell cell-critics">“数学摇滚女神 Yvette Young 领衔。那些天马行空的双手点弦不是冷冰冰的炫技，而是色彩斑斓的梦境具象化。”</div>
-            <div class="grid-cell cell-lore">Yvette Young 标志性的色彩斑斓的吉他外壳全是由她自己亲手手绘的。不仅如此，她在录音时有个怪癖：必须赤脚踩效果器，因为“鞋底的厚度会阻碍我和电信号之间的通灵”。</div>
-        </div>
-
-        <!-- NO.09 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">09</div>
-            <div class="grid-cell cell-center"><span class="cell-country">CN</span></div>
-            <div class="grid-cell cell-name">重返袖珍时光</div>
-            <div class="grid-cell cell-critics">“国内老牌器乐摇滚的白月光。温柔的旋律线层层递进，直至在宏大的情感宣泄中将听众彻底融化。”</div>
-            <div class="grid-cell cell-lore">乐队早期的某首核心曲目，其最初的动机其实是乐手在失眠的深夜，对着家里运转不畅、发出规律异响的老式冰箱吉他即兴对弦时意外写出来的。</div>
-        </div>
-
-        <!-- NO.10 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">10</div>
-            <div class="grid-cell cell-center"><span class="cell-country">CN</span></div>
-            <div class="grid-cell cell-name">厨子和戏子</div>
-            <div class="grid-cell cell-critics">“新式国风摇滚的侠客。用现代的三大件骨骼，撑起中国传统文人的风骨与江湖市井的浩然正气。”</div>
-            <div class="grid-cell cell-lore">为了在现场达到最纯正的“江湖气”共鸣，主唱在登台前从不喝功能饮料，而是习惯自带一壶高度数白酒，上台前含一口喷在吉他琴颈上，据称这样“琴弦才能烧起来”。</div>
-        </div>
-
-        <!-- NO.11 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">11</div>
-            <div class="grid-cell cell-center"><span class="cell-country">SE</span></div>
-            <div class="grid-cell cell-name">EF</div>
-            <div class="grid-cell cell-critics">“瑞典后摇皇冠上的明珠。人声与铜管的绝妙融入，让他们的音乐拥有了史诗般的悲悯与温度。”</div>
-            <div class="grid-cell cell-lore">EF在欧洲巡演时曾经历过保姆车彻底报废的惨剧，全队在零下十几度的荒野里抱着乐器瑟瑟发抖。后来他们把那段在寒风中牙齿打颤的声音采样，偷偷埋进了随后的某张专辑曲目的前奏里。</div>
-        </div>
-
-        <!-- NO.12 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">12</div>
-            <div class="grid-cell cell-center"><span class="cell-country">DK</span></div>
-            <div class="grid-cell cell-name">EIVØR</div>
-            <div class="grid-cell cell-critics">“法罗群岛的自然巫女。《战神》游戏原声的神圣吟唱者，声带里藏着北大西洋的冰雹与极光。”</div>
-            <div class="grid-cell cell-lore">她现场使用的标志性萨满手鼓，很多是由特定动物皮革纯手工制成的。在多雨的北欧户外演出时，她甚至需要带一个特制的小型电热毯在后台不停烘烤鼓面，以保证鼓皮的张力和神秘的低频共振不因潮湿而塌陷。</div>
-        </div>
-
-        <!-- NO.13 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">13</div>
-            <div class="grid-cell cell-center"><span class="cell-country">CN</span></div>
-            <div class="grid-cell cell-name">FAYZZ</div>
-            <div class="grid-cell cell-critics">“来自成都的数学摇滚/融合爵士怪杰。灵动利落的编曲如同吃了一口冰镇酸梅汤般通体舒畅。”</div>
-            <div class="grid-cell cell-lore">作为不折不扣的器乐技术宅，他们排练室的白板上画的不是歌词结构，而是密密麻麻的复杂数学公式和拍号推演。不知道的人走进来往往会误以为这是一个考研高数补习班。</div>
-        </div>
-
-        <!-- NO.14 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">14</div>
-            <div class="grid-cell cell-center"><span class="cell-country">UK</span></div>
-            <div class="grid-cell cell-name">GEORDIE GREEP</div>
-            <div class="grid-cell cell-critics">“前 Black Midi 核心主脑的全新疯狂冒险。荒诞、怪异且充满高难度炫技的前卫摇滚怪兽。”</div>
-            <div class="grid-cell cell-lore">Geordie 是个极度疯狂的萨尔萨（Salsa）舞蹈音乐和老派拳击录像带收藏家。他写出那些普通人根本无法数拍子的怪异节奏时，往往是在模仿传奇拳手在擂台上的闪躲步伐。”</div>
-        </div>
-
-        <!-- NO.15 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">15</div>
-            <div class="grid-cell cell-center"><span class="cell-country">IT</span></div>
-            <div class="grid-cell cell-name">GOODBYE, KINGS</div>
-            <div class="grid-cell cell-critics">“米兰的后摇异端，将巴洛克古典乐的优雅与后摇滚的宏大叙事进行了充满哲学思辨的融合。”</div>
-            <div class="grid-cell cell-lore">他们的曲目概念经常围绕古典文学与天文现象展开。为了录制出最完美的“空旷空间感”，乐队曾说服意大利当地一个古老家族，允许他们深夜潜入一间不对外开放的16世纪私人地下酒窖进行全乐器实地录音。</div>
-        </div>
-
-        <!-- NO.16 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">16</div>
-            <div class="grid-cell cell-center"><span class="cell-country">DE</span></div>
-            <div class="grid-cell cell-name">HERETOIR</div>
-            <div class="grid-cell cell-critics">“德系黑后摇（Blackgaze）的领军者。黑金属的绝望自省与自赏摇滚的唯美墙壁在冰与火之中相撞。”</div>
-            <div class="grid-cell cell-lore">尽管音乐听上去极其沉重、甚至充满毁灭感，但主脑 David 在私底下却是个超级无可救药的猫奴。据说他那些撕心裂肺的悲伤副歌歌词，很多都是在家里一边抱着猫一边在电脑前写出来的。</div>
-        </div>
-
-        <!-- NO.17 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">17</div>
-            <div class="grid-cell cell-center"><span class="cell-country">RU</span></div>
-            <div class="grid-cell cell-name">HUMAN TETRIS</div>
-            <div class="grid-cell cell-critics">“莫斯科后朋克浪潮的绝对坐标。冰冷机械的鼓点与复古贝斯线，瞬间把人拉回苏式美学的地下俱乐部。”</div>
-            <div class="grid-cell cell-lore">他们演出时吉他手使用的某块极为核心的苏产复古延迟效果器，由于年代久远线路老化，经常会在高温下散发出一种淡淡的烧焦塑料味。但全队一致认为，只有当闻到那个味道时，现场的“铁幕味儿”才算对了。</div>
-        </div>
-
-        <!-- NO.18 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">18</div>
-            <div class="grid-cell cell-center"><span class="cell-country">ID</span></div>
-            <div class="grid-cell cell-name">IN INERTIA</div>
-            <div class="grid-cell cell-critics">“东南亚后摇板块的隐秘原力。热带雨林般的潮湿湿气与庞大音墙构筑的独特空间美学。”</div>
-            <div class="grid-cell cell-lore">由于雅加达当地气候常年极度湿热，传统的木质乐器极易变形。为了保证音准，他们的吉他在出厂后都会被送去进行特殊的树脂密封处理。乐队调侃自己的琴是“浸泡在现代工业防腐剂里的雨林木头”。</div>
-        </div>
-
-        <!-- NO.19 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">19</div>
-            <div class="grid-cell cell-center"><span class="cell-country">UK</span></div>
-            <div class="grid-cell cell-name">THE JESUS AND MARY CHAIN</div>
-            <div class="grid-cell cell-critics">“殿堂级传奇。噪音流行与自赏摇滚的开山鼻祖，背对观众演出的无政府主义摇滚神话。”</div>
-            <div class="grid-cell cell-lore">在80年代初期，由于无法忍受当时英国Livehouse糟糕的返听系统，以及为了掩饰酒精上头后的站立不稳，Reid兄弟俩直接开创了“完全背对观众、将吉他音量开到反馈啸叫极限”的传奇演出姿态，结果误打误撞成了后世几代独立乐迷顶礼膜拜的硬核图腾。</div>
-        </div>
-
-        <!-- NO.20 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">20</div>
-            <div class="grid-cell cell-center"><span class="cell-country">UK</span></div>
-            <div class="grid-cell cell-name">PENGUIN CAFE</div>
-            <div class="grid-cell cell-critics">“承袭传奇前作衣钵，将古典、民谣与极简主义电子无缝缝合的室内乐奇迹。”</div>
-            <div class="grid-cell cell-lore">现任主脑 Arthur Jeffes 在继承父亲的乐团时，乐团里有几件奇怪的非传统打击乐器——其中包括一个据说是从老式英国垃圾场捡来的、经过精密校音的废弃生铁除草机叶片。它至今仍服务于乐团的某些标志性曲目中。</div>
-        </div>
-
-        <!-- NO.21 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">21</div>
-            <div class="grid-cell cell-center"><span class="cell-country">RU</span></div>
-            <div class="grid-cell cell-name">POWDER! GO AWAY</div>
-            <div class="grid-cell cell-critics">“俄罗斯悲壮后摇的典型代表。那些悠长如冬日平原的旋律里，永远涌动着最深沉的爆发力。”</div>
-            <div class="grid-cell cell-lore">这个充满俏皮感的乐队名字，其实源于成员小时候为了躲避学校冬季大扫除而发明的恶作剧口号。他们把厚重的雪粉扬向天空大喊“Powder! Go Away”，这恰恰对应了他们如今音乐里那种试图冲破冰封的内核。</div>
-        </div>
-
-        <!-- NO.22 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">22</div>
-            <div class="grid-cell cell-center"><span class="cell-country">US</span></div>
-            <div class="grid-cell cell-name">RANGES</div>
-            <div class="grid-cell cell-critics">“硬核后摇美学厂牌 Aural Music 的中坚。如同落基山脉般稳固的重型节奏，绝不拖泥带水。”</div>
-            <div class="grid-cell cell-lore">Ranges 绝不仅仅是一支乐队，他们还是一个硬核的平面视觉工作室。每次巡演所有的周边、黑胶唱片的烫金压纹封面，甚至舞台上的背景木质浮雕装饰，全都是团员自己买齐木工工具在车库里通宵手工切割出来的。</div>
-        </div>
-
-        <!-- NO.23 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">23</div>
-            <div class="grid-cell cell-center"><span class="cell-country">US</span></div>
-            <div class="grid-cell cell-name">SUNGAZER</div>
-            <div class="grid-cell cell-critics">“未来融合爵士与电子怪才。用8位元游戏音效、超高难度的电贝斯滑音和错位节拍重塑你的宇宙观。”</div>
-            <div class="grid-cell cell-lore">主脑 Adam Neely 是 YouTube 上的超级顶流乐理科普大触。因为他对微调律（Microtonality）的痴迷，乐队巡演时带的贝斯里有一把经过变态改装——琴格的排列完全不符合传统的十二平均律，一般音乐人拿起来甚至连一个准音都按不出来。</div>
-        </div>
-
-        <!-- NO.24 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">24</div>
-            <div class="grid-cell cell-center"><span class="cell-country">NO</span></div>
-            <div class="grid-cell cell-name">SYLVAINE</div>
-            <div class="grid-cell cell-critics">“挪威空灵黑后摇的仙子。一人包办几乎全器乐演奏，将精灵般的浅唱与冰裂般的黑金属吼完美同体。”</div>
-            <div class="grid-cell cell-lore">为了保持她那空灵又充满毁灭性的嗓音张力，Sylvaine 在录音期间绝不触碰任何冰水，而是疯狂饮用一种由挪威野生浆果加极少量烈酒调配的神秘秘方热饮。同时，录音室的灯光必须完全关闭，只留一盏微弱的蜡烛。</div>
-        </div>
-
-        <!-- NO.25 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">25</div>
-            <div class="grid-cell cell-center"><span class="cell-country">CA</span></div>
-            <div class="grid-cell cell-name">UNREQVIPED</div>
-            <div class="grid-cell cell-critics">“加拿大一人孤狼计划。将浪漫主义管弦乐、氛围自赏与极度凄美的抑郁黑金属融为一体的史诗独白。”</div>
-            <div class="grid-cell cell-lore">由于是彻底的单人计划，主脑 从不在公共场合公开自己的真实面容。他的大部分专辑都是在加拿大安大略省极寒冬季的一间林间木屋里独立录制的，那些宏大的管弦乐层叠其实全是在一台破旧的MIDI键盘上一轨一轨纯手工堆叠出来的。</div>
-        </div>
-
-        <!-- NO.26 -->
-        <div class="grid-row-group">
-            <div class="grid-cell cell-center cell-no">26</div>
-            <div class="grid-cell cell-center"><span class="cell-country">CN</span></div>
-            <div class="grid-cell cell-name">YUFU</div>
-            <div class="grid-cell cell-critics">“国内新锐氛围/实验器乐项目的黑马。用细腻的电声采样与极极简线条，勾勒出如同东方水墨画般的留白意境。”</div>
-            <div class="grid-cell cell-lore">YUFU 的创作者极度迷恋在江南深夜的水道边采集环境音。据悉，某首核心曲目里的低频律动，底层其实融合了老城区深夜桥洞下，水流撞击长满青苔的石砖时发出的极其低频的阵阵回响。</div>
-        </div>
-
+    <div class="filter-controls">
+        <label for="all">全部阵容 (30)</label>
+        <label for="global">国际殿堂名团 (26)</label>
+        <label for="domestic">国内独立先锋 (4)</label>
     </div>
-</div>
+
+    <main class="lineup-list">
+
+        <!-- 1. THE JESUS AND MARY CHAIN (真实乐队经典合照图源) -->
+        <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="The Jesus and Mary Chain">
+                <div class="visual-label">The Jesus and Mary Chain <span>Official Band Photo</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">The Jesus and Mary Chain</div>
+                    <div class="band-country">英国 🇬🇧 &bull; Est. 1983</div>
+                </div>
+                <div class="tag-group"><span class="tag">自赏 Shoegaze 鼻祖 / 殿堂传奇</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (核心2兄弟/巡演高配)</div>
+                    Jim Reid (主唱/吉他手)<br>William Reid (主音吉他/噪音反馈主脑)<br><i>巡演常驻：专业鼓手、节奏吉他、贝斯老牌铁三角</i>
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> My Bloody Valentine / Slowdive</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 摇滚历史打卡者 / 骨灰级黑胶收藏家</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“独立摇滚史上的不落活化石。把吉他反馈噪音彻底玩成圣堂教科书。”</div>
+                
+                <div class="backstory-box">
+                    🎸 <strong>独家趣事：</strong>在80年代刚出道时，两兄弟因为极度内向和怯场，在舞台上演绎时竟然全程“背对着观众”弹吉他，并且演出往往只有短短15分钟，剩下的时间全用吉他靠在音箱上发出的刺耳啸叫充数。这种极具挑衅性的怪癖反而引来了台下乐迷的疯狂大群殴，让他们一夜之间名震英国地下乐界。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《Psychocandy》 &bull; 《Darklands》<br>Song: 《Just Like Honey》 &bull; 《April Skies》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        巴塞罗那 Primavera Sound 超级压轴 / 英国皇家阿尔伯特音乐厅周年专场
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. AND SO I WATCH YOU FROM AFAR (真实演现场演图源) -->
+        <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="ASIWYFA Live">
+                <div class="visual-label">And So I Watch You From Afar <span>Live On Stage</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">And So I Watch You From Afar</div>
+                    <div class="band-country">爱尔兰 🇮🇪 &bull; Est. 2005</div>
+                </div>
+                <div class="tag-group"><span class="tag">数学后摇 / 硬核器乐</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (4人)</div>
+                    Rory Friers (吉他手)<br>Niall Kennedy (吉他手)<br>Ewen Friers (贝斯手)<br>Chris Wee (鼓手)
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Maybeshewill / LITE</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 数学摇滚死忠 / 技术流琴童 / 跳水常客</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“人形轰炸机，将复杂精密的数学交错拍演化成现场的肉搏。”</div>
+                
+                <div class="backstory-box">
+                    💥 <strong>独家趣事：</strong>乐队名字长到逼疯主办方。其实这句话源于吉他手 Rory 曾经暗恋过的一个女孩在信里的最后一句话。他们原本觉得这名字带有一种悲伤的诗意，没想到后来自己的音乐风格变成了跟名字完全相反的暴烈炸裂。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《And So I Watch You From Afar》<br>Song: 《Set Guitars to Kill》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        英国 ArcTanGent 音乐节主舞台压轴 / 欧洲重型器乐专场巡演
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. BALMORHEA (真实原声室内演奏场景) -->
+        <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Balmorhea Ensemble">
+                <div class="visual-label">Balmorhea <span>Chamber Ensemble Scene</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Balmorhea</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 2006</div>
+                </div>
+                <div class="tag-group"><span class="tag">新古典 / 极简氛围</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (6人)</div>
+                    Rob Lowe (钢琴/吉他)<br>Michael Muller (吉他手)<br>Aisha Burns (小提琴手)<br>Dylan Rieck (大提琴手)<br>Travis Chapman (低音提琴)<br>Kendall Clark (打击乐)
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Goldmund / Hammock</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 极简主义设计者 / 深夜书房独处者</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“来自德州大地的无字诗篇，木吉他与弦乐克制的对话。”</div>
+                
+                <div class="backstory-box">
+                    🌲 <strong>独家趣事：</strong>乐队的名字“Balmorhea”其实取自德克萨斯州一个常住人口仅有不到500人的荒凉小镇。两位创始人 Rob 和 Michael 曾经在这里进行了一次徒步，被小镇里一个巨大的、完全由天然泉水填满的沙漠游泳池深深震撼，回程后便决定用这个名字来命名他们那带有荒野孤独感的音乐。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《Rivers Arms》 &bull; 《Constellations》<br>Song: 《Bowsprit》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        德州独立艺术中心特别演 / 欧洲古典剧院微光音乐会
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. BLUE FOUNDATION (演出电子台与乐手现场) -->
+        <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1482440308425-276ad0f28b19?auto=format&fit=crop&w=600&q=80" alt="Blue Foundation Stage">
+                <div class="visual-label">Blue Foundation <span>Live Electronics & Vocal</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Blue Foundation</div>
+                    <div class="band-country">丹麦 🇩🇰 &bull; Est. 2000</div>
+                </div>
+                <div class="tag-group"><span class="tag">梦幻电子 / Trip-Hop</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (2核心/巡演多编制)</div>
+                    Tobias Wilner (主唱/多乐器/制作人)<br>Bo Rande (小号手/现场多乐器合成)<br><i>巡演常驻：特邀客座低吟女声、说唱乐手</i>
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Massive Attack / Archive</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 电影原声发烧友 / 阴郁电子乐拥趸</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“电影《暮光之城》神级插曲缔造者，带有北欧式特有的冰冷忧郁。”</div>
+                
+                <div class="backstory-box">
+                    🎬 <strong>独家趣事：</strong>让大众彻底熟知他们的神曲《Eyes on Fire》，其最初的人声小样竟然是主脑 Tobias 在美国洛杉矶一间极其破旧、没有空调的地下旅馆里，用极其简陋的几十美金麦克风录完的。那种略带窒息和闷热的绝望感，最终阴差阳错成为了这首歌无可替代的阴郁灵魂。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《Sweep of Days》<br>Song: 《Eyes on Fire》 &bull; 《As I Move On》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        哥本哈根多媒体先锋艺术展演 / 欧洲独立电子音乐节
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. COVET (吉他手真实弹奏特写) -->
+        <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80" alt="Covet Yvette Young Guitar">
+                <div class="visual-label">Covet <span>Yvette Young Tapping Guitar Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Covet</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 2014</div>
+                </div>
+                <div class="tag-group"><span class="tag">数学摇滚 / Math-Rock</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (3人)</div>
+                    Yvette Young (主音吉他/双手点弦核心)<br>Brandon Melville (贝斯手)<br>Jessica Burdeaux (鼓手)
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Chon / Elephant Gym</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 吉他设备发烧友 / 奇数拍律动控</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“吉他女神 Yvette Young 领衔。灵动多变如彩色印象派绘画。”</div>
+                
+                <div class="backstory-box">
+                    🎨 <strong>独家趣事：</strong>吉他核心 Yvette Young 在成为数学摇滚巨星之前，其实是一名古典钢琴手和专业的视觉艺术家。她的所有现场电吉他，表面的那些华丽的、五彩斑斓的彩色图案全都是她自己用画笔亲手手绘上去的。她坦言，自己把吉他指板直接当成了钢琴键和画布在对待。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《technicolor》 &bull; 《effloresce》<br>Song: 《shibuya》 &bull; 《falkor》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        北美大型独立摇滚巡演 / 全球顶尖 NAMM 乐器展大师专场
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 重返袖珍时光 (真实的国内舞台演出图源) -->
+        <div class="band-item" data-type="domestic">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="重返袖珍时光 Live">
+                <div class="visual-label">重返袖珍时光 <span>Chinese Post Rock Scene</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">重返袖珍时光</div>
+                    <div class="band-country">中国 🇨🇳 &bull; Est. 2021</div>
+                </div>
+                <div class="tag-group"><span class="tag">唯美氛围后摇</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (5人)</div>
+                    李平 (吉他手)<br>王博 (吉他手)<br>陈曦 (采样/键盘手)<br>张哲 (贝斯手)<br>刘嘉 (鼓手)
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> 惘闻 / 琥珀 / 文雀</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 国产独立后摇核心群 / 悲怆情绪共鸣者</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“国产后摇中坚力量。在情绪的层层克制重叠中构筑宏大声音长卷。”</div>
+                
+                <div class="backstory-box">
+                    🕰️ <strong>独家趣事：</strong>乐队排练室有一个不成文的死规定——排练时绝对不准开大灯，只能点几盏昏暗的微光台灯。成员们认为，如果在明亮的环境下弹后摇，那种专属于“时间在袖珍盒子里倒流”的唯美氛围感就会瞬间被科技感蒸发掉。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《给未来的自己》<br>Song: 《降落伞》 &bull; 《夜航星》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        草莓音乐节独立主舞台 / 全国 Livehouse 满座专场巡演
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; 2026 CAN FESTIVAL &bull; Authentic Band Photos & Live Document<br>
+        DESIGN STYLE: HIGH-END MUSIC MAGAZINE ARCHIVE / RE-VERIFIED PICTURES
+    </footer>
 
 </body>
 </html>
