@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乐队阵容一览 | BAND LINEUP</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-color: #ff3e3e; 
+            --text-main: #ffffff;
+            --text-sub: #8a8a93;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'PingFang SC', Arial, sans-serif; }
+        body { background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 10%, #1a1515 0%, #0a0a0c 70%); color: var(--text-main); min-height: 100vh; padding: 60px 20px; display: flex; flex-direction: column; align-items: center; }
+        header { text-align: center; margin-bottom: 60px; max-width: 600px; }
+        .band-badge { background: var(--accent-color); color: white; font-size: 12px; letter-spacing: 2px; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 15px; }
+        h1 { font-size: 42px; font-weight: 900; margin-bottom: 15px; background: linear-gradient(45deg, #ffffff, #a1a1aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .band-desc { color: var(--text-sub); font-size: 16px; line-height: 1.6; }
+        .lineup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; width: 100%; max-width: 1100px; }
+        .member-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); transition: all 0.4s; }
+        .member-card:hover { transform: translateY(-10px); border-color: var(--accent-color); box-shadow: 0 15px 30px rgba(255, 62, 62, 0.1); }
+        .member-photo { height: 260px; width: 100%; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        .member-info { padding: 24px; }
+        .role { color: var(--accent-color); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+        .name { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+        .bio { color: var(--text-sub); font-size: 14px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="band-badge">OFFICIAL LINEUP</div>
+        <h1>THE RESONANCE</h1>
+        <p class="band-desc">成军于城市边缘的独立摇滚乐队。用音墙撕裂黑夜，在噪音中寻找共鸣。</p>
+    </header>
+    <main class="lineup-grid">
+        <div class="member-card">
+            <img class="member-photo" src="https://unsplash.com" alt="主唱">
+            <div class="member-info">
+                <div class="role">Vocal / 主唱</div>
+                <div class="name">艾伦 / Alan</div>
+                <div class="bio">拥有极具穿透力的烟嗓，高音狂放低音深沉。</div>
+            </div>
+        </div>
+        <div class="member-card">
+            <img class="member-photo" src="https://unsplash.com" alt="吉他">
+            <div class="member-info">
+                <div class="role">Guitar / 吉他</div>
+                <div class="name">修 / Xiu</div>
+                <div class="bio">擅长营造厚重的氛围音墙与凌厉的即兴 Solo。</div>
+            </div>
+        </div>
+        <div class="member-card">
+            <img class="member-photo" src="https://unsplash.com" alt="贝斯">
+            <div class="member-info">
+                <div class="role">Bass / 贝斯</div>
+                <div class="name">马克 / Mark</div>
+                <div class="bio">默默掌控全场低音命脉，舞台上最低调的猛兽。</div>
+            </div>
+        </div>
+        <div class="member-card">
+            <img class="member-photo" src="https://unsplash.com" alt="鼓手">
+            <div class="member-info">
+                <div class="role">Drums / 鼓手</div>
+                <div class="name">森 / Sen</div>
+                <div class="bio">现场演出时的人形节拍器，提供雷鸣般的节奏。</div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
