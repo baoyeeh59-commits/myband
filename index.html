@@ -3,71 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>乐队阵容一览 | BAND LINEUP</title>
+    <title>THE RESONANCE | 乐队阵容</title>
     <style>
         :root {
-            --bg-color: #0a0a0c;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --accent-color: #ff3e3e; 
-            --text-main: #ffffff;
-            --text-sub: #8a8a93;
+            --bg-color: #f5eedc;          /* 温暖复古的浅沙色/米白底色 */
+            --card-bg: #ffffff;           /* 干净纯白卡片底色 */
+            --border-color: #e3dac5;      /* 柔和的浅色边框 */
+            --accent-blue: #5b9ca9;       /* 海报同款独立海蓝色 */
+            --accent-pink: #d48295;       /* 海报同款虞美人粉 */
+            --text-main: #2d2926;         /* 极高可读性的深炭灰 */
+            --text-sub: #6e655f;          /* 优雅的复古衬托色 */
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'PingFang SC', Arial, sans-serif; }
-        body { background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 10%, #1a1515 0%, #0a0a0c 70%); color: var(--text-main); min-height: 100vh; padding: 60px 20px; display: flex; flex-direction: column; align-items: center; }
-        header { text-align: center; margin-bottom: 60px; max-width: 600px; }
-        .band-badge { background: var(--accent-color); color: white; font-size: 12px; letter-spacing: 2px; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 15px; }
-        h1 { font-size: 42px; font-weight: 900; margin-bottom: 15px; background: linear-gradient(45deg, #ffffff, #a1a1aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .band-desc { color: var(--text-sub); font-size: 16px; line-height: 1.6; }
-        .lineup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; width: 100%; max-width: 1100px; }
-        .member-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); transition: all 0.4s; }
-        .member-card:hover { transform: translateY(-10px); border-color: var(--accent-color); box-shadow: 0 15px 30px rgba(255, 62, 62, 0.1); }
-        .member-photo { height: 260px; width: 100%; object-fit: cover; border-bottom: 1px solid var(--border-color); }
-        .member-info { padding: 24px; }
-        .role { color: var(--accent-color); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-        .name { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
-        .bio { color: var(--text-sub); font-size: 14px; line-height: 1.5; }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased; /* 文字精细平滑处理 */
+        }
+        
+        body { 
+            background-color: var(--bg-color); 
+            background-image: linear-gradient(180deg, #f7f2e7 0%, #f1ebd9 100%);
+            color: var(--text-main); 
+            min-height: 100vh; 
+            padding: 80px 24px; 
+        }
+
+        /* 顶部页眉区域 */
+        header { 
+            text-align: center; 
+            margin-bottom: 70px; 
+            max-width: 700px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .band-badge { 
+            background: transparent;
+            color: var(--accent-blue); 
+            border: 1px solid var(--accent-blue);
+            font-size: 11px; 
+            font-weight: 600;
+            letter-spacing: 3px; 
+            padding: 5px 16px; 
+            border-radius: 2px; 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            text-transform: uppercase;
+        }
+        
+        h1 { 
+            font-size: 38px; 
+            font-weight: 800; 
+            letter-spacing: 4px;
+            margin-bottom: 18px; 
+            color: var(--text-main);
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-pink);
+            margin: 12px auto 0 auto;
+        }
+        
+        .band-desc { 
+            color: var(--text-sub); 
+            font-size: 15px; 
+            line-height: 1.8; 
+            letter-spacing: 0.5px;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+        
+        /* 阵容网格布局 */
+        .lineup-container {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .lineup-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 35px; 
+            width: 100%; 
+        }
+        
+        /* 干净极简风格卡片 */
+        .member-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 4px; /* 极简微方圆角 */
+            overflow: hidden; 
+            box-shadow: 0 4px 20px rgba(109, 101, 95, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        
+        .member-card:hover { 
+            transform: translateY(-6px); 
+            border-color: var(--accent-blue); 
+            box-shadow: 0 12px 30px rgba(91, 156, 169, 0.12); 
+        }
+        
+        /* 图片展示区域 */
+        .photo-wrapper {
+            position: relative;
+            height: 280px; 
+            width: 100%; 
+            overflow: hidden;
+            background-color: #e8dfc7; /* 兜底图色 */
+        }
+
+        .member-photo { 
+            height: 100%; 
+            width: 100%; 
+            object-fit: cover; 
+            transition: transform 0.6s ease;
+        }
+
+        .member-card:hover .member-photo {
+            transform: scale(1.03);
+        }
+        
+        /* 文字信息区域 */
+        .member-info { 
+            padding: 28px 24px; 
+            background: var(--card-bg);
+        }
+        
+        .role { 
+            color: var(--accent-blue); 
+            font-size: 12px; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px; 
+            display: inline-block;
+        }
+
+        /* 粉蓝色彩交替，模拟音乐节灵动感 */
+        .member-card:nth-child(even) .role {
+            color: var(--accent-pink); 
+        }
+        
+        .name { 
+            font-size: 20px; 
+            font-weight: 700; 
+            color: var(--text-main);
+            margin-bottom: 14px; 
+            letter-spacing: 0.5px;
+        }
+        
+        .bio { 
+            color: var(--text-sub); 
+            font-size: 13.5px; 
+            line-height: 1.7; 
+            border-top: 1px dashed #eaddc3; /* 艺术感虚线分割 */
+            padding-top: 14px;
+        }
+
+        /* 底部致敬标记 */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 11px;
+            color: var(--text-sub);
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="band-badge">OFFICIAL LINEUP</div>
+        <div class="band-badge">Official Lineup</div>
         <h1>THE RESONANCE</h1>
-        <p class="band-desc">成军于城市边缘的独立摇滚乐队。用音墙撕裂黑夜，在噪音中寻找共鸣。</p>
+        <p class="band-desc">成军于城市边缘的独立摇滚/后摇滚乐队。用音墙重塑海浪，在极简的旋律中寻找纯粹共鸣。</p>
     </header>
-    <main class="lineup-grid">
-        <div class="member-card">
-            <img class="member-photo" src="https://unsplash.com" alt="主唱">
-            <div class="member-info">
-                <div class="role">Vocal / 主唱</div>
-                <div class="name">艾伦 / Alan</div>
-                <div class="bio">拥有极具穿透力的烟嗓，高音狂放低音深沉。</div>
+    
+    <main class="lineup-container">
+        <div class="lineup-grid">
+            <div class="member-card">
+                <div class="photo-wrapper">
+                    <img class="member-photo" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600" alt="艾伦 / Alan">
+                </div>
+                <div class="member-info">
+                    <div class="role">Vocal / 主唱</div>
+                    <div class="name">艾伦 / Alan</div>
+                    <div class="bio">拥有极具穿透力的烟嗓，高音狂放低音深沉。在层层递进的后摇音轨中，用人声器乐化拉开宏大叙事的序幕。</div>
+                </div>
             </div>
-        </div>
-        <div class="member-card">
-            <img class="member-photo" src="https://unsplash.com" alt="吉他">
-            <div class="member-info">
-                <div class="role">Guitar / 吉他</div>
-                <div class="name">修 / Xiu</div>
-                <div class="bio">擅长营造厚重的氛围音墙与凌厉的即兴 Solo。</div>
+            
+            <div class="member-card">
+                <div class="photo-wrapper">
+                    <img class="member-photo" src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&q=80&w=600" alt="修 / Xiu">
+                </div>
+                <div class="member-info">
+                    <div class="role">Guitar / 吉他</div>
+                    <div class="name">修 / Xiu</div>
+                    <div class="bio">擅长营造厚重的氛围音墙与凌厉的即兴 Solo。善用延时与反向效果器，将海浪般的潮汐感融入编曲。</div>
+                </div>
             </div>
-        </div>
-        <div class="member-card">
-            <img class="member-photo" src="https://unsplash.com" alt="贝斯">
-            <div class="member-info">
-                <div class="role">Bass / 贝斯</div>
-                <div class="name">马克 / Mark</div>
-                <div class="bio">默默掌控全场低音命脉，舞台上最低调的猛兽。</div>
+            
+            <div class="member-card">
+                <div class="photo-wrapper">
+                    <img class="member-photo" src="https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&q=80&w=600" alt="马克 / Mark">
+                </div>
+                <div class="member-info">
+                    <div class="role">Bass / 贝斯</div>
+                    <div class="name">马克 / Mark</div>
+                    <div class="bio">默默掌控全场低音命脉，舞台上最低调的猛兽。用稳健扎实的根音和极具颗粒感的低频线条，筑起最坚固的声音底座。</div>
+                </div>
             </div>
-        </div>
-        <div class="member-card">
-            <img class="member-photo" src="https://unsplash.com" alt="鼓手">
-            <div class="member-info">
-                <div class="role">Drums / 鼓手</div>
-                <div class="name">森 / Sen</div>
-                <div class="bio">现场演出时的人形节拍器，提供雷鸣般的节奏。</div>
+            
+            <div class="member-card">
+                <div class="photo-wrapper">
+                    <img class="member-photo" src="https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&q=80&w=600" alt="森 / Sen">
+                </div>
+                <div class="member-info">
+                    <div class="role">Drums / 鼓手</div>
+                    <div class="name">森 / Sen</div>
+                    <div class="bio">现场演出时的人形节拍器。从灵动的轻触镲片到雷鸣般的爆发，精准掌控着乐章情绪从平静到高潮的每一次呼吸。</div>
+                </div>
             </div>
         </div>
     </main>
+
+    <footer>
+        &copy; 2026 THE RESONANCE &bull; INSPIRED BY CAN FESTIVAL ZHOUSHAN
+    </footer>
+
 </body>
 </html>
