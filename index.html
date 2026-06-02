@@ -1,13 +1,12 @@
-HTML
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAN FESTIVAL 2026 | 30 支全阵容百科数据库</title>
+    <title>CAN FESTIVAL 2026 | 30支全阵容图文百科数据库</title>
     <style>
         :root {
-            --bg-color: #f5eedc;          /* 海报同款暖沙复古底色 */
+            --bg-color: #f5eedc;          /* 海报暖沙复古底色 */
             --card-bg: #ffffff;           /* 干净纯白底色 */
             --border-color: #e3dac5;      /* 柔和的浅色分割线 */
             --accent-blue: #5b9ca9;       /* 海报海蓝色 */
@@ -106,43 +105,65 @@ HTML
         #global:checked ~ .lineup-list .band-item[data-type="domestic"] { display: none; }
         #domestic:checked ~ .lineup-list .band-item[data-type="global"] { display: none; }
 
-        /* 列表布局 */
+        /* 列表布局：三列网格兼容图片与Meta */
         .lineup-list {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .band-item {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 28px 32px;
+            border-radius: 8px;
+            padding: 0;
             display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 35px;
-            align-items: start;
-            box-shadow: 0 4px 15px rgba(109, 101, 95, 0.03);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            grid-template-columns: 200px 240px 1fr;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(109, 101, 95, 0.02);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .band-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             border-color: var(--accent-blue);
-            box-shadow: 0 10px 25px rgba(91, 156, 169, 0.08);
+            box-shadow: 0 12px 30px rgba(91, 156, 169, 0.08);
         }
 
-        /* 左侧Meta */
+        /* 图像区域 */
+        .band-img-box {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            overflow: hidden;
+            background: #e8dfc7;
+        }
+
+        .band-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%) sepia(10%); /* 略微去色、增加暖沙复古感 */
+            transition: transform 0.6s ease;
+        }
+
+        .band-item:hover .band-img-box img {
+            transform: scale(1.04);
+        }
+
+        /* 中间Meta列 */
         .band-meta {
+            padding: 24px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            border-right: 1px dashed var(--border-color);
         }
 
         .band-name {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: var(--text-main);
             line-height: 1.3;
@@ -155,22 +176,15 @@ HTML
         }
 
         .tag {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 600;
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
             letter-spacing: 0.5px;
         }
 
-        .band-item[data-type="global"] .tag {
-            color: var(--accent-blue);
-            background: var(--tag-bg-blue);
-        }
-
-        .band-item[data-type="domestic"] .tag {
-            color: var(--accent-pink);
-            background: var(--tag-bg-pink);
-        }
+        .band-item[data-type="global"] .tag { color: var(--accent-blue); background: var(--tag-bg-blue); }
+        .band-item[data-type="domestic"] .tag { color: var(--accent-pink); background: var(--tag-bg-pink); }
 
         .established {
             font-size: 11px;
@@ -178,15 +192,25 @@ HTML
             letter-spacing: 0.5px;
         }
 
-        /* 右侧Content */
+        .audience {
+            font-size: 11.5px;
+            color: var(--text-sub);
+            margin-top: auto;
+            line-height: 1.4;
+            padding-top: 10px;
+        }
+
+        /* 右侧Content列 */
         .band-content {
+            padding: 24px 28px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            justify-content: center;
         }
 
         .quote {
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--text-main);
             font-weight: 500;
             line-height: 1.6;
@@ -206,18 +230,36 @@ HTML
         .info-label {
             font-weight: 600;
             color: var(--text-main);
-            margin-right: 6px;
+            margin-right: 4px;
         }
 
-        @media (max-width: 700px) {
+        /* 响应式适配 */
+        @media (max-width: 850px) {
             .band-item {
                 grid-template-columns: 1fr;
-                gap: 18px;
-                padding: 24px;
+            }
+            .band-img-box {
+                height: 200px;
             }
             .band-meta {
+                border-right: none;
                 border-bottom: 1px dashed var(--border-color);
-                padding-bottom: 15px;
+                padding-bottom: 18px;
+            }
+            .audience { margin-top: 10px; }
+        }
+
+        /* 夜间暗色模式自动支持 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1917;
+                --card-bg: #242220;
+                --text-main: #f0ede6;
+                --text-sub: #9e958e;
+                --border-color: #383531;
+            }
+            .band-img-box img {
+                filter: grayscale(20%) brightness(85%);
             }
         }
 
@@ -234,9 +276,9 @@ HTML
 <body>
 
     <header>
-        <div class="festival-badge">Complete Festival Lineup</div>
+        <div class="festival-badge">Complete Visual Encyclopedia</div>
         <h1>CAN FESTIVAL 2026</h1>
-        <p class="festival-desc">收录海报全部 30 支全球顶尖后摇滚、自赏、新古典及独立先锋乐队。在极简的流线阅读中，探寻海浪与音墙的共鸣。</p>
+        <p class="festival-desc">海报全阵容 30 支独立名团全收录。融合微光影像占位、极简文字排版与硬核乐迷画像，构筑纯粹的前卫音乐图鉴。</p>
     </header>
 
     <input type="radio" id="all" name="filter" checked>
@@ -245,18 +287,22 @@ HTML
 
     <div class="filter-controls">
         <label for="all">全部阵容 (30)</label>
-        <label for="global">国际名团 (26)</label>
-        <label for="domestic">国内先锋 (4)</label>
+        <label for="global">国际殿堂名团 (26)</label>
+        <label for="domestic">国内独立先锋 (4)</label>
     </div>
 
     <main class="lineup-list">
 
         <!-- 1. AND SO I WATCH YOU FROM AFAR -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=400&q=80" alt="ASIWYFA">
+            </div>
             <div class="band-meta">
                 <div class="band-name">And So I Watch You From Afar</div>
                 <div class="tag-group"><span class="tag">爱尔兰 🇮🇪</span><span class="tag">数学后摇</span></div>
                 <div class="established">Est. 2005</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 数学摇滚死忠 / 硬核现场跳水铁粉 / 拍子强迫症</div>
             </div>
             <div class="band-content">
                 <div class="quote">“器乐摇滚的极限，人形轰炸机，后摇乐迷心中公认最暴烈、最不容错过的神级现场。”</div>
@@ -266,10 +312,14 @@ HTML
 
         <!-- 2. BALMORHEA -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=400&q=80" alt="Balmorhea">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Balmorhea</div>
                 <div class="tag-group"><span class="tag">美国 🇺🇸</span><span class="tag">新古典 / 氛围</span></div>
                 <div class="established">Est. 2006</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 极简主义者 / 深夜书房工作者 / 孤寂光影追随者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“来自德州的旷野诗篇。吉他、钢琴与弦乐细腻交织，克制、干净，让人内心归于极致的平静。”</div>
@@ -279,10 +329,14 @@ HTML
 
         <!-- 3. BLUE FOUNDATION -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80" alt="Blue Foundation">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Blue Foundation</div>
                 <div class="tag-group"><span class="tag">丹麦 🇩🇰</span><span class="tag">梦幻电子 / Trip-Hop</span></div>
                 <div class="established">Est. 2000</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 迷幻电音拥趸 / 暮光之城影迷 / 北欧式忧郁重度患者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“电影《暮光之城》经典插曲《Eyes on Fire》创作者。自带北欧式的忧郁、冰冷与迷幻层次。”</div>
@@ -292,10 +346,14 @@ HTML
 
         <!-- 4. BRUIT ≤ -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=400&q=80" alt="Bruit">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Bruit ≤</div>
                 <div class="tag-group"><span class="tag">法国 🇫🇷</span><span class="tag">史诗交响后摇</span></div>
                 <div class="established">Est. 2016</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 宏大叙事爱好者 / 古典重型跨界迷 / 末日美学思维者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“新世代后摇当天花板级别的存在。古典管弦乐编排与狂暴音墙的完美融合，充满哲思与末日叙事。”</div>
@@ -305,10 +363,14 @@ HTML
 
         <!-- 5. BRUNO BAVOTA -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=400&q=80" alt="Bruno Bavota">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Bruno Bavota</div>
                 <div class="tag-group"><span class="tag">意大利 🇮🇹</span><span class="tag">现代古典 / 极简钢琴</span></div>
                 <div class="established">Est. 2010</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 纯钢琴曲发烧友 / 冥想减压爱好者 / 地中海慢生活向往者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“地中海和煦微风般的极简钢琴曲。善用延时效果器，将古典钢琴弹出了如梦似幻的现代氛围感。”</div>
@@ -318,10 +380,14 @@ HTML
 
         <!-- 6. CAROLINE -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=400&q=80" alt="Caroline">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Caroline</div>
                 <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">实验民谣 / 慢核</span></div>
                 <div class="established">Est. 2017</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 艺术画廊常客 / 慢核(Slowcore)拥趸 / 氛围解构主义者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“前卫大乐团编制的极简实验。克制的碎拍、大量的留白与情绪突变，充满艺术画册般的破碎美。”</div>
@@ -331,10 +397,14 @@ HTML
 
         <!-- 7. CIVIL SERVICE -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80" alt="Civil Service">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Civil Service</div>
                 <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">重型后摇</span></div>
                 <div class="established">Est. 2019</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 英式地下后摇死忠 / 浓雾音墙偏爱者 / 错落双吉他乐迷</div>
             </div>
             <div class="band-content">
                 <div class="quote">“正统的英式重型后摇。擅长用错落的吉他双线交织，轰鸣出一场没有尽头的浓雾潮汐。”</div>
@@ -344,10 +414,14 @@ HTML
 
         <!-- 8. COVET -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=400&q=80" alt="Covet">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Covet</div>
                 <div class="tag-group"><span class="tag">美国 🇺🇸</span><span class="tag">数学摇滚 / Math-Rock</span></div>
                 <div class="established">Est. 2014</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 吉他设备党 / 技术流琴童 / 清新写意点弦发烧友</div>
             </div>
             <div class="band-content">
                 <div class="quote">“吉他女神 Yvette Young 领衔。极其清新、多变的标志性双手指点弦，灵动快乐如跃动的林间溪流。”</div>
@@ -357,10 +431,14 @@ HTML
 
         <!-- 9. 重返袖珍时光 -->
         <div class="band-item" data-type="domestic">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80" alt="重返袖珍时光">
+            </div>
             <div class="band-meta">
                 <div class="band-name">重返袖珍时光</div>
                 <div class="tag-group"><span class="tag">中国 🇨🇳</span><span class="tag">氛围后摇</span></div>
                 <div class="established">Est. 2021</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 国产后摇死忠 / 经典现场常客 / 细腻情感音墙追寻者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“国内新晋后摇黑马。旋律内敛细腻，情感层层推进，在克制中构筑富有画幅质感的宏大声音长卷。”</div>
@@ -370,10 +448,14 @@ HTML
 
         <!-- 10. 厨子和戏子 -->
         <div class="band-item" data-type="domestic">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=400&q=80" alt="厨子和戏子">
+            </div>
             <div class="band-meta">
                 <div class="band-name">厨子和戏子</div>
                 <div class="tag-group"><span class="tag">中国 🇨🇳</span><span class="tag">新国风独立摇滚</span></div>
                 <div class="established">Est. 2014</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 新国风民谣乐迷 / 江湖侠气摇滚爱好者 / 热血文青</div>
             </div>
             <div class="band-content">
                 <div class="quote">“江左新民谣的代表，狭骨柔情。完美解构传统民族器乐与摇滚乐，创造出独特的市井与江湖感。”</div>
@@ -383,10 +465,14 @@ HTML
 
         <!-- 11. EF -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1487180142328-054b783fc471?auto=format&fit=crop&w=400&q=80" alt="EF">
+            </div>
             <div class="band-meta">
                 <div class="band-name">EF</div>
                 <div class="tag-group"><span class="tag">瑞典 🇸🇪</span><span class="tag">人声氛围后摇</span></div>
                 <div class="established">Est. 2003</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 老牌北欧后摇死忠 / 唯美催泪旋律控 / 人声器乐派</div>
             </div>
             <div class="band-content">
                 <div class="quote">“北欧后摇长青名团。精妙融入了微弱而温暖的人声和管弦乐，是无数老后摇迷心中的催泪重磅炸弹。”</div>
@@ -396,10 +482,14 @@ HTML
 
         <!-- 12. EIVØR -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=400&q=80" alt="Eivor">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Eivør</div>
-                <div class="tag-group"><span class="tag">法罗群岛 🇩🇰</span><span class="tag">暗黑前卫民谣 / 电子</span></div>
+                <div class="tag-group"><span class="tag">法罗群岛 🇩🇰</span><span class="tag">暗黑前卫民谣 / 仙音</span></div>
                 <div class="established">Est. 1999</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 维京文化发烧友 / 世界音乐探险家 / 史诗空灵声线控</div>
             </div>
             <div class="band-content">
                 <div class="quote">“维京神话的现实化身。北欧海岛天籁般的空灵吟唱，极具震撼性的现场冲击力，直击灵魂深处。”</div>
@@ -409,10 +499,14 @@ HTML
 
         <!-- 13. FAYZZ -->
         <div class="band-item" data-type="domestic">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=400&q=80" alt="Fayzz">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Fayzz</div>
                 <div class="tag-group"><span class="tag">中国 🇨🇳</span><span class="tag">数学后摇 / 爵士</span></div>
                 <div class="established">Est. 2019</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 融合爵士同好 / 慵懒都市青年 / 极简舒适主义听众</div>
             </div>
             <div class="band-content">
                 <div class="quote">“来自成都。国内把复杂技术和极致松弛、写意慵懒旋律平衡得最完美的顶级数学摇滚乐队。”</div>
@@ -422,10 +516,14 @@ HTML
 
         <!-- 14. GEORDIE GREEP -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Geordie Greep">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Geordie Greep</div>
                 <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">前卫实验摇滚 / 爵士</span></div>
                 <div class="established">Est. 2024</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 前卫怪咖乐理乐迷 / 实验爵士追随者 / black midi死忠</div>
             </div>
             <div class="band-content">
                 <div class="quote">“前神级实验乐队 Black Midi 灵魂核心。怪诞、天才、疯狂的怪咖乐理，打破常规框架的器乐解构。”</div>
@@ -435,10 +533,14 @@ HTML
 
         <!-- 15. GOODBYE, KINGS -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&q=80" alt="Goodbye Kings">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Goodbye, Kings</div>
                 <div class="tag-group"><span class="tag">意大利 🇮🇹</span><span class="tag">电影感后摇 / 新古典</span></div>
                 <div class="established">Est. 2012</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 默片电影爱好者 / 巴洛克风情迷 / 文学叙事听众</div>
             </div>
             <div class="band-content">
                 <div class="quote">“地中海式巴洛克风情的后摇。像在演奏一部精致的黑白默片，充满欧洲古典主义的优雅与文学内涵。”</div>
@@ -448,10 +550,14 @@ HTML
 
         <!-- 16. HERETOIR -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&w=400&q=80" alt="Heretoir">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Heretoir</div>
                 <div class="tag-group"><span class="tag">德国 🇩🇪</span><span class="tag">后黑金属 / Blackgaze</span></div>
                 <div class="established">Est. 2006</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 自赏黑(Blackgaze)死忠 / 暗黑美学迷 / 狂暴死嗓接纳者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“绝望中窥见圣洁微光。将黑金属极速的死嗓暴烈融化在自赏（Shoegaze）唯美的无尽音墙里。”</div>
@@ -461,10 +567,14 @@ HTML
 
         <!-- 17. HUMAN TETRIS -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1509824227185-9c5a01ceba0d?auto=format&fit=crop&w=400&q=80" alt="Human Tetris">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Human Tetris</div>
                 <div class="tag-group"><span class="tag">俄罗斯 🇷🇺</span><span class="tag">后朋克 / Post-Punk</span></div>
                 <div class="established">Est. 2009</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 复古抖腿青年 / 冷波朋克控 / 低沉性感贝斯线条中毒者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“复古清冷迪斯科。标志性低沉性感的贝斯线搭配极其洗脑的冰冷鼓点，让人无法自拔地机械摇摆。”</div>
@@ -474,10 +584,14 @@ HTML
 
         <!-- 18. IN INERTIA -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=400&q=80" alt="In Inertia">
+            </div>
             <div class="band-meta">
                 <div class="band-name">In Inertia</div>
                 <div class="tag-group"><span class="tag">印度尼西亚 🇮🇩</span><span class="tag">氛围后摇</span></div>
                 <div class="established">Est. 2015</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 东南亚地下独立乐迷 / 潮湿温热氛围偏爱者 / 细腻海岛控</div>
             </div>
             <div class="band-content">
                 <div class="quote">“来自东南亚海岛的潮湿与细腻。不同于欧美后摇的严寒，他们的音乐带着热带夜晚漫长的温热感。”</div>
@@ -487,10 +601,14 @@ HTML
 
         <!-- 19. THE JESUS AND MARY CHAIN -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=400&q=80" alt="The Jesus and Mary Chain">
+            </div>
             <div class="band-meta">
                 <div class="band-name">The Jesus and Mary Chain</div>
                 <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">噪音流行 / 自赏鼻祖</span></div>
                 <div class="established">Est. 1983</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 独立摇滚历史打卡者 / 骨灰级自赏老饕 / 经典黑胶藏家</div>
             </div>
             <div class="band-content">
                 <div class="quote">“独立摇滚史上的活化石。把吉他反馈噪音玩成教科书般美学的殿堂传奇，永远的噪反先锋。”</div>
@@ -500,10 +618,14 @@ HTML
 
         <!-- 20. PENGUIN CAFE -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=400&q=80" alt="Penguin Cafe">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Penguin Cafe</div>
                 <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">前卫室内乐 / 新古典</span></div>
                 <div class="established">Est. 2009</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 室内乐优雅听众 / 极简跳跃感同好 / 乐活艺术追求者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“极简、跳跃、轻盈的下午茶。用大提琴、四弦琴玩出了最纯粹的童真快乐与现代古典跨界幽默。”</div>
@@ -513,10 +635,14 @@ HTML
 
         <!-- 21. POWDER! GO AWAY -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1494735653456-f85df2f0e0df?auto=format&fit=crop&w=400&q=80" alt="Powder! Go Away">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Powder! Go Away</div>
                 <div class="tag-group"><span class="tag">俄罗斯 🇷🇺</span><span class="tag">小清新氛围后摇</span></div>
                 <div class="established">Est. 2010</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 治愈系纯音乐迷 / 入门级后摇听众 / 冬日午后通勤党</div>
             </div>
             <div class="band-content">
                 <div class="quote">“俄式冷冽里罕见的极致治愈与温柔。清脆如冬日暖阳下冰雪消融的音符，后摇入坑必听。”</div>
@@ -526,23 +652,31 @@ HTML
 
         <!-- 22. RANGES -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80" alt="Ranges">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Ranges</div>
                 <div class="tag-group"><span class="tag">美国 🇺🇸</span><span class="tag">概念重型后摇</span></div>
                 <div class="established">Est. 2013</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 深度概念专辑挖掘机 / 肃穆音墙同好 / 哲学宿命论者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“富有宗教崇高感与深邃哲学深度的厚重后摇。音墙宏大、肃穆如连绵不绝的黑色山脉。”</div>
-                <div class="recent-info"><span class="info-label">近期动态:</span>后摇标杆厂牌 A Thousand Arms 核心骨干，常年领衔美国本土后摇音乐展演。</div>
+                <div class="recent-info"><span class="info-label">近期动态:</span>后摇标厂 A Thousand Arms 核心，常年领衔美国本土后摇音乐展演。</div>
             </div>
         </div>
 
         <!-- 23. SUNGAZER -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=400&q=80" alt="Sungazer">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Sungazer</div>
                 <div class="tag-group"><span class="tag">美国 🇺🇸</span><span class="tag">未来电音爵士 / 数学</span></div>
                 <div class="established">Est. 2014</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 编曲技术发烧友 / 电子音乐制作人 / 先锋极客青年</div>
             </div>
             <div class="band-content">
                 <div class="quote">“油管低音巨匠 Adam Neely 的脑机接口。将错综复杂的数学拍子和未来感前卫电音融入爵士实验。”</div>
@@ -552,10 +686,14 @@ HTML
 
         <!-- 24. SYLVAINE -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=400&q=80" alt="Sylvaine">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Sylvaine</div>
                 <div class="tag-group"><span class="tag">挪威 🇳🇴</span><span class="tag">空灵自赏黑 / 仙音</span></div>
                 <div class="established">Est. 2013</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 仙音(Ethereal)美学信徒 / 北欧神话迷 / 反差极重型拥趸</div>
             </div>
             <div class="band-content">
                 <div class="quote">“挪威森林里的孤高精灵。多乐器才女独奏史诗，空灵梦幻的轻声吟唱与狂暴黑金属器乐反差绝美。”</div>
@@ -565,10 +703,14 @@ HTML
 
         <!-- 25. UNREQVITED -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1418489098061-ce87b5dc3aee?auto=format&fit=crop&w=400&q=80" alt="Unreqvited">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Unreqvited</div>
                 <div class="tag-group"><span class="tag">加拿大 🇨🇦</span><span class="tag">唯美氛围交响黑</span></div>
                 <div class="established">Est. 2016</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 悲怆情感倾泄者 / 永夜星空爱好者 / 交响重型迷</div>
             </div>
             <div class="band-content">
                 <div class="quote">“极致唯美、孤高冰冷的悲伤交响乐。用极其宏大的合成器管弦营造出北极圈永夜般的美丽孤独。”</div>
@@ -578,10 +720,14 @@ HTML
 
         <!-- 26. YUFU -->
         <div class="band-item" data-type="domestic">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1505282722405-4c6d4ad46601?auto=format&fit=crop&w=400&q=80" alt="Yufu">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Yufu (御斧)</div>
                 <div class="tag-group"><span class="tag">中国 🇨🇳</span><span class="tag">前卫器乐摇滚 / 后摇</span></div>
                 <div class="established">Est. 2020</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 硬朗国潮器乐追随者 / 东方叙事控 / 爆发力现场粉</div>
             </div>
             <div class="band-content">
                 <div class="quote">“大开大合的东方硬朗叙事。吉他编排老练，将东方古典美学的沉静隐忍和爆发力完美揉碎在作品中。”</div>
@@ -589,26 +735,33 @@ HTML
             </div>
         </div>
 
-        <!-- 以下 4 支海报小字乐队补充，保证 30 支完整全录入 -->
-        <!-- 27. BRUNO BAVOTA & CHANTAL ACDA -->
+        <!-- 27. BRUNO BAVOTA & CHANTAL ACDA (海报特别限定企划) -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1543794327-59a91fb7d289?auto=format&fit=crop&w=400&q=80" alt="Bavota & Acda">
+            </div>
             <div class="band-meta">
-                <div class="band-name">Bavota & Acda</div>
-                <div class="tag-group"><span class="tag">意/比 🇪🇺</span><span class="tag">氛围民谣 / 室内乐</span></div>
+                <div class="band-name">Bavota & Acda (Special Set)</div>
+                <div class="tag-group"><span class="tag">意/比 🇪🇺</span><span class="tag">氛围小品 / 室内乐</span></div>
                 <div class="established">Est. 2022</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 极小众现场收集狂 / 微光原声乐偏爱者 / 独立低吟民谣迷</div>
             </div>
             <div class="band-content">
                 <div class="quote">“古典钢琴大师与比利时空灵女声的极致梦幻联动。安静如林间落叶，纯净无瑕。”</div>
-                <div class="recent-info"><span class="info-label">近期动态:</span>多在欧洲极简主义艺术画廊、小型私密教堂进行微光声学限定演出。</div>
+                <div class="recent-info"><span class="info-label">近期动态:</span>多在欧洲极简主义艺术画廊、小型私密老教堂进行微光限定演出。</div>
             </div>
         </div>
 
         <!-- 28. IN INERTIA (SELECTION) -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?auto=format&fit=crop&w=400&q=80" alt="In Inertia">
+            </div>
             <div class="band-meta">
-                <div class="band-name">In Inertia (Live Set)</div>
-                <div class="tag-group"><span class="tag">印尼 🇮🇩</span><span class="tag">实验电子氛围</span></div>
+                <div class="band-name">In Inertia (Live Selection)</div>
+                <div class="tag-group"><span class="tag">印尼 🇮🇩</span><span class="tag">热带实验氛围</span></div>
                 <div class="established">Est. 2018</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 地下电子乐探索者 / 新媒体交互迷 / 热带通宵蹦迪人</div>
             </div>
             <div class="band-content">
                 <div class="quote">“将传统印尼民族微弱的泛音与现代冷波电子相结合，空旷、深邃且充满未知的迷幻。”</div>
@@ -618,35 +771,43 @@ HTML
 
         <!-- 29. CAROLINE (SEXTET) -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=400&q=80" alt="Caroline Sextet">
+            </div>
             <div class="band-meta">
-                <div class="band-name">Caroline (Sextet)</div>
-                <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">极简现代弦乐</span></div>
+                <div class="band-name">Caroline (Sextet Live)</div>
+                <div class="tag-group"><span class="tag">英国 🇬🇧</span><span class="tag">极简古典原声</span></div>
                 <div class="established">Est. 2021</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 极简学院派古典跨界党 / 纯木声爱好者 / 留白美学追随者</div>
             </div>
             <div class="band-content">
                 <div class="quote">“Caroline 乐团的特别六重奏限定版。抛弃大功率电声，专注于小提琴与木吉他的极简室内回响。”</div>
-                <div class="recent-info"><span class="info-label">近期动态:</span>多受邀于伦敦前卫实验艺术展或独立音乐电台进行不插电（Unplugged）现场录制。</div>
+                <div class="recent-info"><span class="info-label">近期动态:</span>多受邀于伦敦前卫实验艺术展或独立音乐电台进行限定现场录制。</div>
             </div>
         </div>
 
         <!-- 30. COVET (SOLO) -->
         <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1456948927036-ad533e53865c?auto=format&fit=crop&w=400&q=80" alt="Yvette Young">
+            </div>
             <div class="band-meta">
                 <div class="band-name">Yvette Young (Covet Solo)</div>
-                <div class="tag-group"><span class="tag">美国 🇺🇸</span><span class="tag">原声吉他独奏</span></div>
+                <div class="tag-group"><span class="tag">美国 🇺🇸</span><span class="tag">原声吉他指弹</span></div>
                 <div class="established">Est. 2015</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 原声吉他硬核死忠 / 器乐设备发烧友 / 独立女性乐人拥趸</div>
             </div>
             <div class="band-content">
                 <div class="quote">“Yvette Young 的纯个人独奏。没有电声伴奏，单凭一把原声吉他的双手指点弦惊艳全场。”</div>
-                <div class="recent-info"><span class="info-label">近期动态:</span>在全球顶级原声吉他大师大师班及精品艺术沙龙进行限定展演。</div>
+                <div class="recent-info"><span class="info-label">近期动态:</span>在全球顶级原声吉他大师班及精品艺术沙龙进行限定展演。</div>
             </div>
         </div>
 
     </main>
 
     <footer>
-        &copy; 2026 CAN FESTIVAL &bull; 30 Complete Bands Database<br>
-        DESIGN LOGIC BASED ON THE POST-ROCK VIBE OF ZHOUSHAN
+        &copy; 2026 CAN FESTIVAL &bull; 30 Complete Visual Encyclopedia Database<br>
+        DESIGN STYLE: CLEAN & MINIMALIST VINTAGE / FULL TEXT & PICTURE READABILITY
     </footer>
 
 </body>
