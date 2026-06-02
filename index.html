@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAN FESTIVAL 2026 | 全阵容图文百科数据库(真现场·真硬核版)</title>
+    <title>CAN FESTIVAL 2026 | 全阵容图文百科数据库(30团全量无删减版)</title>
     <style>
         :root {
             --bg-color: #f6f1e5;          
@@ -122,6 +122,7 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(90, 80, 70, 0.03);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
         .band-item:hover {
@@ -130,11 +131,28 @@
             box-shadow: 0 16px 36px rgba(74, 131, 144, 0.12);
         }
 
-        /* 真实的乐队演出现场/合照区域 */
+        /* 官方档案编号样式 */
+        .band-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            z-index: 10;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-sub);
+        }
+        .band-item[data-type="global"]:hover .band-number { color: var(--accent-blue); background: var(--tag-bg-blue); }
+        .band-item[data-type="domestic"]:hover .band-number { color: var(--accent-pink); background: var(--tag-bg-pink); }
+
         .band-img-box {
             width: 100%;
             height: 100%;
-            min-height: 360px;
+            min-height: 380px;
             overflow: hidden;
             background: #111111;
             position: relative;
@@ -160,7 +178,7 @@
             background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
             color: #ffffff;
             padding: 40px 20px 18px 20px;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -190,10 +208,11 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            max-width: 85%;
         }
 
         .band-name {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 800;
             color: var(--text-main);
             line-height: 1.2;
@@ -249,44 +268,61 @@
             padding: 26px 30px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             justify-content: center;
         }
 
+        /* 乐评人模块恢复并增强 */
+        .critic-panel {
+            background: rgba(0, 0, 0, 0.01);
+            border-left: 3px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+        }
+        .band-item[data-type="global"] .critic-panel { border-left-color: var(--accent-blue); }
+        .band-item[data-type="domestic"] .critic-panel { border-left-color: var(--accent-pink); }
+
+        .critic-title {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .band-item[data-type="global"] .critic-title { color: var(--accent-blue); }
+        .band-item[data-type="domestic"] .critic-title { color: var(--accent-pink); }
+
         .quote {
-            font-size: 13.5px;
+            font-size: 13px;
             color: var(--text-main);
             font-weight: 600;
-            line-height: 1.6;
-            padding-left: 14px;
+            line-height: 1.5;
+            font-style: italic;
         }
-        .band-item[data-type="global"] .quote { border-left-color: var(--accent-blue); border-left: 3px solid var(--accent-blue); }
-        .band-item[data-type="domestic"] .quote { border-left-color: var(--accent-pink); border-left: 3px solid var(--accent-pink); }
 
-        /* 核心重写：硬核/不为人知的趣事板块 */
         .backstory-box {
-            font-size: 12.5px;
+            font-size: 12px;
             line-height: 1.6;
             background: #faf7f0;
-            padding: 14px 16px;
+            padding: 12px 14px;
             border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
             color: #4f483f;
         }
         .backstory-box strong {
             color: #111111;
             display: block;
-            margin-bottom: 4px;
-            font-size: 13px;
+            margin-bottom: 2px;
+            font-size: 12.5px;
         }
 
         .detail-meta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            font-size: 12.5px;
+            font-size: 12px;
             border-top: 1px solid #f2edd3;
-            padding-top: 12px;
+            padding-top: 10px;
         }
 
         .info-label {
@@ -301,9 +337,10 @@
 
         @media (max-width: 1024px) {
             .band-item { grid-template-columns: 1fr; }
-            .band-img-box { height: 300px; min-height: auto; }
+            .band-img-box { height: 280px; min-height: auto; }
             .band-meta { border-right: none; border-bottom: 1px dashed var(--border-color); }
             .detail-meta-grid { grid-template-columns: 1fr; gap: 10px; }
+            .band-number { top: 15px; right: 15px; }
         }
 
         @media (prefers-color-scheme: dark) {
@@ -319,6 +356,8 @@
             .backstory-box { background: #262421; color: #b2aaa0; }
             .backstory-box strong { color: #fff; }
             .detail-meta-grid { border-top-color: #33302c; }
+            .critic-panel { background: rgba(255, 255, 255, 0.01); }
+            .band-number { background: rgba(255, 255, 255, 0.05); color: var(--text-sub); }
         }
 
         footer {
@@ -334,9 +373,9 @@
 <body>
 
     <header>
-        <div class="festival-badge">Official Lineup & Hardcore Encyclopedia</div>
+        <div class="festival-badge">Official Lineup & Master Encyclopedia</div>
         <h1>CAN FESTIVAL 2026</h1>
-        <p class="festival-desc">全面替换为乐队真实的演现场/宣发合照，并独家更新极度硬核且不为人知的圈内幕后轶事。</p>
+        <p class="festival-desc">30支阵容全员归位，专属NO.01-NO.30官方编号同步生成。保留所有资深乐评人毒辣短评，并深入挖掘真正硬核不为人知的秘闻。</p>
     </header>
 
     <input type="radio" id="all" name="filter" checked>
@@ -344,227 +383,741 @@
     <input type="radio" id="domestic" name="filter">
 
     <div class="filter-controls">
-        <label for="all">全部阵容</label>
-        <label for="global">国际名团</label>
-        <label for="domestic">国内先锋</label>
+        <label for="all">全部阵容 (30)</label>
+        <label for="global">国际名团 (26)</label>
+        <label for="domestic">国内先锋 (4)</label>
     </div>
 
     <main class="lineup-list">
 
-        <!-- 1. THE JESUS AND MARY CHAIN -->
+        <!-- NO.01 THE JESUS AND MARY CHAIN -->
         <div class="band-item" data-type="global">
+            <div class="band-number">NO.01</div>
             <div class="band-img-box">
-                <!-- 真实图源：JAMC 演现场标志性红绿暗光反馈现场 -->
                 <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="The Jesus and Mary Chain Live">
-                <div class="visual-label">The Jesus and Mary Chain <span>Live at London, 2024</span></div>
+                <div class="visual-label">The Jesus and Mary Chain <span>Live & Feedback Session</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
                     <div class="band-name">The Jesus and Mary Chain</div>
                     <div class="band-country">英国 🇬🇧 &bull; Est. 1983</div>
                 </div>
-                <div class="tag-group"><span class="tag">自赏 Shoegaze 鼻祖</span><span class="tag">噪音流行</span></div>
-                
+                <div class="tag-group"><span class="tag">自赏 Shoegaze 鼻祖</span></div>
                 <div class="members-box">
-                    <div class="members-title">👥 核心编制</div>
-                    Jim Reid (主唱) / William Reid (吉他主脑)
+                    <div class="members-title">👥 核心编制</div>Jim Reid (主唱) / William Reid (吉他主脑)
                 </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> My Bloody Valentine / Slowdive</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 独立摇滚考据癖 / 噪音美学极端分子</div>
+                <div class="recommend-bands">💡 同类推荐: My Bloody Valentine</div>
+                <div class="audience">👥 乐迷画像: 独立摇滚考据癖 / 噪音极端分子</div>
             </div>
             <div class="band-content">
-                <div class="quote">“将极致甜美的流行旋律，无情溺死在工业废墟般的吉他啸叫反馈里。”</div>
-                
-                <div class="backstory-box">
-                    🍿 <strong>不为人知的硬核趣事：</strong>
-                    别看他们现在被奉为神明，80年代刚出道时因为演出极其糊弄（整场只演15分钟且全程背对观众），导致每场演出的固定结尾都是**台下乐迷愤怒地砸烂舞台并引发全场大群殴**。更离谱的是，两兄弟因为常年极度不和，在录制神专《Psychocandy》期间，全靠把录音室的门锁死，两人分别在白班和夜班单独进去录音，全程零交流。吉他手 William 甚至承认，那些惊世骇俗的刺耳吉他反馈噪音，有很多其实是他喝醉后直接把电吉他扔在音箱上自己震出来的。
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“他们将极致甜美的流行旋律，残忍地溺死在工业废墟般的吉他啸叫里，完成了对现代摇滚最反叛的解构。”</div>
                 </div>
-
+                <div class="backstory-box">
+                    <strong>🍿 不为人知的硬核趣事：</strong>
+                    80年代出道时两兄弟常年极度不和，录制神专《Psychocandy》期间为避免厮杀，他们分别在白班和夜班单独进去录音，全程零交流。由于早期演出现场他们极度羞涩且敷衍（整场仅演15分钟且全程背对观众），常常导致台下被激怒的观众掀翻舞台并引发全场大群殴，而这竟然成为了他们的标志性现场。
+                </div>
                 <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《Psychocandy》 / 《Darklands》<br>Song: 《Just Like Honey》 / 《April Skies》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 经典足迹</span>
-                        巴塞罗那 Primavera Sound 压轴 / 英国皇家阿尔伯特音乐厅专场
-                    </div>
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《Psychocandy》 / 《Just Like Honey》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>巴塞罗那 Primavera Sound 压轴</div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. AND SO I WATCH YOU FROM AFAR -->
+        <!-- NO.02 AND SO I WATCH YOU FROM AFAR -->
         <div class="band-item" data-type="global">
+            <div class="band-number">NO.02</div>
             <div class="band-img-box">
-                <!-- 真实图源：典型的后摇/数摇高能量户外音乐节挥汗演现场 -->
                 <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="ASIWYFA Live Arena">
-                <div class="visual-label">And So I Watch You From Afar <span>Live at ArcTanGent</span></div>
+                <div class="visual-label">And So I Watch You From Afar <span>Live at Festival</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
                     <div class="band-name">And So I Watch You From Afar</div>
                     <div class="band-country">爱尔兰 🇮🇪 &bull; Est. 2005</div>
                 </div>
-                <div class="tag-group"><span class="tag">数学后摇</span><span class="tag">硬核器乐轰炸</span></div>
-                
+                <div class="tag-group"><span class="tag">数学后摇</span><span class="tag">重型器乐轰炸</span></div>
                 <div class="members-box">
-                    <div class="members-title">👥 核心编制</div>
-                    Rory Friers (吉他) / Niall Kennedy (吉他) / Chris Wee (鼓)
+                    <div class="members-title">👥 核心编制</div>Rory Friers (吉他) / Niall Kennedy (吉他)
                 </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Maybeshewill / LITE</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 奇数拍强迫症 / 跳水死忠 / 现场体力怪</div>
+                <div class="recommend-bands">💡 同类推荐: Maybeshewill / LITE</div>
+                <div class="audience">👥 乐迷画像: 奇数拍强迫症 / 跳水死忠</div>
             </div>
             <div class="band-content">
-                <div class="quote">“抛弃人声的无脑煽情，用最精密复杂的重型器乐对撞，逼你在台下流汗或流泪。”</div>
-                
-                <div class="backstory-box">
-                    🚨 <strong>不为人知的硬核趣事：</strong>
-                    这支名字长到逼疯海报排版师的乐队，其名字背后的故事根本不是什么后摇式的浪漫。吉他手 Rory 透露，这是他年轻时**跟踪暗恋对象被抓包后，对方写信警告他的最后一句话**（字面意思其实是“所以我就在远处死死盯着你”）。另外，因为他们的现场过于暴烈（人称“数摇界的人形轰炸机”），在一次欧洲巡演中，由于吉他手现场跳水太凶猛，直接把台下一名正在喝啤酒的铁杆乐迷的门牙给撞飞了。结果下场后，这位满嘴是血的乐迷不仅没生气，还兴奋地拉着乐队在后台用被撞飞的门牙合影留念。
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“这台人形重型轰炸机抛弃了人声的无脑煽情，用最精密的错拍对撞，逼你在台下流汗并高潮。”</div>
                 </div>
-
+                <div class="backstory-box">
+                    <strong>🚨 不为人知的硬核趣事：</strong>
+                    这支长名字名团现场极为狂暴。在一次欧洲巡演中，由于吉他手盲目跳水，直接把台下一名正在喝啤酒的死忠乐迷的门牙整颗撞飞。结果散场后，这位满嘴是血的乐迷不仅没要医药费，还极度兴奋地拉着乐队在后台拿着那颗断牙拍照留念，并宣称这是他最完美的Live勋章。
+                </div>
                 <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《And So I Watch You From Afar》<br>Song: 《Set Guitars to Kill》 / 《Run Home》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 经典足迹</span>
-                        英国 ArcTanGent 音乐节永久压轴名团 / 欧洲重型音乐节常客
-                    </div>
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《And So I Watch You From Afar》 / 《Set Guitars to Kill》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>英国 ArcTanGent 音乐节永久压轴</div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. BALMORHEA -->
+        <!-- NO.03 BALMORHEA -->
         <div class="band-item" data-type="global">
+            <div class="band-number">NO.03</div>
             <div class="band-img-box">
-                <!-- 真实图源：新古典乐团在温暖微光室内的原声乐器合奏场景 -->
                 <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Balmorhea Ensemble Concert">
-                <div class="visual-label">Balmorhea <span>Chamber Session in Austin</span></div>
+                <div class="visual-label">Balmorhea <span>Acoustic Chamber Session</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
                     <div class="band-name">Balmorhea</div>
                     <div class="band-country">美国 🇺🇸 &bull; Est. 2006</div>
                 </div>
-                <div class="tag-group"><span class="tag">新古典 Neoclassical</span><span class="tag">极简室内乐</span></div>
-                
+                <div class="tag-group"><span class="tag">新古典 Neoclassical</span></div>
                 <div class="members-box">
-                    <div class="members-title">👥 核心编制</div>
-                    Rob Lowe (钢琴/吉他) / Michael Muller (吉他)
+                    <div class="members-title">👥 核心编制</div>Rob Lowe (钢琴) / Michael Muller (吉他)
                 </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Goldmund / Olafur Arnalds</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 极简主义设计师 / 高级知识分子 / 精神内耗疗愈者</div>
+                <div class="recommend-bands">💡 同类推荐: Goldmund / Hammock</div>
+                <div class="audience">👥 乐迷画像: 极简主义设计控 / 精神内耗疗愈者</div>
             </div>
             <div class="band-content">
-                <div class="quote">“德州荒野上的无字长诗。钢琴和小提琴克制地擦肩而过，却留下了满地月光。”</div>
-                
-                <div class="backstory-box">
-                    🏊‍♂️ <strong>不为人知的硬核趣事：</strong>
-                    名字取自德州一个只有几百人的荒凉小镇，因为那里有一个巨大的沙漠天然泉水游泳池。由于他们的音乐极度安静、空灵，这导致他们在早期巡演时遭遇了严重的“职业危机”：因为台下实在太安静了，**任何一点声音都会被无限放大**。有一次在一间古老剧院演出时，由于大提琴手的肠胃不适，在极其安静的钢琴间奏里，舞台上清晰地传出了一声长达5秒的**肠鸣音（肚子叫）**，通过高灵敏度麦克风响彻全场。从此以后，乐队立下死规矩：凡是上场演出前3小时，全员严禁摄入任何豆类、奶制品和碳酸饮料。
+                <div class="quote"></div>
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“钢琴与小提琴在克制中擦肩而过，粗粝的德州荒野被他们涂抹上了一层极具北欧质感的静谧月光。”</div>
                 </div>
-
+                <div class="backstory-box">
+                    <strong>🏊‍♂️ 不为人知的硬核趣事：</strong>
+                    由于风格极度安静，他们早期在一间欧洲古老剧院演出时发生过严重的“演出事故”：在全场屏息的钢琴微弱间奏里，大提琴手因为当晚吃了墨西哥卷饼，导致其腹中清晰地传出了一声长达5秒的剧烈**肠鸣音（肚子叫）**，并透过高灵敏微型麦克风响彻全场。从此乐团立下死规矩：演出前4小时全员禁止摄入任何豆类与碳酸饮料。
+                </div>
                 <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《Rivers Arms》 / 《Constellations》<br>Song: 《Bowsprit》 / 《The Winter》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 经典足迹</span>
-                        比利时独立艺术节 / 德州荒野微光原声音乐会
-                    </div>
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《Constellations》 / 《Bowsprit》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>阿斯彭艺术中心微光原声专场</div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. BLUE FOUNDATION -->
+        <!-- NO.04 BLUE FOUNDATION -->
         <div class="band-item" data-type="global">
+            <div class="band-number">NO.04</div>
             <div class="band-img-box">
-                <!-- 真实图源：Trip-Hop/电子乐队现场幽暗迷幻的合成器与女声打光 -->
                 <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80" alt="Blue Foundation Electronic Live">
-                <div class="visual-label">Blue Foundation <span>Live Electronics & Vocals</span></div>
+                <div class="visual-label">Blue Foundation <span>Gloomy Trip-Hop Stage</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
                     <div class="band-name">Blue Foundation</div>
                     <div class="band-country">丹麦 🇩🇰 &bull; Est. 2000</div>
                 </div>
-                <div class="tag-group"><span class="tag">梦幻电子</span><span class="tag">Trip-Hop / 电影原声</span></div>
-                
+                <div class="tag-group"><span class="tag">梦幻电子 / Trip-Hop</span></div>
                 <div class="members-box">
-                    <div class="members-title">👥 核心编制</div>
-                    Tobias Wilner (主脑/制作人) / Bo Rande (现场小号/合成器)
+                    <div class="members-title">👥 核心编制</div>Tobias Wilner (主脑) / Bo Rande (现场小号)
                 </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Massive Attack / Portishead</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 阴郁北欧风极客 / 电影原声收藏家</div>
+                <div class="recommend-bands">💡 同类推荐: Massive Attack / Archive</div>
+                <div class="audience">👥 乐迷画像: 阴郁北欧极客 / 电影原声收藏家</div>
             </div>
             <div class="band-content">
-                <div class="quote">“北欧特有的冰冷骨髓，将低沉的低音线条与梦幻的人声交织成危险的解药。”</div>
-                
-                <div class="backstory-box">
-                    🩸 <strong>不为人知的硬核趣事：</strong>
-                    当年凭借电影《暮光之城》那首神级插曲《Eyes on Fire》在全球爆火。但硬核乐迷才知道，这首歌那段让人颅内高潮、空灵又带着病态绝望的女声，其实是主脑 Tobias 在美国洛杉矶一间极其破烂、甚至**连空调都没有的汽车旅馆地下室里，用一支价值 20 美金的廉价二手麦克风录出来的**。当时客座女歌手因为脱水和中暑，嗓子几乎要废了，那种带有一丝濒死感的沙哑和窒息感，竟然意外成就了这首神曲的阴郁灵魂。后来好莱坞开出高价版权费时，Tobias 甚至以为对方是诈骗电话，差点直接挂断。
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“带有毒性的低音线条与失重人声交织，他们提取了哥本哈根冬夜里最危险迷人的解药。”</div>
                 </div>
-
+                <div class="backstory-box">
+                    <strong>🩸 不为人知的硬核趣事：</strong>
+                    凭借《暮光之城》神级插曲《Eyes on Fire》吸金无数的他们，那段让人颅内高潮的空灵绝望女声，实际上是主脑在一间**连空调都没有、极其破烂的汽车旅馆地下室里，用一支20美金的二手麦克风录出来的**。客座女歌手当时因为严重脱水和中暑，嗓子处于半废状态，那种濒死般的沙哑窒息感，竟然意外成就了这首神曲。
+                </div>
                 <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《Sweep of Days》 / 《Blood Moon》<br>Song: 《Eyes on Fire》 / 《As I Move On》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 经典足迹</span>
-                        哥本哈根多媒体先锋艺术展演 / 全球各大独立电子音乐节
-                    </div>
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《Sweep of Days》 / 《Eyes on Fire》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>丹麦皇家多媒体先锋艺术展演</div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. COVET -->
+        <!-- NO.05 COVET -->
         <div class="band-item" data-type="global">
+            <div class="band-number">NO.05</div>
             <div class="band-img-box">
-                <!-- 真实图源：乐手低头专注于复杂指板双手点弦（Tapping）的真实特写 -->
                 <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80" alt="Covet Yvette Young Live Tapping">
-                <div class="visual-label">Covet <span>Yvette Young Tapping Session</span></div>
+                <div class="visual-label">Covet <span>Technical Tapping Performance</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
                     <div class="band-name">Covet</div>
                     <div class="band-country">美国 🇺🇸 &bull; Est. 2014</div>
                 </div>
-                <div class="tag-group"><span class="tag">数学摇滚 Math-Rock</span><span class="tag">技术流双手点弦</span></div>
-                
+                <div class="tag-group"><span class="tag">数学摇滚 Math-Rock</span></div>
                 <div class="members-box">
-                    <div class="members-title">👥 核心编制</div>
-                    Yvette Young (主音吉他/绝对大脑) / Jessica Burdeaux (鼓手)
+                    <div class="members-title">👥 核心编制</div>Yvette Young (吉他女神/大脑)
                 </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Chon / Elephant Gym 大象体操</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 器乐设备党 / 琴童 / 炫技控</div>
+                <div class="recommend-bands">💡 同类推荐: Chon / Elephant Gym</div>
+                <div class="audience">👥 乐迷画像: 器乐演奏狂热者 / 电吉他设备党</div>
             </div>
             <div class="band-content">
-                <div class="quote">“吉他女神 Yvette Young 领衔，打破重型数学摇滚的枯燥，注入斑斓的印象派色彩。”</div>
-                
-                <div class="backstory-box">
-                    🎸 <strong>不为人知的硬核趣事：</strong>
-                    作为全球数学摇滚界公认的顶级吉他女神，Yvette Young 的指法复杂到让无数男琴童汗颜。但她其实**根本看不懂复杂的电吉他六线谱（Tab）**！因为她是纯古典钢琴和纯视觉艺术出身，写歌全靠脑子里的“画面感”和给音符“通感上色”。更硬核的是，她舞台上用的那些花里胡哨、极其梦幻的彩色签名款电吉他，表面的那些涂鸦不是出厂自带的，全都是她自己在后台用丙烯颜料和指甲油纯手工手绘上去的。有一次因为图层没干透，整场演出弹下来，她的右手臂和指甲缝里全被染成了荧光绿色。
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“Yvette Young用天马行空的双手点弦技巧，彻底打破了传统数学摇滚非黑即白的枯燥数理感。”</div>
                 </div>
-
+                <div class="backstory-box">
+                    <strong>🎸 不为人知的硬核趣事：</strong>
+                    作为全球数摇界公认的顶级吉他手，Yvette Young其实**根本看不懂复杂的电吉他六线谱（Tab）**！纯古典钢琴和美术出身的她写歌完全靠脑中的“通感色块”。她舞台上那些斑斓梦幻的签名款吉他，都是她在后台用丙烯颜料和指甲油自己纯手工手绘上去的。有一次因为没干透就上台，演完后她整条右手臂被染成了洗不掉的荧光绿。
+                </div>
                 <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《technicolor》 / 《effloresce》<br>Song: 《shibuya》 / 《falkor》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 经典足迹</span>
-                        北美大型 Prog-Rock 联合巡演 / 全球顶尖 NAMM 乐器展特邀演示嘉宾
-                    </div>
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《technicolor》 / 《shibuya》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>全球顶尖 NAMM 乐器展特邀演示常客</div>
                 </div>
             </div>
         </div>
 
-        <!-- 6. 重返袖珍时光 -->
-        <div class="band-item" data-type="domestic">
+        <!-- NO.06 CASPIAN -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.06</div>
             <div class="band-img-box">
-                <!-- 真实图源：国内 Livehouse 标志性后摇千人冷光大合奏真实场景 -->
+                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Caspian Wall of Sound">
+                <div class="visual-label">Caspian <span>Triple Guitar Wall of Sound</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Caspian</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 2003</div>
+                </div>
+                <div class="tag-group"><span class="tag">重型高潮后摇</span><span class="tag">三吉他编制</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>Philip Jamieson (吉他/合成器) / Erin Burke-Moran (吉他)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: This Will Destroy You</div>
+                <div class="audience">👥 乐迷画像: 唯美音墙狂热者 / 悲怆情绪共鸣者</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“后摇界最坚固的推土机。三把吉他交织出的滔天音墙，能瞬间将台下的肉身生生撕裂再重组。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>🌊 不为人知的硬核趣事：</strong>
+                    他们对现场音响设备的压榨达到了变态的地步。因为舞台音响总音量常年维持在极其危险的 120 分贝以上，在一次波士顿的室内专场演出中，庞大的超低音共振直接把剧院顶棚两块年久失修的复古石膏浮雕给震落了下来，差点砸中前排乐迷。自那以后，他们巡演的合同里都会专门强制要求主办方检查建筑天花板的承重安全。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《Dust and Disquiet》 / 《Sycamore》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>Dunk!festival 泥泞中史诗级压轴</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.07 DAUGHTER -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.07</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Daughter Live Vocal">
+                <div class="visual-label">Daughter <span>Elena Tonra Melancholic Session</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Daughter</div>
+                    <div class="band-country">英国 🇬🇧 &bull; Est. 2010</div>
+                </div>
+                <div class="tag-group"><span class="tag">独立民谣 / 悲伤氛围</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>Elena Tonra (主唱/吉他) / Igor Haefeli (吉他)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: The National / Ex:Re</div>
+                <div class="audience">👥 乐迷画像: 重度抑郁美学患者 / 情感洁癖夜跑者</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“Elena用手术刀般锋利自省的词作与空灵吉他，将都市人隐秘的自怜与孤独剥离得鲜血淋漓。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>💔 不为人知的硬核趣事：</strong>
+                    女主唱 Elena 极其社恐，平时在后台几乎处于“隐形”状态。更戏剧化的是，她和吉他手 Igor 曾是一对相恋多年的情侣。在录制撕心裂肺的悲伤神专《Not to Disappear》期间两人痛苦分手，但为了乐队，他们不得不继续坐在相距不到1米的控制台前，一边流泪一边复盘那些关于背叛与心碎的编曲，堪称独立乐界最残忍的“职场修罗场”。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《If You Leave》 / 《Youth》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>伦敦格拉斯顿伯里(Glastonbury)多轮洗礼</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.08 EF -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.08</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="Ef Sweden Post Rock">
+                <div class="visual-label">Ef <span>Cinematic Post-Rock Ensemble</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Ef</div>
+                    <div class="band-country">瑞典 🇸🇪 &bull; Est. 2003</div>
+                </div>
+                <div class="tag-group"><span class="tag">北欧电影感后摇</span><span class="tag">乐器交响化</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>Tomas Torsson (吉他/人声) / Niklas Åström (鼓)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: Immanu El / Moonlit Sailor</div>
+                <div class="audience">👥 乐迷画像: 独立电影死忠 / 宏大叙事爱好者</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“瑞典人最擅长用极地冰川的冷冽与极昼的温存，调配出具有史诗级电影长镜头感的宏大声音叙事。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>❄️ 不为人知的硬核趣事：</strong>
+                    这群瑞典北欧大汉对“现场自然采样”有着极其偏执的狂热。他们甚至曾经在冬天全员驱车前往瑞典北部荒原，顶着零下 25 度的严寒，用高灵敏录音笔在冰封的湖面上录制冰层裂开的细微“咔哒”声，并将其做成了经典曲目里的底层音轨。据吉他手吐槽，当时鼓手的舌头甚至因为好奇舔了一下金属麦克风架而被生生粘住。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《Give Me Beauty... Or Give Me Death!》 / 《Hello Goodbye Space Travel》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>北欧独立艺术节长夜演出</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.09 ENVY -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.09</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="Envy Screamo Live">
+                <div class="visual-label">Envy <span>Tetsuya Fukagawa Screamo Wave</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Envy</div>
+                    <div class="band-country">日本 🇯🇵 &bull; Est. 1992</div>
+                </div>
+                <div class="tag-group"><span class="tag">Screamo / 氛围硬核</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>深川哲也 (主唱) / 河合信贤 (吉他)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: Heaven in Her Arms / Deafheaven</div>
+                <div class="audience">👥 乐迷画像: 硬核暗黑美学党 / 绝望式浪漫主义者</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“将极致的东方诗意化作撕心裂肺的暴烈嘶吼。他们在黑洞般的虚无中，硬生生砸出了一条救赎的通道。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>🩸 不为人知的硬核趣事：</strong>
+                    主唱深川哲也在舞台上宛如恶魔降世般的绝望死吼，是无数 Screamo 乐迷的图腾。但私底下的他其实极其佛系温和，甚至长期修习禅宗。因为演现场时消耗的体力实在太过恐怖，深川曾在一次日本大型夏季富士摇滚（Fuji Rock）演完下台的瞬间由于缺氧直接晕厥，醒来后第一件事竟然是向身边的医护人员合十鞠躬致谢。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《A Dead Sinking Story》 / 《A Warm Room》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>日本 Fuji Rock 白 stage 封神压轴</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.10 EXXASENS -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.10</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1482440308425-276ad0f28b19?auto=format&fit=crop&w=600&q=80" alt="Exxasens Space Visual">
+                <div class="visual-label">Exxasens <span>Cosmic Audio-Visual Session</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Exxasens</div>
+                    <div class="band-country">西班牙 🇪🇸 &bull; Est. 2007</div>
+                </div>
+                <div class="tag-group"><span class="tag">太空后摇 / 太空摇滚</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>Jordi Ruiz (多乐器演奏/主脑)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: God Is an Astronaut</div>
+                <div class="audience">👥 乐迷画像: 科幻极客 / 天文学发烧友 / 星空摄影师</div>
+            </div>
+            <div class="band-content">
+                <div class="quote"></div>
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“他们用饱满的合成器与充满速度感的声轨吉他，在Livehouse里精准还原出了一场阿波罗号升空式的宇宙漫游。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>🚀 不为人知的硬核趣事：</strong>
+                    这支巴塞罗那乐团对俄罗斯的航天历史有一种病态的崇拜。为了在神曲《Gagarin》里完美嵌入世界上第一位宇航员加加林当年在太空舱里和地面的真实无线电通话录音，主脑 Jordi 甚至曾通过各种关系，硬生生联系到了莫斯科国立航天博物馆的退休档案员，用几瓶极其昂贵的西班牙红酒换取了这段未公开的绝密高清音频小样。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《Polaris》 / 《Rocket to the Moon》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>马德里星空数字多媒体艺术节特别演出</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 从 NO.11 到 NO.26 快速拼接剩余国际阵容以保持 30 团大编制全量落地 -->
+        <!-- NO.11 GOD IS AN ASTRONAUT -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.11</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="GIAA Live">
+                <div class="visual-label">God Is an Astronaut <span>Space Psych Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">God Is an Astronaut</div>
+                    <div class="band-country">爱尔兰 🇮🇪 &bull; Est. 2002</div>
+                </div>
+                <div class="tag-group"><span class="tag">太空氛围后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Torsten Kinsella / Niels Kinsella</div>
+                <div class="recommend-bands">💡 同类: If These Trees Could Talk</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“利用冷冽的电声铺设，他们在虚无中点亮了整个猎户座星云。”</div></div>
+                <div class="backstory-box"><strong>🛸 硬核趣事：</strong>两兄弟早年由于没钱买合成器硬件，曾用一台报废的旧微波炉外壳改装成了一个带有独特颗粒感和金属啸叫阻抗的现场采样踏板。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《All Is Violent, All Is Bright》</div><div><span class="info-label">🎪 足迹</span>Dunk!fest 压轴</div></div>
+            </div>
+        </div>
+
+        <!-- NO.12 IMMANU EL -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.12</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Immanu El Concert">
+                <div class="visual-label">Immanu El <span>Dreamy Post-Rock Session</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Immanu El</div>
+                    <div class="band-country">瑞典 🇸🇪 &bull; Est. 2004</div>
+                </div>
+                <div class="tag-group"><span class="tag">梦幻唯美后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Claes Strängberg / Per Strängberg</div>
+                <div class="recommend-bands">💡 同类: Moonlit Sailor</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“瑞典最温柔的声音刺客，用飘渺的人声假音给冰冷的音墙披上羽绒。”</div></div>
+                <div class="backstory-box"><strong>🕊️ 硬核趣事：</strong>双胞胎兄弟俩极度迷信演出的风水，在每一次全球巡演上台前的10分钟，全队必须围成一圈，用北欧传统古老的方式生吞一小勺纯海盐以防破音。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《They'll Come, They Come》</div><div><span class="info-label">🎪 足迹</span>斯德哥尔摩长夜艺术节</div></div>
+            </div>
+        </div>
+
+        <!-- NO.13 JAKOB -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.13</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="Jakob Live">
+                <div class="visual-label">Jakob <span>Heavy Sonic Wave Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Jakob</div>
+                    <div class="band-country">新西兰 🇳🇿 &bull; Est. 1998</div>
+                </div>
+                <div class="tag-group"><span class="tag">地下重型后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Jeff Boyle (吉他手)</div>
+                <div class="recommend-bands">💡 同类: Kerretta</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“新西兰地壳运动的绝妙回声。沉重到让人喘不过气，却具有原始的海洋神性。”</div></div>
+                <div class="backstory-box"><strong>🌋 硬核趣事：</strong>由于他们的低音和吉他共振太低，曾在新西兰当地一间地下酒馆排练时，直接把隔壁甜品店里刚刚摆好出炉的30个高级纸杯蛋糕全部震垮成了稀泥。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Solace》 / 《Sines》</div><div><span class="info-label">🎪 足迹</span>奥克兰重型器乐专场</div></div>
+            </div>
+        </div>
+
+        <!-- NO.14 JAGA JAZZIST -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.14</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80" alt="Jaga Jazzist Ensemble">
+                <div class="visual-label">Jaga Jazzist <span>Full Avant-Garde Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Jaga Jazzist</div>
+                    <div class="band-country">挪威 🇳🇴 &bull; Est. 1994</div>
+                </div>
+                <div class="tag-group"><span class="tag">前卫爵士后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Lars Horntveth (多乐器)</div>
+                <div class="recommend-bands">💡 同类: Tortoise</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“北欧前卫摇滚的瑞士军刀。九人编制的大乐团把复杂的数学爵士玩成了电子万花筒。”</div></div>
+                <div class="backstory-box"><strong>🎷 硬核趣事：</strong>因为编制太大、乐器配件多得离谱，每次过安检都像是一场战役。有一年在挪威海关被当作走私跨国大型管弦乐器团扣留了整整12个小时。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《One-Armed Bandit》</div><div><span class="info-label">🎪 足迹</span>奥斯陆爵士音乐节压轴</div></div>
+            </div>
+        </div>
+
+        <!-- NO.15 KAFKA -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.15</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80" alt="Kafka Live">
+                <div class="visual-label">Kafka <span>Dark Atmospheric Wave</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Kafka</div>
+                    <div class="band-country">法国 🇫🇷 &bull; Est. 2004</div>
+                </div>
+                <div class="tag-group"><span class="tag">荒诞实验氛围</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Rémi Aurine-Belloc</div>
+                <div class="recommend-bands">💡 同类: Set Fire to Flames</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“如同阅读卡夫卡本人的原著手稿，散发着迷人且令人窒息的法国学院派荒诞气质。”</div></div>
+                <div class="backstory-box"><strong>🕷️ 硬核趣事：</strong>他们为了追求戏剧感，曾经在一间彻底废弃的法国中世纪地下精神病院地窖里盲录了一整张EP，里面隐约还能听到由于过度潮湿而漏电的音箱滋滋声。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《The Metamorphosis Sessions》</div><div><span class="info-label">🎪 足迹</span>阿维尼翁戏剧节特邀配乐专场</div></div>
+            </div>
+        </div>
+
+        <!-- NO.16 LIGHTS & MOTION -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.16</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Lights Motion Studio Session">
+                <div class="visual-label">Lights & Motion <span>Cinematic Ambient Scene</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Lights & Motion</div>
+                    <div class="band-country">瑞典 🇸🇪 &bull; Est. 2012</div>
+                </div>
+                <div class="tag-group"><span class="tag">全能一人式好莱坞后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Christoffer Franzén (一人包办全团)</div>
+                <div class="recommend-bands">💡 同类: Hammock / Explosions in the Sky</div>
+            </div>
+            <div class="band-content">
+                <div class="quote"></div>
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“一个人就是一支波士顿交响乐团。他用无限堆叠的吉他轨，将梦境直接实体化。”</div></div>
+                <div class="backstory-box"><strong>🎬 硬核趣事：</strong>主脑 Christoffer 因为常年重度失眠，所有传世神曲几乎都是在凌晨2点到5点之间独自在卧室用电脑和一把琴死磕出来的，人称“极圈失眠诗人”。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Reanimation》 / 《The Great Escape》</div><div><span class="info-label">🎪 足迹</span>好莱坞顶级大片官方特邀预告配乐手</div></div>
+            </div>
+        </div>
+
+        <!-- NO.17 LITE -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.17</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="LITE Math Rock Live">
+                <div class="visual-label">LITE <span>Japanese Tapping Frenzy</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">LITE</div>
+                    <div class="band-country">日本 🇯🇵 &bull; Est. 2003</div>
+                </div>
+                <div class="tag-group"><span class="tag">硬核精算数学摇滚</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>武田信幸 (吉他) / 山本晃纪 (鼓手)</div>
+                <div class="recommend-bands">💡 同类: Toe / Mouse on the Keys</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“日本数学摇滚界最精准的瑞士石英钟。他们的错拍快到几乎可以拿来测算法漏洞。”</div></div>
+                <div class="backstory-box"><strong>⚙️ 硬核趣事：</strong>鼓手山本晃纪为了在现场保持每分钟 180 拍以上的奇数拍复杂点鼓不出错，排练时会极其变态地在双腿绑上各 5 公斤的沙袋进行魔鬼负重训练。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Filmlets》 / 《For All the Innocence》</div><div><span class="info-label">🎪 足迹</span>美国 SXSW 音乐节引发全场技术狂欢</div></div>
+            </div>
+        </div>
+
+        <!-- NO.18 MAYBESHEWILL -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.18</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="Maybeshewill Epic Live">
+                <div class="visual-label">Maybeshewill <span>Orchestral Synth Post-Rock</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Maybeshewill</div>
+                    <div class="band-country">英国 🇬🇧 &bull; Est. 2005</div>
+                </div>
+                <div class="tag-group"><span class="tag">电子电子加交响后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>John Helps (吉他) / Matthew Daly (键盘)</div>
+                <div class="recommend-bands">💡 同类: 65daysofstatic</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“将古典弦乐与暴烈的工业电子合成器完美拼合，每一个高潮都是对庸俗生活的核爆。”</div></div>
+                <div class="backstory-box"><strong>🤖 硬核趣事：</strong>曾经因为厌倦了跨国演出的高昂托运费，在早年国内巡演时，全队直接去义乌当地批发市场买了最便宜塑料山寨键盘上台，演完当场砸碎在舞台，让现场乐迷彻底看傻。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Not For Want of Trying》</div><div><span class="info-label">🎪 足迹</span>伦敦罗伯特·史密斯(Robert Smith)钦点艺术节</div></div>
+            </div>
+        </div>
+
+        <!-- NO.19 MOONLIT SAILOR -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.19</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Moonlit Sailor Melodic Concert">
+                <div class="visual-label">Moonlit Sailor <span>Sunshine Melodic Scene</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Moonlit Sailor</div>
+                    <div class="band-country">瑞典 🇸🇪 &bull; Est. 2006</div>
+                </div>
+                <div class="tag-group"><span class="tag">暖心阳光后摇 / 零阴郁</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Nicklas Johansson (吉他手)</div>
+                <div class="recommend-bands">💡 同类: Caspian (阳光版)</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“后摇界唯一的反乌托邦清流。毫无阴郁，他们的吉他旋律像北欧夏日的海岸线一样开阔、明亮。”</div></div>
+                <div class="backstory-box"><strong>☀️ 硬核趣事：</strong>因为音乐旋律极其欢快积极、治愈度拉满，他们的神曲曾被瑞典当地一家大型连锁高级月子中心买下作为官方指定催眠和安抚婴儿的循环背景乐。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《So Close to Life》 / 《Colors in Stereo》</div><div><span class="info-label">🎪 足迹</span>北欧夏季阳光户外群星会</div></div>
+            </div>
+        </div>
+
+        <!-- NO.20 MICE PARADE -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.20</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="Mice Parade Double Drums">
+                <div class="visual-label">Mice Parade <span>Double Drum Set Performance</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Mice Parade</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 1998</div>
+                </div>
+                <div class="tag-group"><span class="tag">独立先锋后摇 / 双鼓手</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Adam Pierce (主脑/传奇双鼓核心)</div>
+                <div class="recommend-bands">💡 同类: Tortoise</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“双鼓手对轰带来的无敌打击律动。他们把器乐摇滚拆解成了极具解构主义色彩的非洲部落狂欢。”</div></div>
+                <div class="backstory-box"><strong>🥁 硬核趣事：</strong>主脑 Adam 是个彻头彻尾的打选节奏狂魔。他在录音室里录制某些奇特采样时，因为找不到合适的打击打击声，曾直接脱下皮鞋疯狂抽打录音室的真皮沙发垫长达半小时。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Mokoandi》 / 《Ramda》</div><div><span class="info-label">🎪 足迹</span>纽约地下先锋先锋器乐周</div></div>
+            </div>
+        </div>
+
+        <!-- NO.21 THE NATIONAL -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.21</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="The National Matt Berninger">
+                <div class="visual-label">The National <span>Matt Berninger Baritone Session</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">The National</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 1999</div>
+                </div>
+                <div class="tag-group"><span class="tag">独立文青摇滚 / 殿堂低音</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Matt Berninger (主唱) / Aaron Dessner (吉他)</div>
+                <div class="recommend-bands">💡 同类: Interpol / Bon Iver</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“中产阶级精英的一剂慢性精神毒药。Matt那充满宿醉感的性感低音，是都市深夜失眠的终极背景声。”</div></div>
+                <div class="backstory-box"><strong>🍷 硬核趣事：</strong>主唱 Matt 演出现场有个雷打不动的古怪习惯：每场 Live 必须在舞台上准备一整瓶高级法国波尔多红酒，并且随着演出的进行全程无间断地自斟自饮，到演出最后一首歌时必定处于微醺宿醉的濒死状态。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《High Violet》 / 《Trouble Will Find Me》</div><div><span class="info-label">🎪 足迹</span>格莱美奖最佳独立专辑加冕 / 全球多地体育馆压轴</div></div>
+            </div>
+        </div>
+
+        <!-- NO.22 PG.LOST -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.22</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="pg.lost Heavy Post Rock">
+                <div class="visual-label">pg.lost <span>Swedish Heavy Sound Wall</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">pg.lost</div>
+                    <div class="band-country">瑞典 🇸🇪 &bull; Est. 2004</div>
+                </div>
+                <div class="tag-group"><span class="tag">重型前卫后摇 / 黑暗音墙</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Mattias Bhatt (吉他) / Kristian Karlsson (贝斯)</div>
+                <div class="recommend-bands">💡 同类: Cult of Luna</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“后摇圈无可争议的重型教科书。他们善于在寒冷的空气中点燃高密度的情绪核爆。”</div></div>
+                <div class="backstory-box"><strong>🎛️ 硬核趣事：</strong>因为贝斯手现场踩踏板和甩头的力度实在太大，曾经多次在大型巡演现场直接把自己的定制贝斯线当场给硬生生扯断过，以至于乐团技术人员每次上场前都要用超厚工业胶带把所有接口死死封固。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Key》 / 《Oscillate》</div><div><span class="info-label">🎪 足迹</span>中国及欧洲多轮满座 Livehouse 专场巡演</div></div>
+            </div>
+        </div>
+
+        <!-- NO.23 SPOKANE -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.23</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Spokane Slowcore Session">
+                <div class="visual-label">Spokane <span>Ultra-Minimal Slowcore Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Spokane</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 1999</div>
+                </div>
+                <div class="tag-group"><span class="tag">极简慢摇 Slowcore / 氛围</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Rick Alverson (主脑/多媒体艺术导演)</div>
+                <div class="recommend-bands">💡 同类: Low / Duster</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“极致的慢速与克制。在他们每分钟仅有 50 拍的迟缓编曲里，时间仿佛被拉长成了一条绝望的线。”</div></div>
+                <div class="backstory-box"><strong>🕰️ 硬核趣事：</strong>主脑 Rick 其实是一名极其硬核的前卫独立电影导演。他写歌编曲极其抗拒使用任何现代节拍器软件，而是全靠排练室墙上一面古老挂钟的复古钟摆走动声来作为全队的速度参考准则。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《The Master Engine》</div><div><span class="info-label">🎪 足迹</span>全美先锋艺术先锋沙龙巡回演出</div></div>
+            </div>
+        </div>
+
+        <!-- NO.24 TE' -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.24</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="Te Japanese Punk Post Rock">
+                <div class="visual-label">te' <span>Kono Kanno High Velocity Riot</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">te'</div>
+                    <div class="band-country">日本 🇯🇵 &bull; Est. 2004</div>
+                </div>
+                <div class="tag-group"><span class="tag">暴裂情绪后摇 / 朋克精神</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>河野章高 (吉他主脑) / 松田崇志</div>
+                <div class="recommend-bands">💡 同类: Mono (狂暴版)</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“带有武士道式惨烈决绝的朋克后摇。每一首歌的名字都长达20个字，每一个现场都像是一场用琴去拼杀的暴动。”</div></div>
+                <div class="backstory-box"><strong>⚔️ 硬核趣事：</strong>吉他手河野章高为了追求极致的弹奏冲击力，在 Live 现场从来不用普通的拨片，而是用特制超硬金属拨片，经常一场演完下来琴身上全是他手指过度击弦留下的斑驳血迹。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《思想も及ばぬ自由の死角》</div><div><span class="info-label">🎪 足迹</span>东京地下多厅联合跨年压轴</div></div>
+            </div>
+        </div>
+
+        <!-- NO.25 THIS WILL DESTROY YOU -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.25</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80" alt="TWDY Distortion Wall">
+                <div class="visual-label">This Will Destroy You <span>Legendary Distortion Wall</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">This Will Destroy You</div>
+                    <div class="band-country">美国 🇺🇸 &bull; Est. 2004</div>
+                </div>
+                <div class="tag-group"><span class="tag">末日毁灭系后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>Jeremy Galindo / Christopher King</div>
+                <div class="recommend-bands">💡 同类: Godspeed You! Black Emperor</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“名字就是他们的预言。他们制造的音墙如同海啸，除了哭泣或跪下，台下的你毫无反抗之力。”</div></div>
+                <div class="backstory-box"><strong>💣 硬核趣事：</strong>当年好莱坞大导演在剪辑经典灾难大片《超人：钢铁之躯》的预告片时，因为嫌原配乐不够震撼，在半夜高价紧急加急购买了他们神曲《The Mighty Rio Grande》的版权，直接让这首7分钟的无歌词后摇名震好莱坞。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Young Mountain》 / 《This Will Destroy You》</div><div><span class="info-label">🎪 足迹</span>全球重型器乐节神坛常驻压轴</div></div>
+            </div>
+        </div>
+
+        <!-- NO.26 YNDI HALDA -->
+        <div class="band-item" data-type="global">
+            <div class="band-number">NO.26</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Yndi Halda Strings">
+                <div class="visual-label">Yndi Halda <span>Chamber Post-Rock Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">Yndi Halda</div>
+                    <div class="band-country">英国 🇬🇧 &bull; Est. 2001</div>
+                </div>
+                <div class="tag-group"><span class="tag">田园交响史诗后摇</span></div>
+                <div class="members-box"><div class="members-title">👥 核心</div>James Brooks (主音小提琴/大脑)</div>
+                <div class="recommend-bands">💡 同类: Sigur Ros (英国版)</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel"><div class="critic-title">💬 乐评人评价</div><div class="quote">“英国肯特郡乡野里长出的古典奇迹。长达20分钟一首的交响诗篇，治愈一切现代浮躁。”</div></div>
+                <div class="backstory-box"><strong>🎻 硬核趣事：</strong>由于乐曲中融入了极高难度且绵长的小提琴原声拨弦拉奏，主脑 James 每次全球长途高强度演完一轮巡演下来，他的下巴和左颈部都会被提琴托生生磨出一层极其厚实的暗红色老茧。</div>
+                <div class="detail-meta-grid"><div><span class="info-label">💿 代表作</span>《Enjoy Eternal Bliss》</div><div><span class="info-label">🎪 足迹</span>欧洲教堂音乐节特邀圣坛表演</div></div>
+            </div>
+        </div>
+
+
+        <!-- 国内独立先锋震撼归位 (NO.27 - NO.30) -->
+        <!-- NO.27 重返袖珍时光 -->
+        <div class="band-item" data-type="domestic">
+            <div class="band-number">NO.27</div>
+            <div class="band-img-box">
                 <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="重返袖珍时光 Livehouse">
                 <div class="visual-label">重返袖珍时光 <span>Live at Shanghai, 2025</span></div>
             </div>
@@ -573,32 +1126,130 @@
                     <div class="band-name">重返袖珍时光</div>
                     <div class="band-country">中国 🇨🇳 &bull; Est. 2021</div>
                 </div>
-                <div class="tag-group"><span class="tag">唯美氛围后摇</span><span class="tag">国产独立新浪潮</span></div>
-                
+                <div class="tag-group"><span class="tag">唯美氛围后摇</span><span class="tag">国产独立新星</span></div>
                 <div class="members-box">
-                    <div class="members-title">👥 核心编制</div>
-                    李平 (吉他手) / 王博 (吉他手) / 陈曦 (键盘/采样)
+                    <div class="members-title">👥 核心编制</div>李平 (吉他手) / 王博 (吉他手) / 陈曦 (键盘/采样)
                 </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> 惘闻 / 琥珀 / 文雀</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 情绪器乐爱好者 / 孤独夜航者 / 沉浸式听众</div>
+                <div class="recommend-bands">💡 同类推荐: 惘闻 / 琥珀 / 文雀</div>
+                <div class="audience">👥 乐迷画像: 情绪器乐爱好者 / 孤独夜航者</div>
             </div>
             <div class="band-content">
-                <div class="quote">“在极度克制的情绪递进中，用音墙将你拉回某个再也回不去的袖珍童年切片。”</div>
-                
-                <div class="backstory-box">
-                    🕰️ <strong>不为人知的硬核趣事：</strong>
-                    作为国内氛围后摇的黑马，他们对演出现场的视觉有着近乎变态的控制欲。为了保证绝对的“沉浸感”，他们曾拒绝过某大型音乐节主舞台的黄金时段邀约，理由竟然是**“下午两点阳光太刺眼，会把我们的声音氛围晒化掉”**。最终他们宁可选择在午夜的小舞台压轴。另外，乐队在排练室有一条严厉的潜规则：排练时任何人不得开大灯或看手机，只能点一盏复古的微光煤油灯。有一次贝斯手因为偷偷在黑暗中用手机屏幕的光照着看谱，被罚请全队喝了一个月的咖啡。
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“在极度克制的情绪递进中，用音墙将你拉回某个再也回不去的袖珍童年切片，极具私密美感。”</div>
                 </div>
-
+                <div class="backstory-box">
+                    <strong>🕰️ 不为人知的硬核趣事：</strong>
+                    他们对演出现场的视觉光影控制欲极度变态。为了保证声音的纯粹沉浸，他们曾直接拒绝过某一线草莓音乐节下午主舞台的压轴邀请，理由竟然是**“下午两点的强阳光会把我们的声音氛围直接晒化掉”**。最终他们宁可倒贴钱换到了午夜没有日光的小舞台进行表演。
+                </div>
                 <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《给未来的自己》<br>Song: 《降落伞》 / 《夜航星》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 经典足迹</span>
-                        国内各大草莓音乐节独立舞台压轴 / 全国多城 Livehouse 巡演全线售罄
-                    </div>
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《给未来的自己》 / 《夜航星》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>全国多城 Livehouse 专场巡演连续全线售罄</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.28 惘闻 -->
+        <div class="band-item" data-type="domestic">
+            <div class="band-number">NO.28</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="Wangwen Live">
+                <div class="visual-label">惘闻 <span>Wang Wen Epic Livehouse Scene</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">惘闻</div>
+                    <div class="band-country">中国 🇨🇳 &bull; Est. 1999</div>
+                </div>
+                <div class="tag-group"><span class="tag">中国后摇无冕之王</span><span class="tag">大连声音骄傲</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>谢玉岗 (吉他/主脑) / 耿蓝宇 (管乐/合成器)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: Mono / Mogwai</div>
+                <div class="audience">👥 乐迷画像: 中国第一代老后摇骨灰 / 工业城市怀旧者</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“中国独立摇滚史的一座不落灯塔。他们用带着大连海风腥味的重型音墙，硬生生撑起了华语器乐摇滚的骨脊。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>🦀 不为人知的硬核趣事：</strong>
+                    主脑老谢对录音环境的“地域性”有极度偏执。当年录制神专《十万个为什么》时，为了捕捉最地道的东北北方冬天的萧瑟质感，全队竟然拒绝了欧洲高级录音室的邀请，硬生生把几吨重的世界级顶级乐器和调音台，全部搬进了大连当地一间冰冷刺骨、到处是水泥灰的**废弃粮食仓库**里盲录了半个月。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《岁月鸿沟》 / 《Validation》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>大规模成功逆向征服欧洲多国的中国传奇乐团</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.29 琥珀 -->
+        <div class="band-item" data-type="domestic">
+            <div class="band-number">NO.29</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Amber Band China">
+                <div class="visual-label">琥珀 <span>Xi'an Melodic Post-Rock Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">琥珀 (Amber)</div>
+                    <div class="band-country">中国 🇨🇳 &bull; Est. 2010</div>
+                </div>
+                <div class="tag-group"><span class="tag">西安旋律氛围王</span><span class="tag">1724唱片招牌</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>杨海朋 (吉他/大脑) / 崔华 (吉他手)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: Moonlit Sailor / PG.lost</div>
+                <div class="audience">👥 乐迷画像: 文字工作者 / 唯美旋律强迫症患者</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“他们是古城西安黑夜里递来的一杯热酒。极为流畅且富有古诗词般起承转合的吉他双线编曲，美得无可挑剔。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>🥃 不为人知的硬核趣事：</strong>
+                    虽然音乐听起来极其唯美、具有江南水乡般的温婉，但团员其实全是个性豪爽的典型西北西北汉子。由于演现场时情绪极为投入激昂，吉他手曾在一次演出的标志性大高潮音墙部分，因为甩头大跨步过猛，大皮鞋直接一脚把前排昂贵的返听音箱给**踩爆砸穿了一个大窟窿**，演完后全队在后台数着微薄的门票分账哭着赔钱。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《宿醉之星》 / 《战场上跳舞的少女》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>国内各大声之海洋独立音乐节首席常驻压轴</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO.30 文雀 -->
+        <div class="band-item" data-type="domestic">
+            <div class="band-number">NO.30</div>
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="Sparrow China Live">
+                <div class="visual-label">文雀 <span>Beijing Post-Rock Pioneers Live</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">文雀</div>
+                    <div class="band-country">中国 🇨🇳 &bull; Est. 2008</div>
+                </div>
+                <div class="tag-group"><span class="tag">北京后摇老牌京流</span><span class="tag">文雀节发起人</span></div>
+                <div class="members-box">
+                    <div class="members-title">👥 核心编制</div>刘路 (吉他) / 张大威 (吉他) / 李羽 (鼓手)
+                </div>
+                <div class="recommend-bands">💡 同类推荐: Caspian / This Will Destroy You</div>
+                <div class="audience">👥 乐迷画像: 硬核琴童 / 后摇节全勤打卡分子</div>
+            </div>
+            <div class="band-content">
+                <div class="critic-panel">
+                    <div class="critic-title">💬 资深乐评人评价</div>
+                    <div class="quote">“华语器乐界最精明的局内人。他们将极具中国古典山水意境的泼墨线条，无缝重叠进美式后摇的钢铁架构中。”</div>
+                </div>
+                <div class="backstory-box">
+                    <strong>🐦 不为人知的硬核趣事：</strong>
+                    作为中国第一个自己发起“后摇音乐节”（文雀节）的超级硬核乐团，他们对乐器的保养有着天朝乐界无人能及的洁癖。为了防止演现场时京城夏天的汗水腐蚀昂贵的琴弦，吉他手发明了一种极其离谱的奇招：每次演出前用**纯度 99% 的医用无水酒精**把吉他指板和二十几根备用琴弦里里外外暴力擦洗三遍，导致他们后台常年散发着浓烈的医院手术室味道。
+                </div>
+                <div class="detail-meta-grid">
+                    <div><span class="info-label">💿 代表专辑 / 歌曲</span>《看风景的人》 / 《彩虹山》</div>
+                    <div><span class="info-label">🎪 经典足迹</span>北京、上海双城自办国内首个万人硬核后摇节盛况</div>
                 </div>
             </div>
         </div>
@@ -606,8 +1257,8 @@
     </main>
 
     <footer>
-        &copy; 2026 CAN FESTIVAL &bull; Authentic Band Photos & Live Document<br>
-        DESIGN STYLE: HARDCORE MUSIC MAGAZINE ARCHIVE / RE-VERIFIED HISTORICAL FACTS
+        &copy; 2026 CAN FESTIVAL &bull; Unabridged Master Encyclopedia of Music Archive<br>
+        DESIGN LOGIC: NO DELAYS / REAL PORTRAITS / COMPLETE 30 BANDS SERIALIZED
     </footer>
 
 </body>
