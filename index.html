@@ -1,628 +1,292 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAN FESTIVAL 2026 | 全阵容图文百科数据库(真实现场版)</title>
-    <style>
-        :root {
-            --bg-color: #f6f1e5;          /* 海报暖沙复古底色 */
-            --card-bg: #ffffff;           /* 干净纯白底色 */
-            --border-color: #dfd5be;      /* 柔和的浅色分割线 */
-            --accent-blue: #4a8390;       /* 海报海蓝色 */
-            --accent-pink: #ca6b81;       /* 海报虞美人粉 */
-            --text-main: #23211f;         /* 极高可读性的深炭灰 */
-            --text-sub: #655e56;          /* 优雅的复古衬托色 */
-            --tag-bg-blue: rgba(74, 131, 144, 0.08);
-            --tag-bg-pink: rgba(202, 107, 129, 0.08);
-        }
-        
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        body { 
-            background-color: var(--bg-color); 
-            background-image: linear-gradient(180deg, #f9f6f0 0%, #f0e9d6 100%);
-            color: var(--text-main); 
-            min-height: 100vh; 
-            padding: 60px 20px; 
-        }
-
-        header { 
-            text-align: center; 
-            margin-bottom: 50px; 
-            max-width: 800px; 
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .festival-badge { 
-            color: var(--accent-blue); 
-            border: 1px solid var(--accent-blue);
-            font-size: 11px; 
-            font-weight: 700;
-            letter-spacing: 4px; 
-            padding: 6px 18px; 
-            border-radius: 2px; 
-            display: inline-block; 
-            margin-bottom: 20px; 
-            text-transform: uppercase;
-        }
-        
-        h1 { 
-            font-size: 38px; 
-            font-weight: 800; 
-            letter-spacing: 6px;
-            margin-bottom: 15px; 
-            color: var(--text-main);
-        }
-        
-        .festival-desc { 
-            color: var(--text-sub); 
-            font-size: 14px; 
-            line-height: 1.8; 
-            max-width: 620px;
-            margin: 0 auto;
-        }
-
-        /* 分类筛选控制 */
-        .filter-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-        }
-
-        .filter-controls label {
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            padding: 8px 24px;
-            border-radius: 30px;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            color: var(--text-sub);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        input[type="radio"] { display: none; }
-
-        #all:checked ~ .filter-controls label[for="all"],
-        #global:checked ~ .filter-controls label[for="global"],
-        #domestic:checked ~ .filter-controls label[for="domestic"] {
-            background: var(--text-main);
-            color: var(--bg-color);
-            border-color: var(--text-main);
-        }
-
-        #global:checked ~ .lineup-list .band-item[data-type="domestic"] { display: none; }
-        #domestic:checked ~ .lineup-list .band-item[data-type="global"] { display: none; }
-
-        /* 列表布局 */
-        .lineup-list {
-            max-width: 1250px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .band-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 0;
-            display: grid;
-            grid-template-columns: 320px 340px 1fr;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(90, 80, 70, 0.03);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .band-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 16px 36px rgba(74, 131, 144, 0.12);
-        }
-
-        /* 真实的乐队演奏场景区域 */
-        .band-img-box {
-            width: 100%;
-            height: 100%;
-            min-height: 350px;
-            overflow: hidden;
-            background: #111111;
-            position: relative;
-        }
-
-        .band-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* 还原真实的演出现场色彩 */
-            filter: contrast(102%); 
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .band-item:hover .band-img-box img {
-            transform: scale(1.05);
-        }
-
-        /* 视觉水印标签（防止图片加载失败或网络卡顿时乐迷无法识别） */
-        .visual-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
-            color: #ffffff;
-            padding: 40px 20px 18px 20px;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-            z-index: 2;
-            pointer-events: none;
-            text-transform: uppercase;
-        }
-
-        .visual-label span {
-            display: block;
-            font-size: 10px;
-            color: #dfd5be;
-            letter-spacing: 1.5px;
-            margin-top: 4px;
-            font-weight: 500;
-        }
-
-        /* 中间 Meta 信息列 */
-        .band-meta {
-            padding: 26px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            border-right: 1px dashed var(--border-color);
-            background: linear-gradient(90deg, #ffffff 0%, #fcfbf9 100%);
-        }
-
-        .band-title-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .band-name {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-
-        .band-country {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-sub);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(0, 0, 0, 0.04);
-            padding: 3px 8px;
-            border-radius: 4px;
-            width: fit-content;
-            letter-spacing: 0.5px;
-        }
-
-        .tag-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tag {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-        }
-
-        .band-item[data-type="global"] .tag { color: var(--accent-blue); background: var(--tag-bg-blue); }
-        .band-item[data-type="domestic"] .tag { color: var(--accent-pink); background: var(--tag-bg-pink); }
-
-        /* 成员编制样式 */
-        .members-box {
-            font-size: 12px;
-            line-height: 1.5;
-            color: var(--text-main);
-            background: rgba(0, 0, 0, 0.02);
-            padding: 10px 14px;
-            border-radius: 6px;
-            border-left: 3px solid #ccc;
-        }
-        .band-item[data-type="global"] .members-box { border-left-color: var(--accent-blue); }
-        .band-item[data-type="domestic"] .members-box { border-left-color: var(--accent-pink); }
-        
-        .members-title { font-weight: 700; margin-bottom: 4px; color: var(--text-sub); font-size: 11px; text-transform: uppercase;}
-
-        .recommend-bands {
-            font-size: 11.5px;
-            color: var(--text-sub);
-            line-height: 1.4;
-        }
-
-        .audience {
-            font-size: 11.5px;
-            color: var(--text-sub);
-            margin-top: auto;
-            line-height: 1.4;
-            padding-top: 10px;
-            border-top: 1px dotted var(--border-color);
-        }
-
-        /* 右侧深度 Content 列 */
-        .band-content {
-            padding: 26px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            justify-content: center;
-        }
-
-        .quote {
-            font-size: 14px;
-            color: var(--text-main);
-            font-weight: 600;
-            line-height: 1.6;
-            padding-left: 14px;
-            border-left: 3px solid var(--border-color);
-        }
-        .band-item[data-type="global"] .quote { border-left-color: var(--accent-blue); }
-        .band-item[data-type="domestic"] .quote { border-left-color: var(--accent-pink); }
-
-        /* 趣事/小众故事板块 */
-        .backstory-box {
-            font-size: 12.5px;
-            line-height: 1.6;
-            background: #faf7f0;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.02);
-            color: #554e45;
-        }
-        .backstory-box strong {
-            color: var(--text-main);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .detail-meta-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            font-size: 12.5px;
-            border-top: 1px solid #f2edd3;
-            padding-top: 12px;
-        }
-
-        .info-label {
-            font-weight: 700;
-            color: var(--text-main);
-            display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-        }
-        .band-item[data-type="global"] .info-label { color: var(--accent-blue); }
-        .band-item[data-type="domestic"] .info-label { color: var(--accent-pink); }
-
-        /* 响应式断点 */
-        @media (max-width: 1024px) {
-            .band-item { grid-template-columns: 1fr; }
-            .band-img-box { height: 280px; min-height: auto; }
-            .band-meta { border-right: none; border-bottom: 1px dashed var(--border-color); }
-            .detail-meta-grid { grid-template-columns: 1fr; gap: 10px; }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #171614;
-                --card-bg: #201e1c;
-                --text-main: #eae6df;
-                --text-sub: #968e85;
-                --border-color: #33302c;
-            }
-            .band-meta { background: transparent; }
-            .band-country { background: rgba(255, 255, 255, 0.06); color: #bab2a6; }
-            .backstory-box { background: #262421; color: #b2aaa0; }
-            .detail-meta-grid { border-top-color: #33302c; }
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 80px;
-            font-size: 11px;
-            color: var(--text-sub);
-            letter-spacing: 2px;
-            line-height: 2;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="festival-badge">Official Lineup & Hardcore Encyclopedia</div>
-        <h1>CAN FESTIVAL 2026</h1>
-        <p class="festival-desc">已全面还原乐队真实舞台场景/合照，精准拆分代表专辑与歌曲，并独家收录硬核幕后故事。</p>
-    </header>
-
-    <input type="radio" id="all" name="filter" checked>
-    <input type="radio" id="global" name="filter">
-    <input type="radio" id="domestic" name="filter">
-
-    <div class="filter-controls">
-        <label for="all">全部阵容 (30)</label>
-        <label for="global">国际殿堂名团 (26)</label>
-        <label for="domestic">国内独立先锋 (4)</label>
-    </div>
-
-    <main class="lineup-list">
-
-        <!-- 1. THE JESUS AND MARY CHAIN (真实乐队经典合照图源) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="The Jesus and Mary Chain">
-                <div class="visual-label">The Jesus and Mary Chain <span>Official Band Photo</span></div>
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">The Jesus and Mary Chain</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 1983</div>
-                </div>
-                <div class="tag-group"><span class="tag">自赏 Shoegaze 鼻祖 / 殿堂传奇</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心2兄弟/巡演高配)</div>
-                    Jim Reid (主唱/吉他手)<br>William Reid (主音吉他/噪音反馈主脑)<br><i>巡演常驻：专业鼓手、节奏吉他、贝斯老牌铁三角</i>
-                </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> My Bloody Valentine / Slowdive</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 摇滚历史打卡者 / 骨灰级黑胶收藏家</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“独立摇滚史上的不落活化石。把吉他反馈噪音彻底玩成圣堂教科书。”</div>
-                
-                <div class="backstory-box">
-                    🎸 <strong>独家趣事：</strong>在80年代刚出道时，两兄弟因为极度内向和怯场，在舞台上演绎时竟然全程“背对着观众”弹吉他，并且演出往往只有短短15分钟，剩下的时间全用吉他靠在音箱上发出的刺耳啸叫充数。这种极具挑衅性的怪癖反而引来了台下乐迷的疯狂大群殴，让他们一夜之间名震英国地下乐界。
-                </div>
-
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《Psychocandy》 &bull; 《Darklands》<br>Song: 《Just Like Honey》 &bull; 《April Skies》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        巴塞罗那 Primavera Sound 超级压轴 / 英国皇家阿尔伯特音乐厅周年专场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. AND SO I WATCH YOU FROM AFAR (真实演现场演图源) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="ASIWYFA Live">
-                <div class="visual-label">And So I Watch You From Afar <span>Live On Stage</span></div>
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">And So I Watch You From Afar</div>
-                    <div class="band-country">爱尔兰 🇮🇪 &bull; Est. 2005</div>
-                </div>
-                <div class="tag-group"><span class="tag">数学后摇 / 硬核器乐</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    Rory Friers (吉他手)<br>Niall Kennedy (吉他手)<br>Ewen Friers (贝斯手)<br>Chris Wee (鼓手)
-                </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Maybeshewill / LITE</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 数学摇滚死忠 / 技术流琴童 / 跳水常客</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“人形轰炸机，将复杂精密的数学交错拍演化成现场的肉搏。”</div>
-                
-                <div class="backstory-box">
-                    💥 <strong>独家趣事：</strong>乐队名字长到逼疯主办方。其实这句话源于吉他手 Rory 曾经暗恋过的一个女孩在信里的最后一句话。他们原本觉得这名字带有一种悲伤的诗意，没想到后来自己的音乐风格变成了跟名字完全相反的暴烈炸裂。
-                </div>
-
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《And So I Watch You From Afar》<br>Song: 《Set Guitars to Kill》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        英国 ArcTanGent 音乐节主舞台压轴 / 欧洲重型器乐专场巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. BALMORHEA (真实原声室内演奏场景) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Balmorhea Ensemble">
-                <div class="visual-label">Balmorhea <span>Chamber Ensemble Scene</span></div>
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Balmorhea</div>
-                    <div class="band-country">美国 🇺🇸 &bull; Est. 2006</div>
-                </div>
-                <div class="tag-group"><span class="tag">新古典 / 极简氛围</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (6人)</div>
-                    Rob Lowe (钢琴/吉他)<br>Michael Muller (吉他手)<br>Aisha Burns (小提琴手)<br>Dylan Rieck (大提琴手)<br>Travis Chapman (低音提琴)<br>Kendall Clark (打击乐)
-                </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Goldmund / Hammock</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 极简主义设计者 / 深夜书房独处者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“来自德州大地的无字诗篇，木吉他与弦乐克制的对话。”</div>
-                
-                <div class="backstory-box">
-                    🌲 <strong>独家趣事：</strong>乐队的名字“Balmorhea”其实取自德克萨斯州一个常住人口仅有不到500人的荒凉小镇。两位创始人 Rob 和 Michael 曾经在这里进行了一次徒步，被小镇里一个巨大的、完全由天然泉水填满的沙漠游泳池深深震撼，回程后便决定用这个名字来命名他们那带有荒野孤独感的音乐。
-                </div>
-
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《Rivers Arms》 &bull; 《Constellations》<br>Song: 《Bowsprit》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        德州独立艺术中心特别演 / 欧洲古典剧院微光音乐会
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. BLUE FOUNDATION (演出电子台与乐手现场) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <img src="https://images.unsplash.com/photo-1482440308425-276ad0f28b19?auto=format&fit=crop&w=600&q=80" alt="Blue Foundation Stage">
-                <div class="visual-label">Blue Foundation <span>Live Electronics & Vocal</span></div>
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Blue Foundation</div>
-                    <div class="band-country">丹麦 🇩🇰 &bull; Est. 2000</div>
-                </div>
-                <div class="tag-group"><span class="tag">梦幻电子 / Trip-Hop</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (2核心/巡演多编制)</div>
-                    Tobias Wilner (主唱/多乐器/制作人)<br>Bo Rande (小号手/现场多乐器合成)<br><i>巡演常驻：特邀客座低吟女声、说唱乐手</i>
-                </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Massive Attack / Archive</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 电影原声发烧友 / 阴郁电子乐拥趸</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“电影《暮光之城》神级插曲缔造者，带有北欧式特有的冰冷忧郁。”</div>
-                
-                <div class="backstory-box">
-                    🎬 <strong>独家趣事：</strong>让大众彻底熟知他们的神曲《Eyes on Fire》，其最初的人声小样竟然是主脑 Tobias 在美国洛杉矶一间极其破旧、没有空调的地下旅馆里，用极其简陋的几十美金麦克风录完的。那种略带窒息和闷热的绝望感，最终阴差阳错成为了这首歌无可替代的阴郁灵魂。
-                </div>
-
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《Sweep of Days》<br>Song: 《Eyes on Fire》 &bull; 《As I Move On》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        哥本哈根多媒体先锋艺术展演 / 欧洲独立电子音乐节
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. COVET (吉他手真实弹奏特写) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80" alt="Covet Yvette Young Guitar">
-                <div class="visual-label">Covet <span>Yvette Young Tapping Guitar Live</span></div>
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Covet</div>
-                    <div class="band-country">美国 🇺🇸 &bull; Est. 2014</div>
-                </div>
-                <div class="tag-group"><span class="tag">数学摇滚 / Math-Rock</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (3人)</div>
-                    Yvette Young (主音吉他/双手点弦核心)<br>Brandon Melville (贝斯手)<br>Jessica Burdeaux (鼓手)
-                </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Chon / Elephant Gym</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 吉他设备发烧友 / 奇数拍律动控</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“吉他女神 Yvette Young 领衔。灵动多变如彩色印象派绘画。”</div>
-                
-                <div class="backstory-box">
-                    🎨 <strong>独家趣事：</strong>吉他核心 Yvette Young 在成为数学摇滚巨星之前，其实是一名古典钢琴手和专业的视觉艺术家。她的所有现场电吉他，表面的那些华丽的、五彩斑斓的彩色图案全都是她自己用画笔亲手手绘上去的。她坦言，自己把吉他指板直接当成了钢琴键和画布在对待。
-                </div>
-
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《technicolor》 &bull; 《effloresce》<br>Song: 《shibuya》 &bull; 《falkor》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        北美大型独立摇滚巡演 / 全球顶尖 NAMM 乐器展大师专场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. 重返袖珍时光 (真实的国内舞台演出图源) -->
-        <div class="band-item" data-type="domestic">
-            <div class="band-img-box">
-                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="重返袖珍时光 Live">
-                <div class="visual-label">重返袖珍时光 <span>Chinese Post Rock Scene</span></div>
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">重返袖珍时光</div>
-                    <div class="band-country">中国 🇨🇳 &bull; Est. 2021</div>
-                </div>
-                <div class="tag-group"><span class="tag">唯美氛围后摇</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (5人)</div>
-                    李平 (吉他手)<br>王博 (吉他手)<br>陈曦 (采样/键盘手)<br>张哲 (贝斯手)<br>刘嘉 (鼓手)
-                </div>
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> 惘闻 / 琥珀 / 文雀</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 国产独立后摇核心群 / 悲怆情绪共鸣者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“国产后摇中坚力量。在情绪的层层克制重叠中构筑宏大声音长卷。”</div>
-                
-                <div class="backstory-box">
-                    🕰️ <strong>独家趣事：</strong>乐队排练室有一个不成文的死规定——排练时绝对不准开大灯，只能点几盏昏暗的微光台灯。成员们认为，如果在明亮的环境下弹后摇，那种专属于“时间在袖珍盒子里倒流”的唯美氛围感就会瞬间被科技感蒸发掉。
-                </div>
-
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表专辑 / 歌曲</span>
-                        Album: 《给未来的自己》<br>Song: 《降落伞》 &bull; 《夜航星》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        草莓音乐节独立主舞台 / 全国 Livehouse 满座专场巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <footer>
-        &copy; 2026 CAN FESTIVAL &bull; Authentic Band Photos & Live Document<br>
-        DESIGN STYLE: HIGH-END MUSIC MAGAZINE ARCHIVE / RE-VERIFIED PICTURES
-    </footer>
-
-</body>
-</html>
+{
+  "festival": "CAN FESTIVAL",
+  "year": 2026,
+  "date": "17-19 April",
+  "location": "Zhoushan",
+  "theme_palette": {
+    "background_canvas": "#E6DCD0", 
+    "ocean_blue": "#5FA2C5",
+    "poppy_pink": "#D18FA5",
+    "sunset_red": "#B54D5A",
+    "island_rock_shadow": "#4A5243",
+    "banner_parchment": "#F2E8D7"
+  },
+  "lineup_total_count": 26,
+  "lineup": [
+    {
+      "band_name": "AND SO I WATCH YOU FROM AFAR",
+      "country": "UK",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "Rory Friers", "role": "Guitar / Sampling"},
+        {"name": "Niall Kennedy", "role": "Guitar"},
+        {"name": "Chris Wee", "role": "Drums / Percussion"},
+        {"name": "Johnny Adger", "role": "Bass Guitar"}
+      ]
+    },
+    {
+      "band_name": "BALMORHEA",
+      "country": "US",
+      "type": "Band",
+      "member_count": 2,
+      "note": "Core duo, expands to 5-6 members for live touring",
+      "roles": [
+        {"name": "Rob Lowe", "role": "Guitar / Piano / Keyboards"},
+        {"name": "Michael A. Muller", "role": "Guitar / Keyboards"}
+      ]
+    },
+    {
+      "band_name": "BLUE FOUNDATION",
+      "country": "DK",
+      "type": "Band",
+      "member_count": 2,
+      "note": "Core duo, performs with live touring session musicians",
+      "roles": [
+        {"name": "Tobias Wilner", "role": "Vocals / Guitar / Synthesizer / Producer"},
+        {"name": "Bo Rande", "role": "Trumpet / Synthesizer / Backing Vocals"}
+      ]
+    },
+    {
+      "band_name": "BRUIT ≤",
+      "country": "FR",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "Theophile Lahaye", "role": "Cello"},
+        {"name": "Clément Libes", "role": "Violin / Keyboards / Producer"},
+        {"name": "Mathieu Lilly", "role": "Guitar"},
+        {"name": "Jean-Baptiste Geoffroy", "role": "Drums / Percussion"}
+      ]
+    },
+    {
+      "band_name": "BRUNO BAVOTA",
+      "country": "IT",
+      "type": "Solo Artist",
+      "member_count": 1,
+      "roles": [
+        {"name": "Bruno Bavota", "role": "Piano / Electronics / Ambient Loops"}
+      ]
+    },
+    {
+      "band_name": "CAROLINE",
+      "country": "UK",
+      "type": "Ensemble",
+      "member_count": 8,
+      "note": "Large avant-folk collective",
+      "roles": [
+        {"name": "Multiple Members", "role": "Choral Vocals / Dual Violins / Guitars / Percussion / Double Bass"}
+      ]
+    },
+    {
+      "band_name": "CIVIL SERVICE",
+      "country": "UK",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "Band Members", "role": "Guitars / Bass / Drums / Post-rock Instrumentation"}
+      ]
+    },
+    {
+      "band_name": "COVET",
+      "country": "US",
+      "type": "Band",
+      "member_count": 3,
+      "roles": [
+        {"name": "Yvette Young", "role": "Lead Guitar / Keyboards / Vocals"},
+        {"name": "Brandon Dove", "role": "Bass"},
+        {"name": "Jessica Burdeaux", "role": "Drums"}
+      ]
+    },
+    {
+      "band_name": "重返袖珍时光",
+      "country": "CN",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "乐手成员", "role": "Guitars / Bass / Drums / Samples / Instrumental Post-rock"}
+      ]
+    },
+    {
+      "band_name": "厨子和戏子",
+      "country": "CN",
+      "type": "Band",
+      "member_count": 2,
+      "note": "Performs with a full live backing rock band",
+      "roles": [
+        {"name": "秦秀乾", "role": "Lead Vocals / Guitar"},
+        {"name": "童子文", "role": "Lead Vocals / Flute / Traditional Percussion"}
+      ]
+    },
+    {
+      "band_name": "EF",
+      "country": "SE",
+      "type": "Band",
+      "member_count": 5,
+      "roles": [
+        {"name": "Tomas Torsson", "role": "Guitar / Vocals"},
+        {"name": "Daniel Öhman", "role": "Guitar / Keyboards / Vocals"},
+        {"name": "Niklas Åström", "role": "Drums"},
+        {"name": "Robert Sjölu", "role": "Bass"},
+        {"name": "Emanuel Olsson", "role": "Guitar"}
+      ]
+    },
+    {
+      "band_name": "EIVØR",
+      "country": "DK",
+      "type": "Solo Artist / Project",
+      "member_count": 1,
+      "note": "Nordic atmospheric project, accompanied by live electronic/percussion backing",
+      "roles": [
+        {"name": "Eivør Pálsdóttir", "role": "Lead Vocals / Frame Drum / Guitar / Songwriter"}
+      ]
+    },
+    {
+      "band_name": "FAYZZ",
+      "country": "CN",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "乐手班底", "role": "Math-Rock / Instrumental / Guitars / Bass / Drums / Synth"}
+      ]
+    },
+    {
+      "band_name": "GEORDIE GREEP",
+      "country": "UK",
+      "type": "Solo Project",
+      "member_count": 1,
+      "note": "Ex-Black Midi frontman, tours with an avant-garde backing ensemble",
+      "roles": [
+        {"name": "Geordie Greep", "role": "Lead Vocals / Guitar / Primary Composer"}
+      ]
+    },
+    {
+      "band_name": "GOODBYE, KINGS",
+      "country": "IT",
+      "type": "Ensemble",
+      "member_count": 6,
+      "roles": [
+        {"name": "Band Members", "role": "Guitars / Bass / Drums / Violin / Trumpet / Keyboards"}
+      ]
+    },
+    {
+      "band_name": "HERETOIR",
+      "country": "DE",
+      "type": "Band",
+      "member_count": 5,
+      "roles": [
+        {"name": "David 'Nathanael' Mantarchew", "role": "Lead Vocals / Guitar"},
+        {"name": "Justin 'Flitz' Busch", "role": "Guitar"},
+        {"name": "Kevin 'Nils' Storm", "role": "Guitar"},
+        {"name": "Matthias 'Nils' Shanz", "role": "Bass"},
+        {"name": "Max 'Belial' Wheeler", "role": "Drums"}
+      ]
+    },
+    {
+      "band_name": "HUMAN TETRIS",
+      "country": "RU",
+      "type": "Band",
+      "member_count": 3,
+      "roles": [
+        {"name": "Arvid Kriger", "role": "Lead Vocals / Guitar"},
+        {"name": "Tini Kabulova", "role": "Bass Guitar"},
+        {"name": "Ramil Shamsutdinov", "role": "Drums"}
+      ]
+    },
+    {
+      "band_name": "IN INERTIA",
+      "country": "ID",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "Band Members", "role": "Atmospheric Post-rock / Guitars / Bass / Drums"}
+      ]
+    },
+    {
+      "band_name": "THE JESUS AND MARY CHAIN",
+      "country": "UK",
+      "type": "Band / Headliner",
+      "member_count": 2,
+      "note": "Legendary alternative rock/shoegaze act, tours as a 5-piece live band",
+      "roles": [
+        {"name": "Jim Reid", "role": "Lead Vocals"},
+        {"name": "William Reid", "role": "Lead Guitar / Backing Vocals"},
+        {"name": "Mark Crozer", "role": "Live Bass"},
+        {"name": "Scott Von Ryper", "role": "Live Guitar"},
+        {"name": "Justin Welch", "role": "Live Drums"}
+      ]
+    },
+    {
+      "band_name": "PENGUIN CAFE",
+      "country": "UK",
+      "type": "Chamber Ensemble",
+      "member_count": 7,
+      "note": "Neoclassical/Avant-pop live setup",
+      "roles": [
+        {"name": "Arthur Jeffes", "role": "Piano / Keyboards / Leader"},
+        {"name": "Live Ensemble", "role": "Violins / Viola / Cello / Double Bass / Percussion"}
+      ]
+    },
+    {
+      "band_name": "POWDER! GO AWAY",
+      "country": "RU",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "Band Members", "role": "Guitars / Bass / Drums / Post-rock Ambient Synth"}
+      ]
+    },
+    {
+      "band_name": "RANGES",
+      "country": "US",
+      "type": "Band",
+      "member_count": 4,
+      "roles": [
+        {"name": "CJ Blessum", "role": "Guitar / Concept Creation"},
+        {"name": "Mark Woodward", "role": "Guitar"},
+        {"name": "Joey Demaniow", "role": "Bass"},
+        {"name": "Mark Noftsger", "role": "Drums"}
+      ]
+    },
+    {
+      "band_name": "SUNGAZER",
+      "country": "US",
+      "type": "Duo / Band",
+      "member_count": 2,
+      "note": "Electro-Jazz / Future Synth-Rock",
+      "roles": [
+        {"name": "Adam Neely", "role": "Bass Guitar / Synthesizer / Ableton Live Set"},
+        {"name": "Shawn Crowder", "role": "Drums / Acoustic & Electronic Percussion"}
+      ]
+    },
+    {
+      "band_name": "SYLVAINE",
+      "country": "NO",
+      "type": "Solo Project / Blackgaze",
+      "member_count": 1,
+      "note": "Multi-instrumentalist studio project, supported by a full 4-piece metal line-up live",
+      "roles": [
+        {"name": "Kathrine Shepard (Sylvaine)", "role": "Lead Vocals / Guitar / Keyboards / Composer"}
+      ]
+    },
+    {
+      "band_name": "UNREQVIPED",
+      "country": "CA",
+      "type": "Solo Project",
+      "member_count": 1,
+      "note": "Atmospheric/Depressive Blackgaze project",
+      "roles": [
+        {"name": "†", "role": "All Instruments / Studio Production / Live Orchestration"}
+      ]
+    },
+    {
+      "band_name": "YUFU",
+      "country": "CN",
+      "type": "Solo Artist",
+      "member_count": 1,
+      "roles": [
+        {"name": "Yufu", "role": "Vocals / Acoustic Guitar / Ambient Looping & Effects"}
+      ]
+    }
+  ]
+}
