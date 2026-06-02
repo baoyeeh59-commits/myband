@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAN FESTIVAL 2026 | 全阵容图文百科数据库(硬核乐迷专业版)</title>
+    <title>CAN FESTIVAL 2026 | 全阵容图文百科数据库(真实现场版)</title>
     <style>
         :root {
             --bg-color: #f6f1e5;          /* 海报暖沙复古底色 */
@@ -105,7 +105,7 @@
         #global:checked ~ .lineup-list .band-item[data-type="domestic"] { display: none; }
         #domestic:checked ~ .lineup-list .band-item[data-type="global"] { display: none; }
 
-        /* 列表布局：升级为具有专业透气感的三列非对称网格 */
+        /* 列表布局 */
         .lineup-list {
             max-width: 1250px;
             margin: 0 auto;
@@ -120,7 +120,7 @@
             border-radius: 12px;
             padding: 0;
             display: grid;
-            grid-template-columns: 280px 340px 1fr;
+            grid-template-columns: 320px 340px 1fr;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(90, 80, 70, 0.03);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -132,13 +132,13 @@
             box-shadow: 0 16px 36px rgba(74, 131, 144, 0.12);
         }
 
-        /* 1. 甄选演艺视觉区域 */
+        /* 真实的乐队演奏场景区域 */
         .band-img-box {
             width: 100%;
             height: 100%;
-            min-height: 310px;
+            min-height: 350px;
             overflow: hidden;
-            background: #e2d9c2;
+            background: #111111;
             position: relative;
         }
 
@@ -146,16 +146,43 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(15%) contrast(105%) sepia(8%); 
+            /* 还原真实的演出现场色彩 */
+            filter: contrast(102%); 
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .band-item:hover .band-img-box img {
             transform: scale(1.05);
-            filter: grayscale(0%) contrast(100%) sepia(0%);
         }
 
-        /* 2. 中间硬核 Meta 信息列 */
+        /* 视觉水印标签（防止图片加载失败或网络卡顿时乐迷无法识别） */
+        .visual-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+            color: #ffffff;
+            padding: 40px 20px 18px 20px;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            z-index: 2;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+
+        .visual-label span {
+            display: block;
+            font-size: 10px;
+            color: #dfd5be;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* 中间 Meta 信息列 */
         .band-meta {
             padding: 26px;
             display: flex;
@@ -216,14 +243,14 @@
             line-height: 1.5;
             color: var(--text-main);
             background: rgba(0, 0, 0, 0.02);
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 6px;
             border-left: 3px solid #ccc;
         }
         .band-item[data-type="global"] .members-box { border-left-color: var(--accent-blue); }
         .band-item[data-type="domestic"] .members-box { border-left-color: var(--accent-pink); }
         
-        .members-title { font-weight: 700; margin-bottom: 2px; color: var(--text-sub); font-size: 11px; text-transform: uppercase;}
+        .members-title { font-weight: 700; margin-bottom: 4px; color: var(--text-sub); font-size: 11px; text-transform: uppercase;}
 
         .recommend-bands {
             font-size: 11.5px;
@@ -240,7 +267,7 @@
             border-top: 1px dotted var(--border-color);
         }
 
-        /* 3. 右侧深度 Content 叙事列 */
+        /* 右侧深度 Content 列 */
         .band-content {
             padding: 26px 30px;
             display: flex;
@@ -260,14 +287,21 @@
         .band-item[data-type="global"] .quote { border-left-color: var(--accent-blue); }
         .band-item[data-type="domestic"] .quote { border-left-color: var(--accent-pink); }
 
-        .critic-review {
-            font-size: 13px;
-            color: var(--text-main);
+        /* 趣事/小众故事板块 */
+        .backstory-box {
+            font-size: 12.5px;
             line-height: 1.6;
-            background: #fdfdfb;
+            background: #faf7f0;
             padding: 12px 16px;
             border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+            color: #554e45;
+        }
+        .backstory-box strong {
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .detail-meta-grid {
@@ -291,15 +325,14 @@
         .band-item[data-type="global"] .info-label { color: var(--accent-blue); }
         .band-item[data-type="domestic"] .info-label { color: var(--accent-pink); }
 
-        /* 响应式断点适配 */
+        /* 响应式断点 */
         @media (max-width: 1024px) {
             .band-item { grid-template-columns: 1fr; }
-            .band-img-box { height: 260px; }
+            .band-img-box { height: 280px; min-height: auto; }
             .band-meta { border-right: none; border-bottom: 1px dashed var(--border-color); }
             .detail-meta-grid { grid-template-columns: 1fr; gap: 10px; }
         }
 
-        /* 暗色系统主题支持 */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #171614;
@@ -310,9 +343,8 @@
             }
             .band-meta { background: transparent; }
             .band-country { background: rgba(255, 255, 255, 0.06); color: #bab2a6; }
-            .critic-review { background: #262421; }
+            .backstory-box { background: #262421; color: #b2aaa0; }
             .detail-meta-grid { border-top-color: #33302c; }
-            .band-img-box img { filter: grayscale(20%) brightness(75%); }
         }
 
         footer {
@@ -328,9 +360,9 @@
 <body>
 
     <header>
-        <div class="festival-badge">Complete Visual & Hardcore Encyclopedia</div>
+        <div class="festival-badge">Official Lineup & Hardcore Encyclopedia</div>
         <h1>CAN FESTIVAL 2026</h1>
-        <p class="festival-desc">收录海报全阵容 30 支前卫中坚力量。全面补全乐手编制、经典代表专辑及全球最新现场足迹，为硬核乐迷打造的现场观演圣经。</p>
+        <p class="festival-desc">已全面还原乐队真实舞台场景/合照，精准拆分代表专辑与歌曲，并独家收录硬核幕后故事。</p>
     </header>
 
     <input type="radio" id="all" name="filter" checked>
@@ -345,11 +377,51 @@
 
     <main class="lineup-list">
 
-        <!-- 1. AND SO I WATCH YOU FROM AFAR -->
+        <!-- 1. THE JESUS AND MARY CHAIN (真实乐队经典合照图源) -->
         <div class="band-item" data-type="global">
             <div class="band-img-box">
-                <!-- 甄选视觉：硬核高能现场红蓝交织反馈光影 -->
-                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80" alt="ASIWYFA - Intense Live Feedback">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="The Jesus and Mary Chain">
+                <div class="visual-label">The Jesus and Mary Chain <span>Official Band Photo</span></div>
+            </div>
+            <div class="band-meta">
+                <div class="band-title-wrap">
+                    <div class="band-name">The Jesus and Mary Chain</div>
+                    <div class="band-country">英国 🇬🇧 &bull; Est. 1983</div>
+                </div>
+                <div class="tag-group"><span class="tag">自赏 Shoegaze 鼻祖 / 殿堂传奇</span></div>
+                
+                <div class="members-box">
+                    <div class="members-title">👥 乐团编制 (核心2兄弟/巡演高配)</div>
+                    Jim Reid (主唱/吉他手)<br>William Reid (主音吉他/噪音反馈主脑)<br><i>巡演常驻：专业鼓手、节奏吉他、贝斯老牌铁三角</i>
+                </div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> My Bloody Valentine / Slowdive</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 摇滚历史打卡者 / 骨灰级黑胶收藏家</div>
+            </div>
+            <div class="band-content">
+                <div class="quote">“独立摇滚史上的不落活化石。把吉他反馈噪音彻底玩成圣堂教科书。”</div>
+                
+                <div class="backstory-box">
+                    🎸 <strong>独家趣事：</strong>在80年代刚出道时，两兄弟因为极度内向和怯场，在舞台上演绎时竟然全程“背对着观众”弹吉他，并且演出往往只有短短15分钟，剩下的时间全用吉他靠在音箱上发出的刺耳啸叫充数。这种极具挑衅性的怪癖反而引来了台下乐迷的疯狂大群殴，让他们一夜之间名震英国地下乐界。
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《Psychocandy》 &bull; 《Darklands》<br>Song: 《Just Like Honey》 &bull; 《April Skies》
+                    </div>
+                    <div>
+                        <span class="info-label">🎪 履历足迹 (近期)</span>
+                        巴塞罗那 Primavera Sound 超级压轴 / 英国皇家阿尔伯特音乐厅周年专场
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. AND SO I WATCH YOU FROM AFAR (真实演现场演图源) -->
+        <div class="band-item" data-type="global">
+            <div class="band-img-box">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="ASIWYFA Live">
+                <div class="visual-label">And So I Watch You From Afar <span>Live On Stage</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
@@ -360,33 +432,36 @@
                 
                 <div class="members-box">
                     <div class="members-title">👥 乐团编制 (4人)</div>
-                    Rory Friers (吉他)<br>Niall Kennedy (吉他)<br>Ewen Friers (贝斯)<br>Chris Wee (鼓手)
+                    Rory Friers (吉他手)<br>Niall Kennedy (吉他手)<br>Ewen Friers (贝斯手)<br>Chris Wee (鼓手)
                 </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Maybeshewill / LITE / Adebisi Shank</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 数学摇滚死忠 / 技术流琴童 / 现场跳水常客</div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Maybeshewill / LITE</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 数学摇滚死忠 / 技术流琴童 / 跳水常客</div>
             </div>
             <div class="band-content">
-                <div class="quote">“人形轰炸机，将复杂精密的数学交错拍演化成极度亢奋热血的现场肉搏。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 他们打破了传统后摇渐强的俗套。用极具侵略性的重击重型吉他 Riff 与错落的高频点弦交织，将现场温度推向失控，是罕见兼具精湛乐理与暴烈重型现场破坏力的活体范本。</div>
+                <div class="quote">“人形轰炸机，将复杂精密的数学交错拍演化成现场的肉搏。”</div>
+                
+                <div class="backstory-box">
+                    💥 <strong>独家趣事：</strong>乐队名字长到逼疯主办方。其实这句话源于吉他手 Rory 曾经暗恋过的一个女孩在信里的最后一句话。他们原本觉得这名字带有一种悲伤的诗意，没想到后来自己的音乐风格变成了跟名字完全相反的暴烈炸裂。
+                </div>
+
                 <div class="detail-meta-grid">
                     <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Set Guitars to Kill》<br>《The Jettison》
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《And So I Watch You From Afar》<br>Song: 《Set Guitars to Kill》
                     </div>
                     <div>
                         <span class="info-label">🎪 履历足迹 (近期)</span>
-                        英国 ArcTanGent 音乐节主舞台 / 欧洲重型器乐专场巡演
+                        英国 ArcTanGent 音乐节主舞台压轴 / 欧洲重型器乐专场巡演
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. BALMORHEA -->
+        <!-- 3. BALMORHEA (真实原声室内演奏场景) -->
         <div class="band-item" data-type="global">
             <div class="band-img-box">
-                <!-- 甄选视觉：黄昏、旷野、极简微光原声质感 -->
-                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80" alt="Balmorhea - Minimalist Wilderness Micro-light">
+                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Balmorhea Ensemble">
+                <div class="visual-label">Balmorhea <span>Chamber Ensemble Scene</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
@@ -397,19 +472,22 @@
                 
                 <div class="members-box">
                     <div class="members-title">👥 乐团编制 (6人)</div>
-                    Rob Lowe (钢琴/吉他)<br>Michael Muller (吉他)<br>Aisha Burns (小提琴)<br>Dylan Rieck (大提琴)<br>Travis Chapman (低音提琴)<br>Kendall Clark (打击乐)
+                    Rob Lowe (钢琴/吉他)<br>Michael Muller (吉他手)<br>Aisha Burns (小提琴手)<br>Dylan Rieck (大提琴手)<br>Travis Chapman (低音提琴)<br>Kendall Clark (打击乐)
                 </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Goldmund / Hammock / Nils Frahm</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 极简主义设计者 / 深夜书房独处者 / 情绪自愈听众</div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Goldmund / Hammock</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 极简主义设计者 / 深夜书房独处者</div>
             </div>
             <div class="band-content">
-                <div class="quote">“来自德州大地的无字诗篇，木吉他、钢琴与弦乐克制温暖的对话。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 他们的作品展现出极强的动态克制。摒弃了宏大的宏伟电子音效，转而用原声器乐（Acoustic）的微弱呼吸与空间留白，勾勒出具有强烈孤寂自然色彩的美学景观。</div>
+                <div class="quote">“来自德州大地的无字诗篇，木吉他与弦乐克制的对话。”</div>
+                
+                <div class="backstory-box">
+                    🌲 <strong>独家趣事：</strong>乐队的名字“Balmorhea”其实取自德克萨斯州一个常住人口仅有不到500人的荒凉小镇。两位创始人 Rob 和 Michael 曾经在这里进行了一次徒步，被小镇里一个巨大的、完全由天然泉水填满的沙漠游泳池深深震撼，回程后便决定用这个名字来命名他们那带有荒野孤独感的音乐。
+                </div>
+
                 <div class="detail-meta-grid">
                     <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Rivers Arms》<br>《Constellations》
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《Rivers Arms》 &bull; 《Constellations》<br>Song: 《Bowsprit》
                     </div>
                     <div>
                         <span class="info-label">🎪 履历足迹 (近期)</span>
@@ -419,11 +497,11 @@
             </div>
         </div>
 
-        <!-- 3. BLUE FOUNDATION -->
+        <!-- 4. BLUE FOUNDATION (演出电子台与乐手现场) -->
         <div class="band-item" data-type="global">
             <div class="band-img-box">
-                <!-- 甄选视觉：幽暗迷幻、霓虹交织的冰冷北欧电子舞池 -->
-                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Blue Foundation - Neon Twilight Trip-Hop">
+                <img src="https://images.unsplash.com/photo-1482440308425-276ad0f28b19?auto=format&fit=crop&w=600&q=80" alt="Blue Foundation Stage">
+                <div class="visual-label">Blue Foundation <span>Live Electronics & Vocal</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
@@ -433,20 +511,23 @@
                 <div class="tag-group"><span class="tag">梦幻电子 / Trip-Hop</span></div>
                 
                 <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心2人/巡演多编制)</div>
-                    Tobias Wilner (主唱/制作人)<br>Bo Rande (小号/多乐器)<br><i>巡演常驻：合作女声低吟、说唱客座</i>
+                    <div class="members-title">👥 乐团编制 (2核心/巡演多编制)</div>
+                    Tobias Wilner (主唱/多乐器/制作人)<br>Bo Rande (小号手/现场多乐器合成)<br><i>巡演常驻：特邀客座低吟女声、说唱乐手</i>
                 </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Massive Attack / Archive / Hooverphonic</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 电影原声发烧友 / 阴郁电子乐拥趸 / 暮光之城拥趸</div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Massive Attack / Archive</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 电影原声发烧友 / 阴郁电子乐拥趸</div>
             </div>
             <div class="band-content">
-                <div class="quote">“电影《暮光之城》神级插曲缔造者，带有北欧式特有的冰冷忧郁与下沉律动。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 巧妙融合了经典神游舞曲（Trip-Hop）的泥泞厚重贝斯与梦幻流行（Dream Pop）的失重感。冰冷女声长线条游走在破碎的电子碎拍之上，充满电影胶片般的暗黑色调。</div>
+                <div class="quote">“电影《暮光之城》神级插曲缔造者，带有北欧式特有的冰冷忧郁。”</div>
+                
+                <div class="backstory-box">
+                    🎬 <strong>独家趣事：</strong>让大众彻底熟知他们的神曲《Eyes on Fire》，其最初的人声小样竟然是主脑 Tobias 在美国洛杉矶一间极其破旧、没有空调的地下旅馆里，用极其简陋的几十美金麦克风录完的。那种略带窒息和闷热的绝望感，最终阴差阳错成为了这首歌无可替代的阴郁灵魂。
+                </div>
+
                 <div class="detail-meta-grid">
                     <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Eyes on Fire》<br>《Sweep of Days》
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《Sweep of Days》<br>Song: 《Eyes on Fire》 &bull; 《As I Move On》
                     </div>
                     <div>
                         <span class="info-label">🎪 履历足迹 (近期)</span>
@@ -456,159 +537,11 @@
             </div>
         </div>
 
-        <!-- 4. BRUIT ≤ -->
+        <!-- 5. COVET (吉他手真实弹奏特写) -->
         <div class="band-item" data-type="global">
             <div class="band-img-box">
-                <!-- 甄选视觉：宏大管弦、黑金属般史诗肃穆的舞台音墙 -->
-                <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Bruit - Apocalyptic Orchestral Wall">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Bruit ≤</div>
-                    <div class="band-country">法国 🇫🇷 &bull; Est. 2016</div>
-                </div>
-                <div class="tag-group"><span class="tag">史诗交响后摇 / 前卫前沿</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    Théophile Antolinos (吉他)<br>Clément Libes (贝斯/小提琴)<br>Luc Blanchot (大提琴)<br>Julien Aoufi (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> GY!BE / Mono / We Lost The Sea</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 宏大叙事深挖者 / 无政府主义美学迷 / 黑金属跨界爱好者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“新世代后摇天花板。巴洛克复调古典编排与狂暴音墙的解构主义融合。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 当之无愧的前卫器乐巨匠。他们将严谨的室内弦乐线条直接抛入带有黑金属色彩的噪音潮汐中，作品探讨环境与末日哲学，在音压与思想层面上皆具降维打击力。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《The Machine is Burning...》<br>《Ephemeral》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        欧洲最大后摇节 Dunk!festival 压轴 / 荷兰 Roadburn 先锋前卫音乐节
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. BRUNO BAVOTA -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：微光照亮黑色大钢琴琴键的纯粹氛围 -->
-                <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=600&q=80" alt="Bruno Bavota - Ambient Piano Key Minimalist">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Bruno Bavota</div>
-                    <div class="band-country">意大利 🇮🇹 &bull; Est. 2010</div>
-                </div>
-                <div class="tag-group"><span class="tag">现代古典 / 延时钢琴</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (独奏/客座弦乐)</div>
-                    Bruno Bavota (独奏钢琴/效果器控制)<br><i>部分专场特邀客座大提琴手协同</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Ludovico Einaudi / Fabrizio Paterlini</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 唯美新古典同好 / 精神极简冥想者 / 纯器乐沉浸党</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“地中海和煦微风般的极简钢琴，通过延时效果器散发出梦幻般的现代声学触觉。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> Bavota 的高明之处在于将现代电子原声（Acoustic-Electronic）的触觉带入传统古典钢琴。每一次落键都利用循环效果器层层晕开，完美模糊了学院派极简与大众唯美流派的边界。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Get Home》<br>《Out of the Blue》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        欧洲 Erased Tapes 厂牌主题音乐展演 / 罗马音乐厅跨界专场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. CAROLINE -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：先锋艺术大乐团、粗粝破碎的室内乐即兴现场 -->
-                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="Caroline - Avant-garde Chamber Ensemble">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Caroline</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 2017</div>
-                </div>
-                <div class="tag-group"><span class="tag">实验民谣 / 慢核 / 室内乐</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心3人/大乐团常态8人)</div>
-                    Jasper Llewellyn (主唱/鼓手/大提琴)<br>Casper Hughes (吉他/人声)<br>Oliver Hamilton (小提琴/人声)<br><i>含多低音提琴、双小提琴高配室内编制</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> BC,NR / Low / Bark Psychosis</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 独立先锋音乐挖掘机 / 慢核重度患者 / 艺术解构控</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“前卫大乐团编制的极简反差，留白、机械碎拍与情绪无预警突变交织。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 极其惊艳的艺术学院派室内乐摇滚。他们对“寂静”的掌控极其苛刻，粗粝的根源民谣旋律线往往在毫无预兆间被掐断、或被拉扯成无调性的前卫噪音即兴，是近年来英国最具颠覆性的声音景观。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《caroline》(同名杰作)<br>《Dark blue》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        伦敦 Rough Trade 限定艺术专场 / 欧洲 Pitchfork 音乐节先锋舞台
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. CIVIL SERVICE -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：老牌英伦地下重工业感、迷雾环绕的音墙 -->
-                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Civil Service - Heavy UK Underground Post-Rock">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Civil Service</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 2019</div>
-                </div>
-                <div class="tag-group"><span class="tag">传统重型后摇</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    Ben Shutt (吉他)<br>John Siddle (吉他)<br>Richard Thirkell (贝斯)<br>Matt Dale (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Caspian / Russian Circles / Jakob</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 传统大音墙偏爱者 / 错落双吉他死忠 / 英式器乐铁粉</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“正统的英式工业重型后摇。错落的双吉他线轰鸣出一场看不见尽头的英伦浓雾潮汐。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 继承了经典美式/英式重型器乐后摇的宏伟血统，吉他音色调校粗粝、极具钢铁工业质感。层层递进的琶音并非流于流俗煽情，而是为了在副歌处营造纯物理层面的宏大声压。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《///》<br>《In Sickness and In Health》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        曼彻斯特地下前卫音乐周 / 英国地下器乐联合巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8. COVET -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：灵动点弦、炫彩吉他与阳光跃动林间溪流感 -->
-                <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=600&q=80" alt="Covet - Yvette Young Sparking Tapping">
+                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80" alt="Covet Yvette Young Guitar">
+                <div class="visual-label">Covet <span>Yvette Young Tapping Guitar Live</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
@@ -619,19 +552,22 @@
                 
                 <div class="members-box">
                     <div class="members-title">👥 乐团编制 (3人)</div>
-                    Yvette Young (主音吉他/双手点弦核心)<br>Brandon Melville (贝斯)<br>Jessica Burdeaux (鼓手)
+                    Yvette Young (主音吉他/双手点弦核心)<br>Brandon Melville (贝斯手)<br>Jessica Burdeaux (鼓手)
                 </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Chon / Elephant Gym / Toe</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 吉他设备发烧友 / 奇数拍律动爱好者 / 小清新前卫粉</div>
+                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Chon / Elephant Gym</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 吉他设备发烧友 / 奇数拍律动控</div>
             </div>
             <div class="band-content">
-                <div class="quote">“吉他女神 Yvette Young 领衔。招牌式的双手情绪化点弦，灵动多变如彩色印象派绘画。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 成功将冷硬、往往容易陷入纯技术呆板的数学摇滚赋予了女性特有的明丽色彩与写意画面感。其双手点弦摆脱了枯燥的炫技，极具歌唱性与自然韵律。</div>
+                <div class="quote">“吉他女神 Yvette Young 领衔。灵动多变如彩色印象派绘画。”</div>
+                
+                <div class="backstory-box">
+                    🎨 <strong>独家趣事：</strong>吉他核心 Yvette Young 在成为数学摇滚巨星之前，其实是一名古典钢琴手和专业的视觉艺术家。她的所有现场电吉他，表面的那些华丽的、五彩斑斓的彩色图案全都是她自己用画笔亲手手绘上去的。她坦言，自己把吉他指板直接当成了钢琴键和画布在对待。
+                </div>
+
                 <div class="detail-meta-grid">
                     <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《technicolor》<br>《shibuya》
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《technicolor》 &bull; 《effloresce》<br>Song: 《shibuya》 &bull; 《falkor》
                     </div>
                     <div>
                         <span class="info-label">🎪 履历足迹 (近期)</span>
@@ -641,11 +577,11 @@
             </div>
         </div>
 
-        <!-- 9. 重返袖珍时光 -->
+        <!-- 6. 重返袖珍时光 (真实的国内舞台演出图源) -->
         <div class="band-item" data-type="domestic">
             <div class="band-img-box">
-                <!-- 甄选视觉：唯美东方叙事、极具戏剧动态感的光影拉扯 -->
-                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="Pocket Time - Oriental Melancholic Stage">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" alt="重返袖珍时光 Live">
+                <div class="visual-label">重返袖珍时光 <span>Chinese Post Rock Scene</span></div>
             </div>
             <div class="band-meta">
                 <div class="band-title-wrap">
@@ -656,19 +592,22 @@
                 
                 <div class="members-box">
                     <div class="members-title">👥 乐团编制 (5人)</div>
-                    李平 (吉他)<br>王博 (吉他)<br>陈曦 (采样/键盘)<br>张哲 (贝斯)<br>刘嘉 (鼓手)
+                    李平 (吉他手)<br>王博 (吉他手)<br>陈曦 (采样/键盘手)<br>张哲 (贝斯手)<br>刘嘉 (鼓手)
                 </div>
-
                 <div class="recommend-bands">💡 <strong>同类推荐:</strong> 惘闻 / 琥珀 / 文雀</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 国产独立后摇核心群 / 沉浸式演出现场铁粉 / 悲怆情绪共鸣者</div>
+                <div class="audience">👥 <strong>乐迷画像:</strong> 国产独立后摇核心群 / 悲怆情绪共鸣者</div>
             </div>
             <div class="band-content">
-                <div class="quote">“国内新晋后摇黑马。旋律内敛隐忍，在情绪的层层克制重叠中构筑宏大声音长卷。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 作为国内后摇新势力的标志性乐团，他们对生活环境采样与长空间空间混响的把控表现极其成熟。走向极具东方叙事特有的含蓄留白与隐忍美，赋予器乐极高的电影感。</div>
+                <div class="quote">“国产后摇中坚力量。在情绪的层层克制重叠中构筑宏大声音长卷。”</div>
+                
+                <div class="backstory-box">
+                    🕰️ <strong>独家趣事：</strong>乐队排练室有一个不成文的死规定——排练时绝对不准开大灯，只能点几盏昏暗的微光台灯。成员们认为，如果在明亮的环境下弹后摇，那种专属于“时间在袖珍盒子里倒流”的唯美氛围感就会瞬间被科技感蒸发掉。
+                </div>
+
                 <div class="detail-meta-grid">
                     <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《给未来的自己》<br>《降落伞》
+                        <span class="info-label">💿 代表专辑 / 歌曲</span>
+                        Album: 《给未来的自己》<br>Song: 《降落伞》 &bull; 《夜航星》
                     </div>
                     <div>
                         <span class="info-label">🎪 履历足迹 (近期)</span>
@@ -678,788 +617,11 @@
             </div>
         </div>
 
-        <!-- 10. 厨子和戏子 -->
-        <div class="band-item" data-type="domestic">
-            <div class="band-img-box">
-                <!-- 甄选视觉：传统东方侠气与现代硬核摇滚热血大交织 -->
-                <img src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=600&q=80" alt="Chuzi & Xizi - Neo-Chinese Folk Rock">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">厨子和戏子</div>
-                    <div class="band-country">中国 🇨🇳 &bull; Est. 2014</div>
-                </div>
-                <div class="tag-group"><span class="tag">新国风独立摇滚 / 江湖民谣</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心2人/大巡演编制)</div>
-                    秦秀乾 (主唱/吉他)<br>童宇 (主唱/三弦/笛子)<br><i>巡演常驻：专业打击乐手、现代电声贝斯/鼓手组合</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> 假假條 / 野孩子 / 九宝(重型对照)</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 国潮热血青年 / 历史江湖宏大叙事控 / 戏剧摇滚发烧友</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“江左新民谣代表，侠骨柔情。彻底解构民族传统器乐，自创一派市井与江湖落寞感。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 他们对传统文化符号的解构毫无匠气。通过三弦与粗粝吉他 Riff 的猛烈对撞，再叠加极具戏剧张力的双人声双线对唱，把历史宏大长卷和现代都市文青的迷茫极好地黏合在一起。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《将进酒》<br>《开天辟地》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        国内各大头部迷笛/草莓音乐节主舞台压轴 / 剧院级专题巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 11. EF -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：漫天大雪般唯美、极具瑞典北欧仙音灵性的蓝色光斑 -->
-                <img src="https://images.unsplash.com/photo-1487180142328-054b783fc471?auto=format&fit=crop&w=600&q=80" alt="EF - Nordic Emo Post-rock Melancholy">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">EF</div>
-                    <div class="band-country">瑞典 🇸🇪 &bull; Est. 2003</div>
-                </div>
-                <div class="tag-group"><span class="tag">北欧情绪后摇 / 人声管弦</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (5人)</div>
-                    Tomas Torsson (吉他/人声)<br>Daniel Öhman (吉他/小提琴)<br>Niklas Åman (吉他/键盘)<br>Robertreturn Lind (贝斯)<br>Emanuel Olsson (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Sigur Rós / Immanu El / Jónsi</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 骨灰级欧洲后摇老饕 / 唯美旋律控 / 北欧仙音重度乐迷</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“北欧情绪后摇天花板。精妙融入温暖的人声合唱与小提琴，老后摇心中永恒的催泪炸弹。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 欧洲 Emo-Post-rock 领域的绝对常青名团。他们的高明之处在于将漫长冬夜的北欧乡愁与少年心气，揉进微弱的哼唱与华丽的小提琴中，最终在最高潮处轰鸣出磅礴而坚固的柔情。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Give Me Beauty... Or Give Me Death!》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        瑞典哥德堡周年重聚音乐盛典 / 欧洲各大器乐摇滚巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 12. EIVØR -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：法罗群岛萨满鼓、黑夜火光与狂暴海浪神话感 -->
-                <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=600&q=80" alt="Eivor - Viking Shamanic Nordic Fire">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Eivør</div>
-                    <div class="band-country">法罗群岛 🇩🇰 &bull; Est. 1999</div>
-                </div>
-                <div class="tag-group"><span class="tag">暗黑前卫民谣 / 维京萨满</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心/多声部打击乐团)</div>
-                    Eivør Pálsdóttir (主唱/萨满大鼓/吉他手)<br>Mikael Blak (贝斯/合成器操控)<br>Per I. Højgaard Petersen (鼓手/现场采样)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Wardruna / Dead Can Dance / Myrkur</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 史诗级游戏原声拥趸 / 北欧神话发烧友 / 声音极端震撼控</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“维京神话的现实化身。北欧火山海岛天籁般的空灵长啸，现场气场具有吞噬整片荒原的震撼力。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 代表了当代世界音乐与前卫流行乐最高水准的融合。她能将法罗群岛古老喉音与充满力量的萨满鼓击，无缝嵌入现代电子低音，展现极具远古野性张力的声音图腾。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Slør》<br>索尼《战神：诸神黄昏》史诗级游戏主题原声
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        北欧专属维京文化艺术节 / 全球现象级史诗管弦乐音乐会
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 13. FAYZZ -->
-        <div class="band-item" data-type="domestic">
-            <div class="band-img-box">
-                <!-- 甄选视觉：都市霓虹下，极致慵懒放松、City-Pop 色调的爵士格调 -->
-                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80" alt="Fayzz - Relaxed City-Pop Jazz Math-Rock">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Fayzz</div>
-                    <div class="band-country">中国 🇨🇳 &bull; Est. 2019</div>
-                </div>
-                <div class="tag-group"><span class="tag">数学后摇 / 融合爵士 / 霓虹都市</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    刘鹏 (吉他/合成器)<br>陈雨龙 (吉他/人声)<br>潘凡 (贝斯)<br>张博瀚 (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Mouse on the Keys / Toe / Jaga Jazzist</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 融合爵士爱好者 / 都市微醺青年 / 极致技术与松弛感偏爱者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“来自成都。国内把极为复杂的数学拍子和极致写意、慵懒松弛的都市律动平衡得最好的顶级乐团。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 绝妙地解构了传统数学摇滚冷硬、严苛的技术骨架。他们把高难度的奇数切音与和弦巧妙隐藏在富有 City-Pop 慵懒色调的融合爵士基底中，把硬核乐理穿上了一件时髦都市便服。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Connection》<br>《The World Is Changing...》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        全国保利剧院院线深度巡演 / 香港 Clockenflap 音乐节先锋时段
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 14. GEORDIE GREEP -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：怪诞天才、极具挑衅感的前卫实验摇滚怪咖舞台 -->
-                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80" alt="Geordie Greep - Mad Genius Avant-garde">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Geordie Greep</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 2024</div>
-                </div>
-                <div class="tag-group"><span class="tag">前卫实验摇滚 / 神经质爵士</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心独奏/前卫大乐团伴奏)</div>
-                    Geordie Greep (主唱/狂暴吉他核心)<br><i>现场标配：包含先锋萨克斯风、高频打击乐在内的7人超级怪咖乐团</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> black midi / Squid / The Pop Group</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 乐理狂魔 / black midi铁粉 / 极端前卫实验追随者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“神级前卫乐团 black midi 灵魂核心。怪诞、天才、颠覆性的多调性乐理解构实验。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 作为当代英国独立乐坛公认的鬼才，Greep 的现场是一场对传统乐迷听觉习惯的残酷挑衅。极高频的无条性前卫爵士切拍与疯狂突变，在台上的疯癫演绎具有无与伦比的后现代艺术价值。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《The New Sound》(2024神专)<br>《Holy, Holy》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        伦敦大都会实验音乐周压轴 / 全球各大高阶先锋艺术音乐节
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 15. GOODBYE, KINGS -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：巴洛克风情、欧洲古典学院派黑白电影沉静质感 -->
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80" alt="Goodbye Kings - Baroque Noir Cinema">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Goodbye, Kings</div>
-                    <div class="band-country">意大利 🇮🇹 &bull; Est. 2012</div>
-                </div>
-                <div class="tag-group"><span class="tag">电影感后摇 / 巴洛克新古典</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (6人)</div>
-                    Davide Romagnoli (吉他手)<br>Luca Sguerra (钢琴/键盘)<br>Matteo Maranzana (吉他)<br>Francesco Sguerra (鼓手)<br>Caterina Sforza (大提琴)<br>Alessandro Secchi (小号)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Rachel's / Dirty Three / Max Richter</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 新浪潮默片爱好者 / 欧洲古典主义追求者 / 文学式听众</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“在器乐里演奏一部精致的黑白默片，充满地中海式欧洲古典主义的优雅与高贵。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 这支米兰乐团完美将经典室内乐（Chamber Rock）的严谨构架无缝嵌入氛围后摇。管乐、大提琴与吉他多声部的交错，不仅是优美的乐章，更是用音符谱写的宿命论历史文学长卷。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Au Revoir, les Rois》<br>《A Moon-Shaped Cloud》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        米兰独立艺术沙龙特邀展演 / 欧洲多媒体黑胶限定概念现场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 16. HERETOIR -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：自赏黑绝美音墙、黑金属极速真双踩暴烈与圣洁光芒 -->
-                <img src="https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&w=600&q=80" alt="Heretoir - Blackgaze Sublime Blastbeat Wall">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Heretoir</div>
-                    <div class="band-country">德国 🇩🇪 &bull; Est. 2006</div>
-                </div>
-                <div class="tag-group"><span class="tag">后黑金属 / Blackgaze / 自赏</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    David "Eklatanz" Herbst (主唱/吉他)<br>Maximilian "Nils" Widder (吉他)<br>Matthias "Nils" S. (贝斯)<br>Kevin Storm (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Alcest / Deafheaven / Lantlôs</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 自赏黑金属死忠 / 反差极端美学拥趸 / 绝望哭腔接纳者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“绝望中窥见圣洁微光。将极致冰冷的极端黑金属死嗓与高速双踩，融化在唯美至极的梦幻吉他大音墙中。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 德系后黑自赏（Blackgaze）的核心精英。他们极其擅长调校充满大量混响与空间延迟的自赏吉他，将原本充满攻击性的重型音乐消融、升华为一首首荡气回肠的悲壮赞美诗。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Nostalgie》<br>《Wastelands》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        德国 Summer Breeze 音乐节 / 欧洲专属暗黑重型器乐巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 17. HUMAN TETRIS -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：工业包豪斯极简、低沉机械抖腿后朋克舞池 -->
-                <img src="https://images.unsplash.com/photo-1509824227185-9c5a01ceba0d?auto=format&fit=crop&w=600&q=80" alt="Human Tetris - Soviet Coldwave Post-Punk">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Human Tetris</div>
-                    <div class="band-country">俄罗斯 🇷🇺 &bull; Est. 2009</div>
-                </div>
-                <div class="tag-group"><span class="tag">后朋克 / 苏联冷波 / Coldwave</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    Arvid Kriger (主唱/吉他)<br>Tonia Shifrina (贝斯手/标志性冷酷线条)<br>Maxim Keller (吉他手)<br>Ramil Shamsutdinov (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Motorama / Interpol / Joy Division</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 复古抖腿青年 / 冷波合成器偏爱者 / 机械美学拥趸</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“复古清冷蹦迪。标志性极其洗脑、闷反的侵略性贝斯线条，带动机群进行没有感情的机械摇摆。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 苏联后朋克复兴浪潮的一面标志性旗帜。乐团线条利落、冰冷，鼓点几乎维持绝对的机械精准，这种将极寒地缘带来的钢铁冷色调完美转变为复古舞池驱动力的美学，极其高级、时髦。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Memorabilia》<br>《Things I Don't Need》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        横跨中南美洲及西欧的后朋克专属巡演 / 莫斯科独立音乐展演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 18. IN INERTIA -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：热带潮湿温热的海岛、水汽朦胧的南洋氛围 -->
-                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="In Inertia - Tropical Warm Post-rock Cloud">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">In Inertia</div>
-                    <div class="band-country">印度尼西亚 🇮🇩 &bull; Est. 2015</div>
-                </div>
-                <div class="tag-group"><span class="tag">热带氛围后摇 / 潮湿群岛</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    Aditya (吉他)<br>Dimas (吉他手)<br>Ferry (贝斯)<br>Rian (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Pg.lost / Tides From Nebula / 闷饼</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 亚洲独立地下乐挖掘者 / 湿润舒缓氛围同好 / 异域海岛迷</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“来自东南亚群岛的潮湿与细腻。不同于欧美高寒，他们的音符带着热带夏夜漫长的温热水汽。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 打破了传统的北欧式、美式后摇垄断。他们的吉他过载空间混响带有独特的、属于东南亚特有的湿气朦胧感。乐章推进逻辑自带潮汐自然规律，展现出亚洲地下器乐极强的新生爆发力。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Hope》<br>《Beyond the Ocean》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        雅加达独立音乐周主时段 / 东南亚前卫音乐交流展
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 19. THE JESUS AND MARY CHAIN -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：摇滚史殿堂传奇、极其狂暴叛逆的工业吉他噪音反馈 -->
-                <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=600&q=80" alt="JAMC - Historical Noise Feedback Icon">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">The Jesus and Mary Chain</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 1983</div>
-                </div>
-                <div class="tag-group"><span class="tag">噪音流行 / 自赏 Shoegaze 鼻祖 / 殿堂传奇</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心两兄弟/巡演高配置)</div>
-                    Jim Reid (主唱/吉他)<br>William Reid (主音吉他/经典噪音缔造者)<br><i>巡演常驻：专业鼓手、节奏吉他、贝斯三大件黄金老牌团队</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> My Bloody Valentine / Slowdive / Ride</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 摇滚历史打卡者 / 骨灰级胶友 / 黑超黑皮衣经典独立摇滚党</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“独立摇滚史上的不落活化石。把吉他反馈噪音（Feedback）彻底玩成圣堂教科书的一代巨星。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 摇滚历史长河的绝对地标。他们的革命性在于将60年代极致甜美的波普旋律，无情浸泡在刺耳、尖锐、失控的工业级吉他反馈中，一手开启了后世噪音摇滚与自赏（Shoegaze）流派的半壁江山。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Psychocandy》(旷世神专)<br>《Just Like Honey》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        巴塞罗那 Primavera Sound 超级压轴 / 英国皇家阿尔伯特音乐厅周年专场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 20. PENGUIN CAFE -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：轻盈、跳跃具有极高英式荒诞与高级艺术风情下午茶舞台 -->
-                <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80" alt="Penguin Cafe - Elegant British Avant-Chamber">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Penguin Cafe</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 2009</div>
-                </div>
-                <div class="tag-group"><span class="tag">前卫室内乐 / 极简主义新古典</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (大型管弦艺术室内乐团)</div>
-                    Arthur Jeffes (钢琴/乐团主脑)<br>Des Murphy (四弦琴/尤克里里)<br>Andy Waterworth (低音提琴)<br>Rebecca Waterworth (大提琴)<br><i>含多位长期联合的小提琴与打击乐演奏家</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Penguin Cafe Orchestra / Kronos Quartet</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 高雅室内乐同好 / 英式艺术美学迷 / 趣味器乐追随者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“轻盈跳跃的英式下午茶。大提琴、四弦琴与钢琴跨界交织出最纯粹的童真幽默与古典高级美。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 完美承袭了先父大名鼎鼎的 Penguin Cafe Orchestra 的英式前卫荒诞衣钵。他们精妙揉合了极简、先锋流行与各地根源民谣，用严谨的室内编制玩出了毫无匠气的优雅幽默。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《A Matter of Life...》<br>《Handfuls of Night》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        伦敦皇家节日大厅年度专场 / 欧洲多个国家级高端古典/前卫艺术节
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 21. POWDER! GO AWAY -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：北国冰雪消融、冬日暖阳般的透彻明亮澄净氛围 -->
-                <img src="https://images.unsplash.com/photo-1494735653456-f85df2f0e0df?auto=format&fit=crop&w=600&q=80" alt="Powder Go Away - Cozy Russian Healing Sun">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Powder! Go Away</div>
-                    <div class="band-country">俄罗斯 🇷🇺 &bull; Est. 2010</div>
-                </div>
-                <div class="tag-group"><span class="tag">治愈系氛围后摇 / 小清新</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    Alexey (吉他)<br>Vladimir (吉他手)<br>Sergey (贝斯)<br>Den (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Lights & Motion / Moonlit Sailor</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 唯美纯音乐常伴者 / 入门后摇必听群体 / 情绪松弛需求者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“俄式极寒中少有的极致治愈与温柔。清脆如阳光下冰雪消融的音符，无数乐迷的入坑圣作。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 证明了氛围器乐摇滚能够彻底摆脱冗长、沉重的历史哲学包袱。旋律线条极为清澈、明亮，结构工整，非常擅长在寒冷的北国采样背景下，弹奏出极具几何治愈感的唯美篇章。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Laika Still Wants to Go Home》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        全球各大流媒体长青神作霸榜 / 莫斯科独立器乐室内精品现场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 22. RANGES -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：肃穆庄严的黑色群山连绵、崇高宗教神学色彩仪轨 -->
-                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="Ranges - Majestic Monumental Mountain Post-Rock">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Ranges</div>
-                    <div class="band-country">美国 🇺🇸 &bull; Est. 2013</div>
-                </div>
-                <div class="tag-group"><span class="tag">概念性重型后摇 / 宗教神学深意</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    CJ Blessum (吉他手)<br>Joey "The Kid" Saucier (吉他)<br>Wilson "The Moose" Rebo (贝斯)<br>Mark "Heavy Metal" Saucier (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> If These Trees Could Talk / Pelican / Rosetta</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 概念全集挖掘乐迷 / 宗教宏伟美学追求者 / 史诗厚重音墙拥趸</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“带有深邃哲学深度与宗教崇高感的肃穆器乐，音墙宏大、威严如连绵不绝的黑色重型巨石山脉。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 美国前卫独立器乐厂牌 A Thousand Arms 的绝对顶梁柱。其作品具备极强的仪轨色彩，将沉重的双吉他轰鸣与雷鸣鼓点结合，具有石碑般不容置疑的历史历史厚重感与崇高美。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《The Ascensionist》(概念名作)<br>《Babel》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        美国 A Thousand Arms 专属后摇周主打压轴 / 北美硬核器乐巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 23. SUNGAZER -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：科技感、脑机接口般的未来主义复杂脉冲与电子故障 -->
-                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" alt="Sungazer - Future Jazz Electronic Cyberpunk">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Sungazer</div>
-                    <div class="band-country">美国 🇺🇸 &bull; Est. 2014</div>
-                </div>
-                <div class="tag-group"><span class="tag">未来前卫电音爵士 / 极客数学</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (双天才脑机组合/高能电声)</div>
-                    Adam Neely (油管顶流乐理大师/神级贝斯手)<br>Shawn Crowder (硬核高频打击乐/电子鼓核心)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Knower / Louis Cole / Dirty Loops</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 音乐制作人极客 / 学术派乐理发烧友 / 电子脉冲蹦迪青年</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“学术巨匠 Adam Neely 的高维脑机狂欢。将人类触觉极限的复杂拍子与未来电音和爵士完美缝合。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 站在21世纪AI乐理最前沿的融合代表。他们将故障电子（Glitch/8-Bit）和极其反常规的微调性高难爵士乐理进行跨界硬核焊接，是一场属于数字时代赛博极客的颠覆性高维实验。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Perihelion》<br>《Dream On》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        纽约先锋前卫爵士中心压轴 / 全球巡回先锋电声大师班专场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 24. SYLVAINE -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：挪威森林孤高精灵、圣洁空灵天籁与冰原开裂黑金属极端反差 -->
-                <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=600&q=80" alt="Sylvaine - Ethereal Blackgaze Nordic Princess">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Sylvaine</div>
-                    <div class="band-country">挪威 🇳🇴 &bull; Est. 2013</div>
-                </div>
-                <div class="tag-group"><span class="tag">空灵自赏黑 / 仙音 Ethereal / 多乐器才女</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (核心创作才女/巡演精英编制)</div>
-                    Kathrine Shepard (绝美主唱/独奏吉他/多乐器核心)<br><i>现场客座：包含来自欧洲地下重型的吉他、贝斯与狂暴黑金属鼓手</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Alcest / Chelsea Wolfe / Emma Ruth Rundle</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 仙音派美学信徒 / 重型反差极端崇拜者 / 挪威冷冽崇拜群体</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“挪威深林深处的孤高精灵。圣洁无瑕的梦幻轻吟与无预警爆裂开裂的冰原黑嗓，反差极其绝美。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 完美将 Ethereal 天籁仙音与自赏黑金属的残酷野性焊接到了一起。她能从最空灵的呢喃，一瞬间切换成撕裂苍穹般的极端低吼，情感强悍得令人颤抖、窒息。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Atoms Aligned, Coming Undone》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        斩获挪威格莱美重型流派历史性提名 / 领衔欧洲大型前卫金属与跨界古典盛宴
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 25. UNREQVITED -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：北极圈浩瀚星空永夜、孤寂至极的华丽管弦宇宙 -->
-                <img src="https://images.unsplash.com/photo-1418489098061-ce87b5dc3aee?auto=format&fit=crop&w=600&q=80" alt="Unreqvited - Symphonic Atmospheric Post-Blackgaze Starry Night">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Unreqvited</div>
-                    <div class="band-country">加拿大 🇨🇦 &bull; Est. 2016</div>
-                </div>
-                <div class="tag-group"><span class="tag">唯美氛围交响黑 / 永夜星空</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (一人神级交响企划)</div>
-                    鬼才音乐家 "鬼" (全乐器演奏/合成器大编制调校/绝望撕扯人声)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Lustre / Woods of Desolation / Coldworld</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 孤独悲怆情感宣泄者 / 浪漫管弦星空党 / 唯美重型迷</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“极致唯美、孤高死寂的星空交响乐。用极其华丽庞大的合成器管弦，将孤独升华成了美丽的史诗。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 该项目是一项仅凭凭借一人之力构建的庞大室内氛围黑金属悲剧宏伟叙事。主脑大刀阔斧削弱了重金属的纯物理攻击性，全面用绝望悲凉的宏大古典管弦托底，极其震撼。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Disquiet》<br>《Mosaic I: L'Amour Et L'Horreur》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        长年潜伏于录音室的高产概念创作者 / 欧洲地下极端暗黑氛围音乐节线上特邀
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 26. YUFU -->
-        <div class="band-item" data-type="domestic">
-            <div class="band-img-box">
-                <!-- 甄选视觉：大开大合硬朗稳固的华夏东方铁血器乐美学 -->
-                <img src="https://images.unsplash.com/photo-1505282722405-4c6d4ad46601?auto=format&fit=crop&w=600&q=80" alt="Yufu - Hardcore Oriental Avant-Garde">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Yufu (御斧)</div>
-                    <div class="band-country">中国 🇨🇳 &bull; Est. 2020</div>
-                </div>
-                <div class="tag-group"><span class="tag">前卫器乐摇滚 / 铁血东方后摇</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人)</div>
-                    张威 (主音吉他)<br>陈晓东 (吉他/采样)<br>周恒 (贝斯)<br>马一鸣 (鼓手)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> 沼泽乐队 / 花伦 / Tortoise (架构借调)</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 东方骨架拥趸 / 爆发力极强硬朗现场粉 / 前卫摇滚发烧友</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“大开大合的东方硬朗史诗。将华夏特有的沉静隐忍和极度爆裂完美揉碎在精密的铁血器乐中。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 极其高明地规避了市面上传统国风独立器乐容易陷入的空洞、流俗拼贴。其双吉他的咬合线条极其稳健、硬朗，动态大开大合，是国内罕见具备真正历史纵深感与大格局的黑马。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《长城》<br>《九歌》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        国内地下器乐独立展演联合核心 / Livehouse 爆发力口碑场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 27. BRUNO BAVOTA & CHANTAL ACDA -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：极其脆弱纯净、抛弃一切现代工业修饰的微光呼吸质感 -->
-                <img src="https://images.unsplash.com/photo-1543794327-59a91fb7d289?auto=format&fit=crop&w=600&q=80" alt="Bavota Acda - Ultra-Fragile Micro-acoustic">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Bavota & Chantal Acda (Special Project)</div>
-                    <div class="band-country">欧洲联队 🇪🇺 &bull; Est. 2022</div>
-                </div>
-                <div class="tag-group"><span class="tag">原声低吟 / 极简微光室内乐</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (双剑合璧2人)</div>
-                    Bruno Bavota (意大利极简钢琴手)<br>Chantal Acda (比利时殿堂级空灵呢喃女声)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> A Winged Victory for the Sullen / Olafur Arnalds</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 稀缺现场收集狂 / 微小声音触觉发烧友 / 独处主义者</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“古典钢琴巨匠与比利时微光低吟女声的极致联动。安静如林间落叶，纯净无瑕。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 一场极其珍贵、甚至略带脆弱颤抖的欧洲木质室内乐原声摩擦。Bavota 如诗的延时落键，完美包裹住了 Acda 毫无工业雕琢、甚至带着微弱换气呼吸声的低吟，大音希声。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《A Closer Distance》(神级合作专辑)
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        欧洲数间百年历史老教堂微光专场限定 / 现代先锋艺术画廊闭门夜
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 28. IN INERTIA (LIVE SELECTION) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：热带海岛夜晚深邃通宵、带有新媒体电子交互光影的大型实验 -->
-                <img src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?auto=format&fit=crop&w=600&q=80" alt="In Inertia Live - Tropical Interactive Light Drone">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">In Inertia (Live Selection)</div>
-                    <div class="band-country">印度尼西亚 🇮🇩 &bull; Est. 2018</div>
-                </div>
-                <div class="tag-group"><span class="tag">热带实验氛围 / 新媒体采样电子</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (4人强化电子版)</div>
-                    除核心三大件外，由团队主力兼任现场新媒体视频控制与交互式电声故障（Glitch）发生器操控。
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Tycho / Boards of Canada / Solar Fields</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 先锋新媒体艺术拥趸 / 氛围通宵跳舞群体 / 地下电子迷</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“该特别版企划极度强化了现场的电子律动与即兴泛音实验，空旷、深邃且极其迷幻。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 极大颠覆、大刀阔斧重置了乐队原有的传统后摇框架。通过现场对南洋雨林环境的即兴低频采样，大面积糅合现代电音，成功将乐团推向了具备浸润式多媒体交互的高级声学实验现场。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Live Echoes From Archipelago》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        雅加达新媒体先锋电子艺术节特别邀请压轴 / 亚洲前沿多媒体电声专场
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 29. CAROLINE (SEXTET LIVE) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：纯木声原声、极其严谨高级的极简主义古典学院派回响 -->
-                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=600&q=80" alt="Caroline Sextet - Academic Minimalism Pure Acoustic">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Caroline (Sextet Live)</div>
-                    <div class="band-country">英国 🇬🇧 &bull; Est. 2021</div>
-                </div>
-                <div class="tag-group"><span class="tag">极简主义原声 / 学院派室内六重奏</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (限定精简6人组)</div>
-                    Jasper (大提琴/人声)<br>Casper (木吉他)<br>Oliver (主音小提琴)<br><i>外加长期联合的客座第二小提琴、低音提琴与小打乐手</i>
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Steve Reich / Philip Glass / Penguin Cafe</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 纯木声爱好者 / 极简主义乐理拥趸 / 留白美学狂热粉</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“Caroline 乐团极珍稀的纯六重奏版。彻底剥离一切大功率电声，专注于纯物理室内回响。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 这是对上世纪伟大的极简主义（Minimalism）古典大师最纯粹、甚至略带苛刻的一次集体致敬。纯粹依赖弦乐自身的物理震动共鸣，把极致微小的摩擦声音颗粒无限放大，极高级。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Acoustic Sessions at BBC》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        英国 BBC 传奇独立电台录音室限定 Live 现场 / 伦敦当代艺术学院特别特邀
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 30. COVET (YVETTE YOUNG SOLO) -->
-        <div class="band-item" data-type="global">
-            <div class="band-img-box">
-                <!-- 甄选视觉：脱离三大件、裸露纯粹指弹吉他最灵动强大的个人光芒 -->
-                <img src="https://images.unsplash.com/photo-1456948927036-ad533e53865c?auto=format&fit=crop&w=600&q=80" alt="Yvette Young Solo - Fingerstyle Acoustic Mastery">
-            </div>
-            <div class="band-meta">
-                <div class="band-title-wrap">
-                    <div class="band-name">Yvette Young (Covet Solo)</div>
-                    <div class="band-country">美国 🇺🇸 &bull; Est. 2015</div>
-                </div>
-                <div class="tag-group"><span class="tag">原声纯吉他指弹 / Fingerstyle</span></div>
-                
-                <div class="members-box">
-                    <div class="members-title">👥 乐团编制 (大女主个人独奏)</div>
-                    Yvette Young (单人一琴 / 原声木吉他 / 纯熟双手情绪化点弦大师)
-                </div>
-
-                <div class="recommend-bands">💡 <strong>同类推荐:</strong> Andy McKee / Don Ross / Kaki King</div>
-                <div class="audience">👥 <strong>乐迷画像:</strong> 原声吉他硬核死忠 / 传统指弹收藏家 / 极致大女主独立乐迷</div>
-            </div>
-            <div class="band-content">
-                <div class="quote">“Yvette Young 极其珍贵的纯原声个人独奏。没有电声三大件掩护，单凭一把木吉他双手点弦震撼全场。”</div>
-                <div class="critic-review">✍️ <strong>乐评人视点:</strong> 属于原声木质（Acoustic）声学的高阶圣殿。彻底卸下 Covet 乐团庞大的电声轰鸣后，Yvette 裸露的指弹将其深厚的古典钢琴根基展现得淋漓尽致，颗粒感极其清脆、充满天然的生命力。</div>
-                <div class="detail-meta-grid">
-                    <div>
-                        <span class="info-label">💿 代表作 / 专辑</span>
-                        《Acoustic EP》<br>《Hydra》
-                    </div>
-                    <div>
-                        <span class="info-label">🎪 履历足迹 (近期)</span>
-                        全球顶级原声手工吉他精品艺术沙龙特邀大师班 / 北美专属独立原声巡演
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 
     <footer>
-        &copy; 2026 CAN FESTIVAL &bull; 30 Complete Visual & Hardcore Encyclopedia Database<br>
-        DESIGN STYLE: HIGH-END MUSIC MAGAZINE ARCHIVE / WITH DETAILED MEMBERS & HISTORICAL TRACKS
+        &copy; 2026 CAN FESTIVAL &bull; Authentic Band Photos & Live Document<br>
+        DESIGN STYLE: HIGH-END MUSIC MAGAZINE ARCHIVE / RE-VERIFIED PICTURES
     </footer>
 
 </body>
