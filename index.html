@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAN FESTIVAL 2026 | 极简音乐节日程</title>
+    <title>CAN FESTIVAL 2026 | 极简音乐节官方全阵容</title>
     <style>
         /* 1. 核心色彩系统声明 - 完美复刻海报的清新复古岛屿色调 */
         :root {
             --bg-canvas: #F5EFEB;       /* 极简留白：温润清新的羊皮纸底色 */
             --ocean-blue: #5FA2C5;      /* 核心点缀：海报中的清爽海岛蓝 */
             --poppy-pink: #D18FA5;      /* 次要点缀：低饱和度烟粉色 */
-            --sunset-red: #B54D5A;      /* 醒目标签：复古红砖色 */
             --text-main: #333C3A;       /* 高可读性：深石墨绿/黑，替代纯黑以显高级 */
             --text-muted: #707A78;     /* 辅助信息：清透的灰绿色 */
             --card-bg: #FFFFFF;         /* 卡片背景：纯白提升悬浮感与干净度 */
             --border-line: #E1D7CE;     /* 极简细线：浅卡其色边框 */
+            --tag-bg: #FAF6F3;          /* 标签背景：极浅的暖咖色 */
         }
 
         /* 2. 基础样式重置 */
@@ -30,16 +30,15 @@
             color: var(--text-main);
             line-height: 1.6;
             padding: 40px 20px;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.02em;
         }
 
-        /* 3. 版面容器 */
         .container {
-            max-width: 1040px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* 4. 头部设计 - 极致留白与清爽线条 */
+        /* 3. 头部设计 - 极致留白与清爽线条 */
         header {
             text-align: center;
             padding-bottom: 60px;
@@ -60,7 +59,7 @@
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 300;
             letter-spacing: 0.08em;
             color: var(--text-main);
@@ -77,50 +76,72 @@
             margin: 0 10px;
         }
 
-        /* 5. 阵容网格布局 */
+        /* 4. 阵容网格布局 - 适配丰富信息的大网格 */
         .lineup-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 35px;
         }
 
-        /* 6. 卡片设计 - 清新极简的核心体现 */
+        /* 5. 卡片设计 */
         .band-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-line);
-            border-radius: 4px;
-            padding: 30px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            transition: all 0.3s ease;
         }
 
         .band-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-5px);
             border-color: var(--ocean-blue);
-            box-shadow: 0 10px 25px rgba(95, 162, 197, 0.08);
+            box-shadow: 0 15px 35px rgba(95, 162, 197, 0.06);
         }
 
-        /* 卡片头部区域 */
+        /* 乐队实拍照片区域 */
+        .band-photo-wrapper {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            background-color: #EFE9E4; /* 图片未加载时的极简灰色占位 */
+        }
+
+        .band-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 卡片内容区域 */
+        .band-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
         .band-header {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .band-meta {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .country-tag {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             color: var(--ocean-blue);
             border: 1px solid var(--ocean-blue);
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 2px;
+            letter-spacing: 0.05em;
         }
 
         .member-count {
@@ -129,18 +150,19 @@
         }
 
         .band-name {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 600;
             color: var(--text-main);
-            line-height: 1.3;
+            line-height: 1.2;
+            margin-top: 4px;
         }
 
-        /* 乐手编制列表 - 高可读性排版 */
+        /* 乐手编制列表 */
         .roles-list {
             list-style: none;
             border-top: 1px solid #F0EAE5;
-            padding-top: 16px;
-            margin-bottom: 16px;
+            padding-top: 14px;
+            margin-bottom: 18px;
         }
 
         .role-item {
@@ -148,37 +170,89 @@
             justify-content: space-between;
             align-items: baseline;
             font-size: 0.85rem;
-            margin-bottom: 8px;
-        }
-
-        .role-item:last-child {
-            margin-bottom: 0;
+            margin-bottom: 6px;
         }
 
         .member-name {
             font-weight: 500;
             color: var(--text-main);
-            padding-right: 10px;
         }
 
         .member-role {
             color: var(--text-muted);
             font-size: 0.8rem;
-            text-align: right;
         }
 
-        /* 附注说明 */
+        /* 深度扩展板块样式 - 极致可读排版 */
+        .info-section {
+            margin-bottom: 14px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .info-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background-color: #F2ECE7;
+        }
+
+        .review-text {
+            color: var(--text-main);
+            font-style: italic;
+        }
+
+        /* 标签流样式 (乐迷风格 & 相似乐队) */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .info-tag {
+            font-size: 0.75rem;
+            background-color: var(--tag-bg);
+            color: var(--text-main);
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #ECE4DE;
+        }
+
+        .info-tag.sim-band {
+            border-left: 2px solid var(--ocean-blue);
+        }
+
+        .live-text {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* 底部特写附注 */
         .band-note {
             font-size: 0.78rem;
             color: var(--poppy-pink);
             background-color: #FAF4F6;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 4px;
-            border-left: 2px solid var(--poppy-pink);
+            border-left: 3px solid var(--poppy-pink);
             line-height: 1.4;
+            margin-top: auto;
         }
 
-        /* 7. 页脚设计 */
+        /* 6. 页脚设计 */
         footer {
             text-align: center;
             margin-top: 80px;
@@ -188,13 +262,19 @@
             color: var(--text-muted);
             letter-spacing: 0.05em;
         }
+
+        @media (max-width: 480px) {
+            .lineup-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <div class="festival-badge">OFFICIAL LINEUP</div>
+        <div class="festival-badge">OFFICIAL FULL LINEUP & GUIDE</div>
         <h1>CAN FESTIVAL 2026</h1>
         <div class="meta-info">
             <strong>17-19 APRIL</strong><span>•</span><strong>ZHOUSHAN ISLAND</strong>
@@ -203,196 +283,995 @@
 
     <main class="lineup-grid">
 
+        <!-- 1. AND SO I WATCH YOU FROM AFAR -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">UK</span>
-                    <span class="member-count">2 Core / 5 Live Members</span>
-                </div>
-                <h2 class="band-name">THE JESUS AND MARY CHAIN</h2>
+            <div class="band-photo-wrapper">
+                <img src="asiwyfa_live.jpg" alt="AND SO I WATCH YOU FROM AFAR 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Jim Reid</span><span class="member-role">Lead Vocals</span></li>
-                <li class="role-item"><span class="member-name">William Reid</span><span class="member-role">Lead Guitar / Backing Vocals</span></li>
-                <li class="role-item"><span class="member-name">Mark Crozer</span><span class="member-role">Live Bass</span></li>
-                <li class="role-item"><span class="member-name">Scott Von Ryper</span><span class="member-role">Live Guitar</span></li>
-                <li class="role-item"><span class="member-name">Justin Welch</span><span class="member-role">Live Drums</span></li>
-            </ul>
-            <div class="band-note">传奇自赏/噪音流行先驱，本次音乐节殿堂级重磅压轴。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">UK</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">AND SO I WATCH YOU FROM AFAR</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Rory Friers</span><span class="member-role">吉他 / 采样</span></li>
+                    <li class="role-item"><span class="member-name">Niall Kennedy</span><span class="member-role">吉他手</span></li>
+                    <li class="role-item"><span class="member-name">Chris Wee</span><span class="member-role">鼓手 / 打击乐</span></li>
+                    <li class="role-item"><span class="member-name">Johnny Adger</span><span class="member-role">贝斯手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“打破了传统后摇起承转合的温吞定律，以极其狂暴的吉他连弦和复杂的数学对位统治现场。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">数学摇滚重度患者</span><span class="info-tag">高能Pogo党</span><span class="info-tag">硬核器乐迷</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Maybeshewill</span><span class="info-tag sim-band">65daysofstatic</span><span class="info-tag sim-band">TTNG</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 ArcTanGent 音乐节压轴、2025 欧洲巡演伦敦站</p>
+                </div>
+                <div class="band-note">北爱尔兰高能数学摇滚强团，演出现场极其炸裂，拒绝温吞。</div>
+            </div>
         </div>
 
+        <!-- 2. BALMORHEA -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">UK</span>
-                    <span class="member-count">4 Members</span>
-                </div>
-                <h2 class="band-name">AND SO I WATCH YOU FROM AFAR</h2>
+            <div class="band-photo-wrapper">
+                <img src="balmorhea_live.jpg" alt="BALMORHEA 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Rory Friers</span><span class="member-role">Guitar / Sampling</span></li>
-                <li class="role-item"><span class="member-name">Niall Kennedy</span><span class="member-role">Guitar</span></li>
-                <li class="role-item"><span class="member-name">Chris Wee</span><span class="member-role">Drums / Percussion</span></li>
-                <li class="role-item"><span class="member-name">Johnny Adger</span><span class="member-role">Bass Guitar</span></li>
-            </ul>
-            <div class="band-note">来自北爱尔兰的高能数学摇滚/后摇强团。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">US</span><span class="member-count">2核心 (现场多乐器编制)</span></div>
+                    <h2 class="band-name">BALMORHEA</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Rob Lowe</span><span class="member-role">吉他 / 钢琴 / 键盘</span></li>
+                    <li class="role-item"><span class="member-name">Michael A. Muller</span><span class="member-role">吉他手 / 键盘采样</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“如同在德克萨斯荒原上升起的冬日暖阳，将古典室内乐的克制与极简主义后摇的空灵完美糅合。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">氛围古典爱好者</span><span class="info-tag">独处冥想系</span><span class="info-tag">极简美学党</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Goldmund</span><span class="info-tag sim-band">A Winged Victory for the Sullen</span><span class="info-tag sim-band">Olafur Arnalds</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 德州奥斯汀中央教堂专场、2024 欧洲多国大剧院巡演</p>
+                </div>
+                <div class="band-note">美国新古典主义器乐后摇，如冬日暖阳般细腻内敛。</div>
+            </div>
         </div>
 
+        <!-- 3. BLUE FOUNDATION -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">US</span>
-                    <span class="member-count">3 Members</span>
-                </div>
-                <h2 class="band-name">COVET</h2>
+            <div class="band-photo-wrapper">
+                <img src="blue_foundation_live.jpg" alt="BLUE FOUNDATION 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Yvette Young</span><span class="member-role">Lead Guitar / Keyboards / Vocals</span></li>
-                <li class="role-item"><span class="member-name">Brandon Dove</span><span class="member-role">Bass</span></li>
-                <li class="role-item"><span class="member-name">Jessica Burdeaux</span><span class="member-role">Drums</span></li>
-            </ul>
-            <div class="band-note">由新一代灵动吉他女帝 Yvette Young 领衔的数摇名团。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">DK</span><span class="member-count">2核心 (带巡演乐手)</span></div>
+                    <h2 class="band-name">BLUE FOUNDATION</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Tobias Wilner</span><span class="member-role">主唱 / 吉他 / 制作人</span></li>
+                    <li class="role-item"><span class="member-name">Bo Rande</span><span class="member-role">小号 / 合成器 / 和声</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“游走在北欧清冷梦幻流行与Trip-Hop阴郁电子之间的幽灵，现场小号一出瞬间将人带入暮色森林。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">神游电子迷</span><span class="info-tag">暮光之城情结</span><span class="info-tag">北欧冷调控</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Archive</span><span class="info-tag sim-band">Massive Attack</span><span class="info-tag sim-band">Múm</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 哥本哈根音乐厅特别专场、2024 亚洲多城巡演</p>
+                </div>
+                <div class="band-note">丹麦迷幻电子/Dream Pop名团，标志性的阴郁清冷美学。</div>
+            </div>
         </div>
 
+        <!-- 4. BRUIT ≤ -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">US</span>
-                    <span class="member-count">2 Members</span>
-                </div>
-                <h2 class="band-name">SUNGAZER</h2>
+            <div class="band-photo-wrapper">
+                <img src="bruit_live.jpg" alt="BRUIT ≤ 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Adam Neely</span><span class="member-role">Bass / Synth / Ableton Live</span></li>
-                <li class="role-item"><span class="member-name">Shawn Crowder</span><span class="member-role">Drums / Acoustic & E-Percussion</span></li>
-            </ul>
-            <div class="band-note">将未来感霓虹电子与数学摇滚融合的先锋双人组。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">FR</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">BRUIT ≤</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Theophile Lahaye</span><span class="member-role">大提琴手</span></li>
+                    <li class="role-item"><span class="member-name">Clément Libes</span><span class="member-role">小提琴 / 键盘 / 制作</span></li>
+                    <li class="role-item"><span class="member-name">Mathieu Lilly</span><span class="member-role">吉他手</span></li>
+                    <li class="role-item"><span class="member-name">Jean-Baptiste Geoffroy</span><span class="member-role">鼓手 / 环绕打击乐</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“当代最具野心的交响艺术后摇，他们用古典弦乐搭建框架，随后用推土机般的现代音墙将其彻底摧毁。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">重度震撼洗礼流</span><span class="info-tag">交响黑金属兼修</span><span class="info-tag">实验先锋拥趸</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Godspeed You! Black Emperor</span><span class="info-tag sim-band">Mono</span><span class="info-tag sim-band">Amenra</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 Dunk!Festival 压轴、2025 法国巴黎大教堂限定演出</p>
+                </div>
+                <div class="band-note">法国前卫交响后摇，将古典弦乐与爆裂墙无缝交织。</div>
+            </div>
         </div>
 
+        <!-- 5. BRUNO BAVOTA -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">DK</span>
-                    <span class="member-count">2 Core Members</span>
-                </div>
-                <h2 class="band-name">BLUE FOUNDATION</h2>
+            <div class="band-photo-wrapper">
+                <img src="bruno_bavota_live.jpg" alt="BRUNO BAVOTA 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Tobias Wilner</span><span class="member-role">Vocals / Guitar / Synth / Producer</span></li>
-                <li class="role-item"><span class="member-name">Bo Rande</span><span class="member-role">Trumpet / Synth / Backing Vocals</span></li>
-            </ul>
-            <div class="band-note">来自丹麦的梦幻流行/Trip-Hop电子乐团。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">IT</span><span class="member-count">单人独奏</span></div>
+                    <h2 class="band-name">BRUNO BAVOTA</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Bruno Bavota</span><span class="member-role">钢琴 / 环境电子 / 环绕Loop</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“用意大利南部的地中海微风编织现代键琴，微弱的电子采样与钢琴漫反射出的回音让人瞬间安静。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">新古典现代钢琴迷</span><span class="info-tag">极简治愈系</span><span class="info-tag">书房背景乐收藏家</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Ludovico Einaudi</span><span class="info-tag sim-band">Fabrizio Paterlini</span><span class="info-tag sim-band">Yiruma</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 罗马古典音乐节、2024 欧洲现代极简主义巡回展演</p>
+                </div>
+                <div class="band-note">意大利现代新古典钢琴家，用极简的琴音编织纯净浪潮。</div>
+            </div>
         </div>
 
+        <!-- 6. CAROLINE -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">UK</span>
-                    <span class="member-count">7 Live Musicians</span>
-                </div>
-                <h2 class="band-name">PENGUIN CAFE</h2>
+            <div class="band-photo-wrapper">
+                <img src="caroline_live.jpg" alt="CAROLINE 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Arthur Jeffes</span><span class="member-role">Piano / Keyboards / Leader</span></li>
-                <li class="role-item"><span class="member-name">Live Ensemble</span><span class="member-role">Violins / Cello / Double Bass / Percussion</span></li>
-            </ul>
-            <div class="band-note">融合现代极简主义与古典民谣的室内乐团。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">UK</span><span class="member-count">8人大型编制</span></div>
+                    <h2 class="band-name">CAROLINE</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">乐团现场人马</span><span class="member-role">双提琴 / 双吉他 / 多声部和声</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“难以被定义的慢核前卫民谣共同体，与其说他们在演奏，不如说他们在舞台上捕捉即兴、留白与呼吸。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">慢核/Slowcore党</span><span class="info-tag">阿巴拉契亚前卫民谣迷</span><span class="info-tag">留白艺术控</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Black Country, New Road</span><span class="info-tag sim-band">Low</span><span class="info-tag sim-band">Talk Talk</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 伦敦伊丽莎白女王音乐厅专场、2025 Green Man 音乐节</p>
+                </div>
+                <div class="band-note">英国实验前卫民谣共同体，探索即兴、留白与微弱声响。</div>
+            </div>
         </div>
 
+        <!-- 7. CIVIL SERVICE -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">RU</span>
-                    <span class="member-count">3 Members</span>
-                </div>
-                <h2 class="band-name">HUMAN TETRIS</h2>
+            <div class="band-photo-wrapper">
+                <img src="civil_service_live.jpg" alt="CIVIL SERVICE 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Arvid Kriger</span><span class="member-role">Lead Vocals / Guitar</span></li>
-                <li class="role-item"><span class="member-name">Tini Kabulova</span><span class="member-role">Bass Guitar</span></li>
-                <li class="role-item"><span class="member-name">Ramil Shamsutdinov</span><span class="member-role">Drums</span></li>
-            </ul>
-            <div class="band-note">冷冽清爽的经典俄罗斯后朋克/冷波乐团。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">UK</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">CIVIL SERVICE</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">乐队乐手班底</span><span class="member-role">双吉他 / 贝斯 / 鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“英国传统重型器乐后摇的忠实继承者。没有什么花哨的修饰，他们靠钢铁般的宏大音墙和悲壮旋律正面击碎观众。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">正统重型后摇迷</span><span class="info-tag">悲壮旋律控</span><span class="info-tag">音墙洗礼流</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Caspian</span><span class="info-tag sim-band">Jakob</span><span class="info-tag sim-band">Rosetta</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 曼彻斯特后摇巡演、2024 Portals Festival</p>
+                </div>
+                <div class="band-note">英国新生代重型器乐后摇，层层递进的传统音墙。</div>
+            </div>
         </div>
 
+        <!-- 8. COVET -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">FR</span>
-                    <span class="member-count">4 Members</span>
-                </div>
-                <h2 class="band-name">BRUIT ≤</h2>
+            <div class="band-photo-wrapper">
+                <img src="covet_live.jpg" alt="COVET 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Theophile Lahaye</span><span class="member-role">Cello</span></li>
-                <li class="role-item"><span class="member-name">Clément Libes</span><span class="member-role">Violin / Keyboards / Producer</span></li>
-                <li class="role-item"><span class="member-name">Mathieu Lilly</span><span class="member-role">Guitar</span></li>
-                <li class="role-item"><span class="member-name">Jean-Baptiste Geoffroy</span><span class="member-role">Drums / Percussion</span></li>
-            </ul>
-            <div class="band-note">法国前卫新古典艺术后摇，宏大的现场宿命感。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">US</span><span class="member-count">3人编制</span></div>
+                    <h2 class="band-name">COVET</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Yvette Young</span><span class="member-role">主音吉他 / 键盘 / 灵动主创</span></li>
+                    <li class="role-item"><span class="member-name">Brandon Dove</span><span class="member-role">贝斯手</span></li>
+                    <li class="role-item"><span class="member-name">Jessica Burdeaux</span><span class="member-role">鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“吉他女帝 Yvette Young 将双手点弦技术演变成了绚丽的魔法，多彩、轻盈、跳跃，完全颠覆了后摇的灰色调。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">多指点弦技术迷</span><span class="info-tag">元气数摇党</span><span class="info-tag">器乐设备发烧友</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Chon</span><span class="info-tag sim-band">Polyphia</span><span class="info-tag sim-band">Elephant Gym</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 美加全境巡演、2024 日本富士摇滚音乐节 (Fuji Rock)</p>
+                </div>
+                <div class="band-note">新一代数学摇滚代表，标志性的双指点弦与灵动节奏。</div>
+            </div>
         </div>
 
+        <!-- 9. 重返袖珍时光 -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">CN</span>
-                    <span class="member-count">2 Core Members</span>
-                </div>
-                <h2 class="band-name">厨子和戏子</h2>
+            <div class="band-photo-wrapper">
+                <img src="pocket_time_live.jpg" alt="重返袖珍时光 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">秦秀乾</span><span class="member-role">Lead Vocals / Guitar</span></li>
-                <li class="role-item"><span class="member-name">童子文</span><span class="member-role">Lead Vocals / Flute / Percussion</span></li>
-            </ul>
-            <div class="band-note">现场配置传统电声与国风传统乐器的独立乐团。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">CN</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">重返袖珍时光</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">乐手成员</span><span class="member-role">吉他 / 贝斯 / 鼓 / 采样</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“细腻的东方旋律线条中包裹着精巧的时值变化，像在静谧的时光隧道中寻找遗落的琥珀。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">国风数摇同好</span><span class="info-tag">感性叙事流</span><span class="info-tag">室内Livehouse常客</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Chinese Football</span><span class="info-tag sim-band">发光曲线</span><span class="info-tag sim-band">琥珀</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 国内多城双城巡演、2024 草莓音乐节器乐舞台</p>
+                </div>
+                <div class="band-note">国内优质器乐后摇/数学摇滚乐队，旋律清澈而富有情绪。</div>
+            </div>
         </div>
 
+        <!-- 10. 厨子和戏子 -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">DK</span>
-                    <span class="member-count">1 Solo Artist</span>
-                </div>
-                <h2 class="band-name">EIVØR</h2>
+            <div class="band-photo-wrapper">
+                <img src="chuzi_xizi_live.jpg" alt="厨子和戏子 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Eivør Pálsdóttir</span><span class="member-role">Vocals / Frame Drum / Guitar</span></li>
-            </ul>
-            <div class="band-note">法罗群岛神级艺术家，空灵而具力量的北欧史诗吟唱。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">CN</span><span class="member-count">2核心 (带全乐队)</span></div>
+                    <h2 class="band-name">厨子和戏子</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">秦秀乾</span><span class="member-role">主唱 / 吉他</span></li>
+                    <li class="role-item"><span class="member-name">童子文</span><span class="member-role">主唱 / 竹笛 / 传统打击乐</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“古老的东方史诗与现代独立摇滚的绝妙杂交，竹笛与电吉他撕扯，声线具有极强的戏剧张力与沧桑感。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">新国风独立摇滚迷</span><span class="info-tag">文青词作党</span><span class="info-tag">热血合唱流</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">野孩子</span><span class="info-tag sim-band">九宝</span><span class="info-tag sim-band">谢天笑</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 迷笛音乐节战国舞台、2025“将进酒”全国巡演</p>
+                </div>
+                <div class="band-note">国内“新浪潮中国风”独立摇滚，将传统戏曲身段融入现代电声。</div>
+            </div>
         </div>
 
+        <!-- 11. EF -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">NO</span>
-                    <span class="member-count">1 Studio / 4 Live</span>
-                </div>
-                <h2 class="band-name">SYLVAINE</h2>
+            <div class="band-photo-wrapper">
+                <img src="ef_live.jpg" alt="EF 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Kathrine Shepard</span><span class="member-role">Vocals / Guitar / Keyboards</span></li>
-            </ul>
-            <div class="band-note">单人后黑金属/自赏（Blackgaze）演出时为完整金属编制。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">SE</span><span class="member-count">5人编制</span></div>
+                    <h2 class="band-name">EF</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Tomas Torsson</span><span class="member-role">吉他 / 吟唱主唱</span></li>
+                    <li class="role-item"><span class="member-name">Daniel Öhman</span><span class="member-role">吉他 / 键盘 / 人声</span></li>
+                    <li class="role-item"><span class="member-name">Niklas Åström</span><span class="member-role">鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“北欧大寂静与大爆裂的教科书。宏大的管乐和层叠的人声吟唱，让他们的音墙带有近乎神圣的史诗色彩。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">史诗高潮派</span><span class="info-tag">北欧大爆裂拥趸</span><span class="info-tag">情绪摇滚考据党</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Sigur Rós</span><span class="info-tag sim-band">Explosions in the Sky</span><span class="info-tag sim-band">Immanu El</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 瑞典哥德堡夏日音乐节、2024 欧洲十国大剧院巡演</p>
+                </div>
+                <div class="band-note">瑞典殿堂级爆裂系后摇，温暖的管乐、人声与宏大音墙并存。</div>
+            </div>
         </div>
 
+        <!-- 12. EIVØR -->
         <div class="band-card">
-            <div class="band-header">
-                <div class="band-meta">
-                    <span class="country-tag">IT</span>
-                    <span class="member-count">1 Solo Artist</span>
-                </div>
-                <h2 class="band-name">BRUNO BAVOTA</h2>
+            <div class="band-photo-wrapper">
+                <img src="eivor_live.jpg" alt="EIVØR 实拍" class="band-photo">
             </div>
-            <ul class="roles-list">
-                <li class="role-item"><span class="member-name">Bruno Bavota</span><span class="member-role">Piano / Electronics / Loops</span></li>
-            </ul>
-            <div class="band-note">意大利新古典现代钢琴家，温润的键琴叠加环境电子采样。</div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">DK</span><span class="member-count">个人项目 (带现场伴奏)</span></div>
+                    <h2 class="band-name">EIVØR</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Eivør Pálsdóttir</span><span class="member-role">主唱 / 萨满手鼓 / 吉他</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“大自然神灵的化身。法罗群岛的狂风与海浪赋予了她不可思议的魔性咽音，现场萨满大鼓一敲，直接通灵。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">暗黑民谣教众</span><span class="info-tag">维京史诗迷</span><span class="info-tag">世界音乐信徒</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Wardruna</span><span class="info-tag sim-band">Heilung</span><span class="info-tag sim-band">Dead Can Dance</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 冰岛冰川音乐节、2025 Wacken Open Air 金属节特别嘉宾</p>
+                </div>
+                <div class="band-note">法罗群岛国宝级女声，空灵原始、充满神圣北欧史诗感的现场。</div>
+            </div>
+        </div>
+
+        <!-- 13. FAYZZ -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="fayzz_live.jpg" alt="FAYZZ 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">CN</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">FAYZZ</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">成都器乐班底</span><span class="member-role">双吉他 / 贝斯 / 鼓手 / 合成器</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“将器乐后摇、爵士融合与城市霓虹电子融合得天衣无缝，他们的律动就像成都夜晚的一杯冷萃，松弛又现代。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">City-Pop兼修</span><span class="info-tag">前卫爵士律动控</span><span class="info-tag">城市霓虹漫游者</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Toe</span><span class="info-tag sim-band">LITE</span><span class="info-tag sim-band">Mouse on the Keys</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 上海/深圳双城保利剧院特邀展演、2024 迷笛音乐节</p>
+                </div>
+                <div class="band-note">融合数学摇滚、爵士与器乐后摇的国内高水准前卫独立强团。</div>
+            </div>
+        </div>
+
+        <!-- 14. GEORDIE GREEP -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="geordie_greep_live.jpg" alt="GEORDIE GREEP 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">UK</span><span class="member-count">独奏项目 (技术流伴奏团)</span></div>
+                    <h2 class="band-name">GEORDIE GREEP</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Geordie Greep</span><span class="member-role">核心主唱 / 魔性吉他弹唱</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“从Black Midi单飞后的前卫怪杰，他在舞台上疯狂编织着带有戏剧张力的、怪诞暴躁且极度精确的前卫爵士朋克。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">前卫艺术朋克狂热者</span><span class="info-tag">怪诞戏剧审美党</span><span class="info-tag">数学核心怪咖</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">black midi</span><span class="info-tag sim-band">Squid</span><span class="info-tag sim-band">The Mars Volta</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 伦敦及纽约地下先锋独立巡演、2025 Pitchfork 音乐节</p>
+                </div>
+                <div class="band-note">前 Black Midi 前卫怪杰 frontman，开启带有戏剧张力的疯狂独奏项目。</div>
+            </div>
+        </div>
+
+        <!-- 15. GOODBYE, KINGS -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="goodbye_kings_live.jpg" alt="GOODBYE, KINGS 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">IT</span><span class="member-count">6人编制</span></div>
+                    <h2 class="band-name">GOODBYE, KINGS</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">乐团全体</span><span class="member-role">吉他 / 小提琴 / 小号 / 键盘</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“一出华丽至极的古典器乐歌剧。管乐、弦乐与电吉他彼此对话，用电影原声般的宏大色调重塑后摇宏叙事。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">艺术电影原声控</span><span class="info-tag">古典配器偏执狂</span><span class="info-tag">唯美宏大叙事流</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Yndi Halda</span><span class="info-tag sim-band">The Cinematic Orchestra</span><span class="info-tag sim-band">Maybeshewill</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 米兰前卫音乐节、2024 意大利国家艺术中心特邀专场</p>
+                </div>
+                <div class="band-note">意大利叙事器乐后摇，电影原声般宏大且极其注重配器色彩。</div>
+            </div>
+        </div>
+
+        <!-- 16. HERETOIR -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="heretoir_live.jpg" alt="HERETOIR 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">DE</span><span class="member-count">5人编制</span></div>
+                    <h2 class="band-name">HERETOIR</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">David Mantarchew</span><span class="member-role">主唱 / 吉他</span></li>
+                    <li class="role-item"><span class="member-name">Justin Busch</span><span class="member-role">吉他手</span></li>
+                    <li class="role-item"><span class="member-name">Max Wheeler</span><span class="member-role">鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“完美的黑自赏典范。在连绵不绝的自赏吉他延时回授中，猛烈爆发属于黑金属的绝望水喉与爆裂双踩。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">自赏黑/Blackgaze信徒</span><span class="info-tag">唯美金属党</span><span class="info-tag">深渊悲伤流</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Alcest</span><span class="info-tag sim-band">Lantlôs</span><span class="info-tag sim-band">Deafheaven</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 Summer Breeze 金属节、2025 欧洲黑金属联合巡演</p>
+                </div>
+                <div class="band-note">德国后黑金属/黑自赏（Post-Black Metal / Blackgaze）名团。</div>
+            </div>
+        </div>
+
+        <!-- 17. HUMAN TETRIS -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="human_tetris_live.jpg" alt="HUMAN TETRIS 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">RU</span><span class="member-count">3人编制</span></div>
+                    <h2 class="band-name">HUMAN TETRIS</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Arvid Kriger</span><span class="member-role">主唱 / 吉他手</span></li>
+                    <li class="role-item"><span class="member-name">Tini Kabulova</span><span class="member-role">贝斯手 (冷冽根基)</span></li>
+                    <li class="role-item"><span class="member-name">Ramil Shamsutdinov</span><span class="member-role">鼓手 (机械节拍)</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“东欧冰冷机械美学的极致代表。跳跃低沉的贝斯线条配上没有一丝感情的机械鼓点，现场一秒变成复古迪斯科舞厅。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">后朋克抖腿党</span><span class="info-tag">苏联冷波控</span><span class="info-tag">低音贝斯中毒者</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Motorama</span><span class="info-tag sim-band">Lebanon Hanover</span><span class="info-tag sim-band">Molchat Doma</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 中南美洲大型巡演墨西哥站、2024 柏林独立音乐周</p>
+                </div>
+                <div class="band-note">俄罗斯经典冷波后朋克，复古跳跃的低音线条与干净克制的现场。</div>
+            </div>
+        </div>
+
+        <!-- 18. IN INERTIA -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="in_inertia_live.jpg" alt="IN INERTIA 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">ID</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">IN INERTIA</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">现场成员</span><span class="member-role">双吉他 / 贝斯 / 鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“来自东南亚海岛的氛围回响，完美的空间延迟混响让每一个音符都像在潮湿的夜空中缓慢蒸发。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">空间氛围控</span><span class="info-tag">延迟回授爱好者</span><span class="info-tag">孤岛幻境游民</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Hammock</span><span class="info-tag sim-band">Lights & Motion</span><span class="info-tag sim-band">The Album Leaf</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 雅加达独立音乐节、2024 东南亚联合展演</p>
+                </div>
+                <div class="band-note">来自印度尼西亚的氛围后摇，极其细腻的音频空间延迟处理。</div>
+            </div>
+        </div>
+
+        <!-- 19. THE JESUS AND MARY CHAIN -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="jamc_live.jpg" alt="THE JESUS AND MARY CHAIN 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">UK</span><span class="member-count">2核心 (现场5人)</span></div>
+                    <h2 class="band-name">THE JESUS AND MARY CHAIN</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Jim Reid</span><span class="member-role">核心主唱</span></li>
+                    <li class="role-item"><span class="member-name">William Reid</span><span class="member-role">主音噪音吉他 / 和声</span></li>
+                    <li class="role-item"><span class="member-name">Justin Welch</span><span class="member-role">现场鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“摇滚史上的活化石。他们用纯粹的吉他尖叫、刺耳的反馈白噪音和极其动听的流行旋律，调配出了世界上最迷人的毒药。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">老摇滚/自赏元老朝圣团</span><span class="info-tag">白噪音爱好者</span><span class="info-tag">皮革夹克硬核党</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">My Bloody Valentine</span><span class="info-tag sim-band">The Velvet Underground</span><span class="info-tag sim-band">Ride</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 Primavera Sound 音乐节、2025 乐队40周年世界巡演伦敦站</p>
+                </div>
+                <div class="band-note">英国传奇噪音流行/自赏摇滚鼻祖，全场灵魂压轴。</div>
+            </div>
+        </div>
+
+        <!-- 20. PENGUIN CAFE -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="penguin_cafe_live.jpg" alt="PENGUIN CAFE 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">UK</span><span class="member-count">7-8人室内乐编制</span></div>
+                    <h2 class="band-name">PENGUIN CAFE</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Arthur Jeffes</span><span class="member-role">钢琴 / 指挥 / 键盘</span></li>
+                    <li class="role-item"><span class="member-name">巡演原声弦乐组</span><span class="member-role">提琴组 / 双贝斯 / 打击乐</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“像在纯白画布上欢快跳跃的原声小品，融合了极简主义、前卫古典与英国民谣，高级、克制且充满童趣。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">高雅室内乐受众</span><span class="info-tag">企鹅咖啡馆老粉</span><span class="info-tag">极简乐派行家</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Penguin Cafe Orchestra</span><span class="info-tag sim-band">Steve Reich</span><span class="info-tag sim-band">Rachel's</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 伦敦皇家节日大厅（Royal Festival Hall）、2024 格拉斯哥大剧院</p>
+                </div>
+                <div class="band-note">当代新古典主义先驱，用精巧的原声乐器构造诗意梦境。</div>
+            </div>
+        </div>
+
+        <!-- 21. POWDER! GO AWAY -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="powder_go_away_live.jpg" alt="POWDER! GO AWAY 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">RU</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">POWDER! GO AWAY</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">乐队乐手</span><span class="member-role">吉他 / 贝斯 / 鼓 / 采样</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“完美继承了东欧大陆的广袤与荒凉，他们的吉他扫弦纯净如西伯利亚的初雪，却在结尾爆发出海啸般的绝美音墙。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">纯净流器乐拥趸</span><span class="info-tag">绝美音墙控</span><span class="info-tag">深夜催泪后摇迷</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Moonlit Sailor</span><span class="info-tag sim-band">April Rain</span><span class="info-tag sim-band">The Evpatoria Report</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 莫斯科及圣彼得堡双城大爆满头牌演出现场</p>
+                </div>
+                <div class="band-note">俄罗斯清澈流淌型器乐后摇，在国内后摇迷中拥有超高人气。</div>
+            </div>
+        </div>
+
+        <!-- 22. RANGES -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="ranges_live.jpg" alt="RANGES 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">US</span><span class="member-count">4人编制</span></div>
+                    <h2 class="band-name">RANGES</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">CJ Blessum</span><span class="member-role">吉他手 / 视觉概念统筹</span></li>
+                    <li class="role-item"><span class="member-name">Mark Woodward</span><span class="member-role">吉他手</span></li>
+                    <li class="role-item"><span class="member-name">Mark Noftsger</span><span class="member-role">鼓手</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“不仅是一支后摇乐队，更是一个视觉艺术组织。现场音乐伴随着庄严的图腾几何巨幕，呈现宏大的宗教肃穆感。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">概念艺术偏执狂</span><span class="info-tag">视听一体化党</span><span class="info-tag">硬核器乐信徒</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">If These Trees Could Talk</span><span class="info-tag sim-band">Pelican</span><span class="info-tag sim-band">Russian Circles</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 PostFest 压轴、2025 欧洲全境概念巡演</p>
+                </div>
+                <div class="band-note">美国概念型后摇，现场伴随宏大的视觉图腾叙事。</div>
+            </div>
+        </div>
+
+        <!-- 23. SUNGAZER -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="sungazer_live.jpg" alt="SUNGAZER 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">US</span><span class="member-count">2人先锋组</span></div>
+                    <h2 class="band-name">SUNGAZER</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Adam Neely</span><span class="member-role">贝斯 / 合成器 / Ableton</span></li>
+                    <li class="role-item"><span class="member-name">Shawn Crowder</span><span class="member-role">鼓手 / 电子打击乐</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“把高难度的现代前卫爵士、数学摇滚和未来感的霓虹电子乐塞进了高压锅，现场炫技炫到让人头皮发麻。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">数字爵士极客</span><span class="info-tag">Adam Neely频道粉丝</span><span class="info-tag">复杂节拍分裂症</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Louis Cole</span><span class="info-tag sim-band">Knower</span><span class="info-tag sim-band">Dirty Loops</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 纽约先锋音乐周、2024 欧洲硬核炫技爵士巡回演出</p>
+                </div>
+                <div class="band-note">著名音乐博主 Adam Neely 领衔的未来电声/硬核炫技爵士数学摇滚。</div>
+            </div>
+        </div>
+
+        <!-- 24. SYLVAINE -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="sylvaine_live.jpg" alt="SYLVAINE 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">NO</span><span class="member-count">单人核心 (现场金属大队)</span></div>
+                    <h2 class="band-name">SYLVAINE</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">Kathrine Shepard</span><span class="member-role">空灵女主唱 / 吉他</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“北欧仙乐（Ethereal）与极端金属爆裂墙的双面维纳斯。她的歌声可以在圣洁天使与地狱魔女之间无缝切换。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">后金属/自赏金属双修</span><span class="info-tag">仙乐流行控</span><span class="info-tag">北欧神话死忠</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Alcest</span><span class="info-tag sim-band">Myrkur</span><span class="info-tag sim-band">Chelsea Wolfe</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 Hellfest 音乐节 The Temple 舞台、2024 欧洲不插电巡演</p>
+                </div>
+                <div class="band-note">挪威黑自赏（Blackgaze）唯美项目，演出时为爆裂的金属三大件编制。</div>
+            </div>
+        </div>
+
+        <!-- 25. UNREQVIPED -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="unreqviped_live.jpg" alt="UNREQVIPED 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">CA</span><span class="member-count">单人独立项目</span></div>
+                    <h2 class="band-name">UNREQVIPED</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">† (唯一主创)</span><span class="member-role">录音室全乐器演奏 / 采样包办</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“将抑郁黑金属的绝望哀嚎，彻底浸泡在宏大绝美的交响氛围和梦幻自赏吉他里的孤高鬼才。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">抑郁氛围黑（DSBM）</span><span class="info-tag">交响后摇迷</span><span class="info-tag">孤独美学党</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Coldworld</span><span class="info-tag sim-band"> Woods of Desolation</span><span class="info-tag sim-band">Sadness</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 加拿大实验音乐展演、2024 线上独家限定虚拟声学舞台</p>
+                </div>
+                <div class="band-note">加拿大著名的单人交响氛围黑金属/DSBM/自赏计划。</div>
+            </div>
+        </div>
+
+        <!-- 26. YUFU -->
+        <div class="band-card">
+            <div class="band-photo-wrapper">
+                <img src="yufu_live.jpg" alt="YUFU 实拍" class="band-photo">
+            </div>
+            <div class="band-content">
+                <div class="band-header">
+                    <div class="band-meta"><span class="country-tag">CN</span><span class="member-count">独立现场</span></div>
+                    <h2 class="band-name">YUFU</h2>
+                </div>
+                <ul class="roles-list">
+                    <li class="role-item"><span class="member-name">渔斧</span><span class="member-role">人声主唱 / 木吉他弹唱 / Loop</span></li>
+                </ul>
+                <div class="info-section">
+                    <div class="info-title">乐评</div>
+                    <p class="review-text">“一把木吉他，一个多轨循环采样踏板，他用质朴的人声低吟在舞台上搭建起了一座孤寂而清澈的海边木屋。”</p>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">乐迷风格</div>
+                    <div class="tag-container">
+                        <span class="info-tag">独立低吟民谣迷</span><span class="info-tag">Lo-Fi质感控</span><span class="info-tag">极简主义听众</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">相似乐队</div>
+                    <div class="tag-container">
+                        <span class="info-tag sim-band">Low Roar</span><span class="info-tag sim-band">Radical Face</span><span class="info-tag sim-band">Novo Amor</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">近期大型现场</div>
+                    <p class="live-text">2025 阿那亚海滩不插电音乐节、2024 全国Livehouse不插电巡演</p>
+                </div>
+                <div class="band-note">国内优质独立吟唱/民谣氛围音乐人个人项目。</div>
+            </div>
         </div>
 
     </main>
 
     <footer>
-        <p>© 2026 CAN FESTIVAL OFFICIAL PAGE • LINEUP COMPLIED FROM POSTER DATA</p>
+        <p>© 2026 CAN FESTIVAL OFFICIAL PAGE • ENHANCED ARCHIVE WITH FULL METADATA</p>
     </footer>
 </div>
 
