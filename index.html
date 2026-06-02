@@ -46,7 +46,7 @@
         }
 
         .container {
-            max-width: 1560px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -60,6 +60,7 @@
             margin-bottom: 35px;
             gap: 20px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         /* 搜索框 */
@@ -67,11 +68,12 @@
             position: relative;
             flex-grow: 1;
             max-width: 380px;
+            min-width: 260px;
         }
 
         .search-input {
             width: 100%;
-            padding: 10px 16px 10px 40px;
+            padding: 11px 16px 11px 40px;
             font-size: 0.9rem;
             border: 1px solid var(--border-line);
             border-radius: 30px;
@@ -138,25 +140,33 @@
         }
 
         /* ==========================================================================
-           4. 网格卡片布局与精致数据区块
+           4. 安全稳定的弹性网格布局 (防塌陷核心代码)
            ========================================================================== */
         .database-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
-            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;             /* 允许换行 */
+            gap: 30px;                   /* 卡片间距 */
+            width: 100%;
+            min-height: 400px;           /* 强制撑开安全高度防止截断 */
+            align-items: stretch;
         }
 
         /* 基础悬浮白色卡片 */
         .app-card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            border: 1px solid rgba(216, 236, 240, 0.5);
+            border: 1px solid rgba(216, 236, 240, 0.6);
             box-shadow: 0 4px 20px rgba(30, 49, 55, 0.02);
             padding: 28px;
             display: flex;
             flex-direction: column;
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
+            /* 响应式占比计算 */
+            flex: 1 1 calc(33.333% - 20px); 
+            min-width: 380px;            /* 限制最小宽度，防止在窄屏时缩成一团 */
+            max-width: 520px;            /* 限制最大宽度，防止在极宽屏时被横向拉扁 */
         }
 
         .app-card:hover {
@@ -164,21 +174,20 @@
             box-shadow: 0 12px 30px rgba(13, 99, 122, 0.06);
         }
 
-        /* 卡片实拍相册区域 */
+        /* 无图无红叉的现代空气感几何占位背景 */
         .card-photo-box {
             width: 100%;
-            height: 160px;
-            background-color: #F0F6F8;
+            height: 140px;
+            background: linear-gradient(135deg, #F0F6F8 0%, #E1EFF2 100%);
             border-radius: 8px;
             margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-line);
-        }
-
-        .card-photo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            border: 1px dashed var(--border-line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(13, 99, 122, 0.25);
+            font-size: 2rem;
+            font-weight: bold;
         }
 
         /* 卡片头部与评分 */
@@ -190,7 +199,7 @@
         }
 
         .brand-title {
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 700;
             color: var(--text-main);
             letter-spacing: -0.01em;
@@ -202,7 +211,7 @@
             margin-bottom: 16px;
         }
 
-        /* 还原图像中的评分小方块 */
+        /* 评分小方块 */
         .rating-badge {
             background-color: #E3F2FD;
             color: #0D47A1;
@@ -245,7 +254,7 @@
             text-transform: uppercase;
             letter-spacing: 0.03em;
         }
-        /* 动态匹配色系 */
+        /* 颜色对应规则 */
         .g-math   { background-color: var(--tag-math-bg); color: var(--tag-math-text); }
         .g-prog   { background-color: var(--tag-prog-bg); color: var(--tag-prog-text); }
         .g-indie  { background-color: var(--tag-indie-bg); color: var(--tag-indie-text); }
@@ -274,7 +283,7 @@
 
         .album-strip {
             background-color: #F5FAFC;
-            border: 1px solid rgba(216, 236, 240, 0.3);
+            border: 1px solid rgba(216, 236, 240, 0.4);
             border-radius: 6px;
             padding: 8px 14px;
             display: flex;
@@ -309,7 +318,7 @@
         }
 
         /* ==========================================================================
-           7. 乐评人折叠组件 & 大事件混合排版
+           7. 乐评人折叠组件与大事件
            ========================================================================== */
         .dropdown-panel {
             border: 1px solid var(--border-line);
@@ -346,7 +355,7 @@
             gap: 12px;
             border-top: 1px dashed var(--border-line);
             padding-top: 18px;
-            margin-top: auto;
+            margin-top: auto; /* 推至卡片底部对齐 */
         }
 
         .event-node {
@@ -380,12 +389,13 @@
             margin-top: 4px;
             display: block;
             text-decoration: underline;
-            cursor: pointer;
         }
 
-        @media (max-width: 768px) {
-            body { padding: 20px; }
-            .database-grid { grid-template-columns: 1fr; }
+        /* 极致窄屏下的移动端自适应 */
+        @media (max-width: 480px) {
+            body { padding: 15px; }
+            .database-grid { gap: 15px; }
+            .app-card { min-width: 100%; padding: 20px; }
         }
     </style>
 </head>
@@ -393,10 +403,163 @@
 
 <div class="container">
 
+    <!-- 顶部现代轻量组件级过滤面板 -->
     <header class="filter-registry">
         <div class="search-wrapper">
             <input type="text" class="search-input" placeholder="搜索乐队、风格、国籍...">
         </div>
         <div class="pill-tabs-container">
             <div class="pill-tab active">全部 <span class="badge-count">25/25</span></div>
-            <div class="pill-
+            <div class="pill-tab">🇨🇳 中国</div>
+            <div class="pill-tab">🇬🇧 英伦</div>
+            <div class="pill-tab">🇺🇸 美国</div>
+            <div class="pill-tab">🌐 北欧</div>
+            <div class="pill-tab">🇪🇺 欧陆</div>
+            <div class="pill-tab">Post-Rock</div>
+            <div class="pill-tab">Math Rock</div>
+            <div class="pill-tab">Shoegaze</div>
+            <div class="pill-tab">Metal</div>
+        </div>
+    </header>
+
+    <!-- 核心安全网格大框架 -->
+    <main class="database-grid">
+
+        <!-- CARD 1: COVET -->
+        <div class="app-card">
+            <div class="card-photo-box">🎸 COVET</div>
+            <div class="card-header">
+                <h2 class="brand-title">Covet</h2>
+                <div class="rating-badge high">★ 7.1分</div>
+            </div>
+            <div class="brand-subtitle">Yvette Young 主导的数学摇滚三人组</div>
+            <div class="meta-geo-row">
+                <span>📍 美国 · 加州</span><span>📅 始于 2013年</span><span>厂牌: Triple Crown</span>
+            </div>
+            <div class="genre-tags-wrapper">
+                <span class="genre-tag g-math">Math Rock</span>
+                <span class="genre-tag g-prog">Progressive Rock</span>
+                <span class="genre-tag g-indie">Indie</span>
+                <span class="genre-tag g-finger">Fingerstyle</span>
+            </div>
+            <div class="section-label">经典专辑 · Albums</div>
+            <div class="album-strip-list">
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2015</span><span class="album-name">Currents (EP)</span></div>
+                    <div class="album-score-box">3.70</div>
+                </div>
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2018</span><span class="album-name">Effloresce</span></div>
+                    <div class="album-score-box">3.85</div>
+                </div>
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2023</span><span class="album-name">Catharsis</span></div>
+                    <div class="album-score-box">3.80</div>
+                </div>
+            </div>
+            <div class="dropdown-panel">
+                <span class="preview">💬 乐评人：“Yvette 将点弦上演变成了绚丽的艺术...”</span>
+            </div>
+            <div class="events-container">
+                <div class="event-node">
+                    <div class="event-icon-badge">✨</div>
+                    <div class="event-text">
+                        Yvette Young 的教学视频在全球吉他圈广泛流传，是现代数摇标志性的大使。
+                        <span class="event-tag-link">持续</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2: BALMORHEA -->
+        <div class="app-card">
+            <div class="card-photo-box">🎻 BALMORHEA</div>
+            <div class="card-header">
+                <h2 class="brand-title">Balmorhea</h2>
+                <div class="rating-badge high">★ 7.0分</div>
+            </div>
+            <div class="brand-subtitle">德克萨斯新古典主义器乐室内乐团</div>
+            <div class="meta-geo-row">
+                <span>📍 美国 · 德州</span><span>📅 始于 2006年</span><span>厂牌: Western Vinyl</span>
+            </div>
+            <div class="genre-tags-wrapper">
+                <span class="genre-tag g-prog">Post-Classical</span>
+                <span class="genre-tag g-indie">Ambient</span>
+                <span class="genre-tag g-math">Chamber</span>
+                <span class="genre-tag g-finger">Americana</span>
+            </div>
+            <div class="section-label">经典专辑 · Albums</div>
+            <div class="album-strip-list">
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2007</span><span class="album-name">Balmorhea</span></div>
+                    <div class="album-score-box">3.60</div>
+                </div>
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2009</span><span class="album-name">All is Wild, All is Silent</span></div>
+                    <div class="album-score-box">3.85</div>
+                </div>
+            </div>
+            <div class="dropdown-panel">
+                <span class="preview">💬 乐评人：“如荒原上升起的冬日暖阳，克制且极具画面感...”</span>
+            </div>
+            <div class="events-container">
+                <div class="event-node">
+                    <div class="event-icon-badge">🍃</div>
+                    <div class="event-text">经典现场完成于奥斯汀大教堂专属音乐会，将古典原声与环境音完美交织。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3: PENGUIN CAFE -->
+        <div class="app-card">
+            <div class="card-photo-box">🐧 PENGUIN CAFE</div>
+            <div class="card-header">
+                <h2 class="brand-title">Penguin Cafe</h2>
+                <div class="rating-badge mid">★ 6.9分</div>
+            </div>
+            <div class="brand-subtitle">原 Penguin Cafe Orchestra 精神传承乐团</div>
+            <div class="meta-geo-row">
+                <span>📍 英国 · 伦敦</span><span>📅 始于 2009年</span><span>厂牌: Erased Tapes</span>
+            </div>
+            <div class="genre-tags-wrapper">
+                <span class="genre-tag g-post">Chamber Pop</span>
+                <span class="genre-tag g-math">Minimalism</span>
+                <span class="genre-tag g-prog">Neo-Classical</span>
+                <span class="genre-tag g-finger">Folk</span>
+            </div>
+            <div class="section-label">经典专辑 · Albums</div>
+            <div class="album-strip-list">
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2014</span><span class="album-name">The Red Book</span></div>
+                    <div class="album-score-box">3.65</div>
+                </div>
+                <div class="album-strip">
+                    <div class="album-left"><span class="album-year">2019</span><span class="album-name">Handfuls of Night</span></div>
+                    <div class="album-score-box">3.80</div>
+                </div>
+            </div>
+            <div class="dropdown-panel">
+                <span class="preview">💬 乐评人：“干净灵动，原声小品在画布上欢快地欢跃...”</span>
+            </div>
+            <div class="events-container">
+                <div class="event-node">
+                    <div class="event-icon-badge">🎹</div>
+                    <div class="event-text">于伦敦皇家节日大厅（Royal Festival Hall）举行全套室内乐编制现场。</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // 基础交互动作
+    document.querySelectorAll('.dropdown-panel').forEach(panel => {
+        panel.addEventListener('click', () => {
+            alert("正在从音乐数据库加载完整乐评报告...");
+        });
+    });
+</script>
+
+</body>
+</html>
